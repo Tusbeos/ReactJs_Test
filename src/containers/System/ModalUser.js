@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Modal,ModalHeader,ModalBody, ModalFooter, Input, Label, Form, FormGroup,} from 'reactstrap';
+import emitter from "../../utils/emitter";
 class ModalUser extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +13,22 @@ class ModalUser extends Component {
       lastName: "",
       address: "",
     };
+    this.listenToEmitter();
   }
-  componentDidMount() {}
+  listenToEmitter() {
+    emitter.on("EVENT_CLEAR_MODAL_DATA", () => {
+      this.setState({
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        address: "",
+      });
+    });
+  }
+  componentDidMount() {
+    console.log("Mounting modal", this.props);
+  }
 
   toggle = () => {
     this.props.toggleFromParent();
@@ -71,7 +86,7 @@ class ModalUser extends Component {
               <div className="col-6 form-group">
                 <label>Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   placeholder="Password"
                   onChange={(event) => {

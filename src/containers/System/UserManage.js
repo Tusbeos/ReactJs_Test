@@ -5,9 +5,11 @@ import "./UserManage.scss";
 import {
   handleGetAllUsers,
   handleCreateNewUserService,
+  handleDeleteUserService,
 } from "../../services/userService";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import ModalUser from "./ModalUser";
+import emitter from "../../utils/emitter";
 class UserManage extends Component {
   constructor(props) {
     super(props);
@@ -53,12 +55,24 @@ class UserManage extends Component {
         this.setState({
           isOpenModalUser: false,
         });
+        emitter.emit("EVENT_CLEAR_MODAL_DATA");
       }
     } catch (e) {
       console.log(e);
     }
     console.log("check data from chill", data);
-    // alert("call me");
+  };
+  deleteUser = async (user) => {
+    try {
+      let res = await handleDeleteUserService(user.id);
+      if (res && res.errCode === 0) {
+        await this.getAllUsersFromReact();
+      } else {
+        alert(res.errMessage);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   render() {
@@ -102,7 +116,10 @@ class UserManage extends Component {
                         <button className="btn-edit">
                           <i className="fas fa-pencil"></i>
                         </button>
-                        <button className="btn-delete">
+                        <button
+                          className="btn-delete"
+                          onClick={() => this.deleteUser(item)}
+                        >
                           <i className="fas fa-trash"></i>
                         </button>
                       </td>
