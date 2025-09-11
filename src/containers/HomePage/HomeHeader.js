@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './HomeHeader.scss';
-import { lang } from "moment";
+import "./HomeHeader.scss";
 import { FormattedMessage } from "react-intl";
+import { LANGUAGES } from "../../utils";
+import { changeLanguageApp } from "../../store/actions/appActions";
+
 class HomeHeader extends Component {
+  changeLanguage = (language) => {
+    this.props.changeLanguageAppRedux(language);
+  };
   render() {
+    let language = this.props.language;
     return (
       <React.Fragment>
         <div className="home-header-container">
           <div className="home-header-content">
             <div className="left-content">
-              <i class="fas fa-bars"></i>
+              <i className="fas fa-bars"></i>
               <div className="header-logo"></div>
             </div>
             <div className="center-content">
@@ -58,11 +64,31 @@ class HomeHeader extends Component {
             </div>
             <div className="right-content">
               <div className="support">
-                <i class="far fa-question-circle"></i>
+                <i className="far fa-question-circle"></i>
                 <FormattedMessage id="home-header.support" />
               </div>
-              <div className="language-vi">VN</div>
-              <div className="language-en">EN</div>
+              <div
+                className={
+                  language === LANGUAGES.VI
+                    ? "language-vi active"
+                    : "language-vi"
+                }
+              >
+                <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>
+                  VN
+                </span>
+              </div>
+              <div
+                className={
+                  language === LANGUAGES.EN
+                    ? "language-en active"
+                    : "language-en"
+                }
+              >
+                <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>
+                  EN
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -76,7 +102,7 @@ class HomeHeader extends Component {
               <FormattedMessage id="banner.title2" />
             </div>
             <div className="search">
-              <i class="fas fa-search"></i>
+              <i className="fas fa-search"></i>
               <input className="search-input"></input>
             </div>
           </div>
@@ -84,7 +110,7 @@ class HomeHeader extends Component {
             <div className="options">
               <div className="option-child">
                 <div className="icon-child">
-                  <i class="far fa-hospital"></i>
+                  <i className="far fa-hospital"></i>
                 </div>
                 <div className="text-child">
                   {" "}
@@ -93,7 +119,7 @@ class HomeHeader extends Component {
               </div>
               <div className="option-child">
                 <div className="icon-child">
-                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  <i className="fa-solid fa-mobile-screen-button"></i>
                 </div>
                 <div className="text-child">
                   {" "}
@@ -102,7 +128,7 @@ class HomeHeader extends Component {
               </div>
               <div className="option-child">
                 <div className="icon-child">
-                  <i class="fas fa-stethoscope"></i>
+                  <i className="fas fa-stethoscope"></i>
                 </div>
                 <div className="text-child">
                   {" "}
@@ -111,7 +137,7 @@ class HomeHeader extends Component {
               </div>
               <div className="option-child">
                 <div className="icon-child">
-                  <i class="fa fa-microscope"></i>
+                  <i className="fas fa-vial"></i>
                 </div>
                 <div className="text-child">
                   {" "}
@@ -120,7 +146,7 @@ class HomeHeader extends Component {
               </div>
               <div className="option-child">
                 <div className="icon-child">
-                  <i class="fas fa-brain"></i>
+                  <i className="fas fa-brain"></i>
                 </div>
                 <div className="text-child">
                   {" "}
@@ -129,7 +155,7 @@ class HomeHeader extends Component {
               </div>
               <div className="option-child">
                 <div className="icon-child">
-                  <i class="fa-solid fa-user-doctor"></i>
+                  <i className="fa-solid fa-user-doctor"></i>
                 </div>
                 <div className="text-child">
                   {" "}
@@ -144,16 +170,17 @@ class HomeHeader extends Component {
   }
 }
 
+// Redux
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
   };
 };
-
-const mapDispatchToProps = dispatch => {
-    return {
-    };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
