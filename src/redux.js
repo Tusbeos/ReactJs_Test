@@ -20,10 +20,8 @@ isDevelopment = false;
 export const history = createBrowserHistory({ basename: process.env.REACT_APP_ROUTER_BASE_NAME });
 
 const reduxStateSyncConfig = {
-    whitelist: [
-        actionTypes.APP_START_UP_COMPLETE,
-    ]
-}
+  whitelist: [actionTypes.APP_START_UP_COMPLETE, actionTypes.CHANGE_LANGUAGE],
+};
 
 const rootReducer = createRootReducer(history);
 const middleware = [
