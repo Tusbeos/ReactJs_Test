@@ -36,5 +36,20 @@
       "handbook": "Handbook",
       "manage-handbook": "Manage Handbook"
     }
+  },
+  "manage-user": {
+    "title": "Manage users with React and Redux",
+    "add": "Add a new user",
+    "email": "Email",
+    "password": "Password",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "address": "Address",
+    "phone-number": "Phone number",
+    "gender": "Gender",
+    "position": "Position",
+    "image": "Avatar",
+    "role": "Role",
+    "save": "Save"
   }
 }

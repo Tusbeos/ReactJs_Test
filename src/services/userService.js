@@ -15,11 +15,15 @@ const handleDeleteUserService = (userId) => {
 const handleEditUserService = (inputData) => {
   return axios.put("/api/edit-user", inputData);
 };
+const handleGetAllCodeService = (inputType) => {
+  return axios.get(`/api/allcode?type=${inputType}`);
+};
 export {
   handleLoginApi,
   handleGetAllUsers,
   handleCreateNewUserService,
   handleDeleteUserService,
   handleEditUserService,
+  handleGetAllCodeService,
 };
 

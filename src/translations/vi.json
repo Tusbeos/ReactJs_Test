@@ -36,5 +36,20 @@
       "handbook": "Cẩm nang",
       "manage-handbook": "Quản lý cẩm nang"
     }
+  },
+  "manage-user": {
+    "title": "Quản lý người dùng với React và Redux",
+    "add": "Thêm mới người dùng",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "first-name": "Tên",
+    "last-name": "Họ",
+    "address": "Địa chỉ",
+    "phone-number": "Số điện thoại",
+    "gender": "Giới tính",
+    "position": "Chức vụ",
+    "image": "Ảnh đại diện",
+    "role": "Vai trò",
+    "save": "Lưu User"
   }
 }
