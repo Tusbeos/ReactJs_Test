@@ -50,6 +50,7 @@
     "position": "Chức vụ",
     "image": "Ảnh đại diện",
     "role": "Vai trò",
-    "save": "Lưu User"
+    "save": "Lưu User",
+    "edit": "Cập nhật User"
   }
 }

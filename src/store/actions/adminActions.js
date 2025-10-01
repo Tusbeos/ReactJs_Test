@@ -5,6 +5,7 @@ import {
   handleCreateNewUserService,
   handleGetAllUsers,
   handleDeleteUserService,
+  handleEditUserService,
 } from "../../services/userService";
 
 export const fetchGenderStart = () => {
@@ -81,7 +82,6 @@ export const fetchAllUsersStart = () => {
     try {
       let res = await handleGetAllUsers("ALL");
       if (res && res.errCode === 0) {
-        toast.success("Fetch all users success!");
         dispatch(fetchAllUsersSuccess(res.users.reverse()));
       } else {
         toast.error("Fetch all users failed!");
@@ -110,6 +110,25 @@ export const deleteUserStart = (userId) => {
     } catch (e) {
       toast.error("Delete the user failed!");
       dispatch(deleteUserFailed());
+      console.log(e);
+    }
+  };
+};
+
+export const editUserStart = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await handleEditUserService(data);
+      if (res && res.errCode === 0) {
+        toast.success("Update the user success!");
+        dispatch(editUserSuccess());
+        dispatch(fetchAllUsersStart());
+      } else {
+        dispatch(editUserFailed());
+      }
+    } catch (e) {
+      toast.error("Update the user failed!");
+      dispatch(editUserFailed());
       console.log(e);
     }
   };
@@ -157,6 +176,14 @@ export const fetchAllUsersSuccess = (data) => ({
 
 export const fetchAllUsersFailed = () => ({
   type: actionTypes.FETCH_ALL_USER_FAILED,
+});
+
+export const editUserSuccess = () => ({
+  type: actionTypes.EDIT_USER_SUCCESS,
+});
+
+export const editUserFailed = () => ({
+  type: actionTypes.EDIT_USER_FAILED,
 });
 
 export const deleteUserSuccess = (data) => ({
