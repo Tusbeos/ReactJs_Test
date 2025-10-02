@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { LANGUAGES, CRUD_ACTIONS } from "../../../utils";
+import CommonUtils from "../../../utils/CommonUtils";
 import * as actions from "../../../store/actions";
 import Lightbox from "react-image-lightbox";
 import "./UserRedux.scss";
 import TableManageUser from "./TableManageUser";
 import "react-image-lightbox/style.css";
-import { set } from "lodash";
+import { Buffer } from "buffer";
 
 class UserRedux extends Component {
   constructor(props) {
@@ -88,14 +89,15 @@ class UserRedux extends Component {
     }
   }
 
-  handleOnchangeImage = (event) => {
+  handleOnchangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
     if (file) {
+      let Base64 = await CommonUtils.getBase64(file);
       let objectUrl = URL.createObjectURL(file);
       this.setState({
         previewImgURL: objectUrl,
-        avatar: file,
+        avatar: Base64,
       });
     }
   };
@@ -121,7 +123,9 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
+        avatar: this.state.avatar,
       });
+      console.log("check state: ", this.state);
     } else if (actions === CRUD_ACTIONS.EDIT) {
       //fire redux edit user
       this.props.editAUserRedux({
@@ -135,7 +139,7 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
-        // avatar: this.state.avatar,
+        avatar: this.state.avatar,
       });
     }
   };
@@ -172,7 +176,11 @@ class UserRedux extends Component {
   };
 
   handleEditUserFromParent = (user) => {
-    console.log("check edit user from parent: ", user);
+    let imageBase64 = "";
+    if (user.image) {
+      imageBase64 = Buffer.from(user.image, "base64").toString("base64");
+    }
+
     this.setState({
       email: user.email,
       password: "HARDCODE",
@@ -185,6 +193,8 @@ class UserRedux extends Component {
       role: user.roleId,
       actions: CRUD_ACTIONS.EDIT,
       userEditId: user.id,
+      avatar: imageBase64,
+      previewImgURL: imageBase64 ? `data:image/jpeg;base64,${imageBase64}` : "",
     });
   };
 
@@ -395,6 +405,7 @@ class UserRedux extends Component {
                 </label>
                 <div className="preview-img-container">
                   <input
+                    values={avatar}
                     id="previewImg"
                     type="file"
                     hidden
@@ -413,6 +424,7 @@ class UserRedux extends Component {
                   ></div>
                 </div>
               </div>
+
               <div className="col-12 mt-3">
                 <button
                   className={
