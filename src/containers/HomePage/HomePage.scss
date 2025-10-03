@@ -34,21 +34,18 @@
         transition   : all 0.3s ease;
         height       : 250px;
 
-          &.section-os-doctor {
-            width: 225px;
-            height: 225px;
-            margin: 0 auto 12px;
-            border-radius: 50%;
-            overflow: hidden;
-            padding: 0; 
+         &.section-os-doctor {
+          width        : 225px;
+          height       : 225px;
+          margin       : 0 auto 12px;
+          border-radius: 50%;
+          overflow     : hidden;
+          padding      : 0;
 
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;   
-              display: block;
-            }
-          }
+          background-position: center;
+          background-size    : cover;
+          background-repeat  : no-repeat;
+        }
           &.section-medical-facility{
             img{
               border-radius: 10px;

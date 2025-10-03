@@ -6,6 +6,7 @@ import {
   handleGetAllUsers,
   handleDeleteUserService,
   handleEditUserService,
+  handleGetTopDoctorHomeService,
 } from "../../services/userService";
 
 export const fetchGenderStart = () => {
@@ -57,7 +58,7 @@ export const fetchRoleStart = () => {
     }
   };
 };
-
+// Create a new user
 export const createNewUser = (data) => {
   return async (dispatch, getState) => {
     try {
@@ -76,7 +77,7 @@ export const createNewUser = (data) => {
     }
   };
 };
-
+// Fetch all users
 export const fetchAllUsersStart = () => {
   return async (dispatch, getState) => {
     try {
@@ -94,7 +95,7 @@ export const fetchAllUsersStart = () => {
     }
   };
 };
-
+// Delete a user
 export const deleteUserStart = (userId) => {
   return async (dispatch, getState) => {
     try {
@@ -114,7 +115,7 @@ export const deleteUserStart = (userId) => {
     }
   };
 };
-
+// Edit a user
 export const editUserStart = (data) => {
   return async (dispatch, getState) => {
     try {
@@ -129,6 +130,30 @@ export const editUserStart = (data) => {
     } catch (e) {
       toast.error("Update the user failed!");
       dispatch(editUserFailed());
+      console.log(e);
+    }
+  };
+};
+// Fetch top doctors for home page
+export const fetchTopDoctor = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await handleGetTopDoctorHomeService(5);
+      if (res && res.errCode === 0) {
+        console.log("check res1: ", res);
+        dispatch({
+          type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
+      });
       console.log(e);
     }
   };
@@ -193,3 +218,5 @@ export const deleteUserSuccess = (data) => ({
 export const deleteUserFailed = () => ({
   type: actionTypes.DELETE_USER_FAILED,
 });
+
+
