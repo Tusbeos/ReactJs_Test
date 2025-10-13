@@ -4,6 +4,15 @@ import { connect } from 'react-redux';
 import "./TableManageUser.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import * as actions from "../../../store/actions";
+import MarkdownIt from "markdown-it";
+import MdEditor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+// Finish!
+function handleEditorChange({ html, text }) {
+  console.log("handleEditorChange", html, text);
+}
 
 class TableManageUser extends Component {
   constructor(props) {
@@ -36,43 +45,50 @@ class TableManageUser extends Component {
   render() {
     let userRedux = this.state.userRedux;
     return (
-      <table>
-        <tbody>
-          <tr>
-            <th>Email</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Address</th>
-            <th>Actions</th>
-          </tr>
-          {userRedux &&
-            userRedux.length > 0 &&
-            userRedux.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{item.email}</td>
-                  <td>{item.firstName}</td>
-                  <td>{item.lastName}</td>
-                  <td>{item.address}</td>
-                  <td>
-                    <button
-                      className="btn-edit"
-                      onClick={() => this.handleEditUser(item)}
-                    >
-                      <i className="fas fa-pencil"></i>
-                    </button>
-                    <button
-                      className="btn-delete"
-                      onClick={() => this.props.deleteAUser(item.id)}
-                    >
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+      <React.Fragment>
+        <table>
+          <tbody>
+            <tr>
+              <th>Email</th>
+              <th>FirstName</th>
+              <th>LastName</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+            {userRedux &&
+              userRedux.length > 0 &&
+              userRedux.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{item.email}</td>
+                    <td>{item.firstName}</td>
+                    <td>{item.lastName}</td>
+                    <td>{item.address}</td>
+                    <td>
+                      <button
+                        className="btn-edit"
+                        onClick={() => this.handleEditUser(item)}
+                      >
+                        <i className="fas fa-pencil"></i>
+                      </button>
+                      <button
+                        className="btn-delete"
+                        onClick={() => this.props.deleteAUser(item.id)}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+        <MdEditor
+          style={{ height: "500px" }}
+          renderHTML={(text) => mdParser.render(text)}
+          onChange={handleEditorChange}
+        />
+      </React.Fragment>
     );
   }
 }
