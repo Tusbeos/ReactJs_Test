@@ -12,14 +12,24 @@ import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const PrevArrow = ({ onClick }) => (
-  <button className="sp-arrow sp-prev" onClick={onClick} aria-label="Prev">
+const PrevArrow = ({ className, onClick }) => (
+  <button
+    className={`sp-arrow sp-prev ${className || ""}`}
+    onClick={onClick}
+    aria-label="Prev"
+    type="button"
+  >
     ‹
   </button>
 );
 
-const NextArrow = ({ onClick }) => (
-  <button className="sp-arrow sp-next" onClick={onClick} aria-label="Next">
+const NextArrow = ({ className, onClick }) => (
+  <button
+    className={`sp-arrow sp-next ${className || ""}`}
+    onClick={onClick}
+    aria-label="Next"
+    type="button"
+  >
     ›
   </button>
 );
@@ -27,7 +37,7 @@ class HomePage extends Component {
   render() {
     let settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       speed: 500,
       slidesToShow: 4,
       slidesToScroll: 2,

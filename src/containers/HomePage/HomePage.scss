@@ -32,9 +32,11 @@
         text-align   : center;
         cursor       : pointer;
         transition   : all 0.3s ease;
-        height       : 250px;
-
-         &.section-os-doctor {
+        height       : 235px;
+          &.section-specialty{
+            height: 210px;
+          }
+          &.section-os-doctor {
           width        : 225px;
           height       : 225px;
           margin       : 0 auto 12px;
@@ -45,13 +47,14 @@
           background-position: center;
           background-size    : cover;
           background-repeat  : no-repeat;
-        }
+          }
           &.section-medical-facility{
             img{
               border-radius: 10px;
             }
           }
           &.section-handbook{
+            height: 200px;
             img{
               border-radius: 10px;
             }
@@ -164,36 +167,46 @@ margin-top: 30px;
 }
 
 .sp-arrow {
-    position       : absolute;
-    top            : 50%;
-    transform      : translateY(-50%);
-    width          : 44px;
-    height         : 44px;
-    border         : 1.5px solid #e6e6e6;
-    background     : #fff;
-    border-radius  : 12px;
-    box-shadow     : 0 2px 8px rgba(0,0,0,0.06);
-    display        : flex;
-    align-items    : center;
-    justify-content: center;
-    font-size      : 24px;
-    line-height    : 1;
-    cursor         : pointer;
-    z-index        : 9999;
-    transition     : border-color .2s, box-shadow .2s, transform .1s;
+    position       : absolute !important;
+    top            : 50% !important;
+    transform      : translateY(-50%) !important;
+    width          : 44px !important;
+    height         : 44px !important;
+    border         : 1.5px solid #e6e6e6 !important;
+    background     : #fff !important;
+    border-radius  : 12px !important;
+    box-shadow     : 0 2px 8px rgba(0,0,0,0.06) !important;
+    display        : flex !important;
+    align-items    : center !important;
+    justify-content: center !important;
+    font-size      : 24px !important;
+    line-height    : 1 !important;
+    cursor         : pointer !important;
+    z-index        : 9999 !important;
+    transition     : border-color .2s, box-shadow .2s, transform .1s !important;
+}
 
-    &.sp-prev { left: -22px;}
-    &.sp-next { right: -22px; }
+/* vị trí trái/phải */
+.sp-arrow.sp-prev { left: -28px; color: black;}
+.sp-arrow.sp-next { right: -28px;color: black; }
 
-    &:hover {
-        border-color: #45c3d2;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-    }
+/* hover */
+.sp-arrow:hover {
+  background: #45c3d2 !important;
+  color: #fff !important;                 /* khi hover: mũi tên trắng, nền xanh */
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15)!important;
+}
 
-    &:active { transform: translateY(-50%) scale(0.98); }
+/* active */
+.sp-arrow:active {
+  transform: translateY(-50%) scale(0.95) !important;
+}
 
-    &.slick-disabled {
-        opacity       : .5;
-        pointer-events: none;
-    }
+/* disabled */
+.sp-arrow.slick-disabled {
+  display: none !important;
+}
+.slick-prev:before,
+.slick-next:before {
+  content: '' !important;
 }

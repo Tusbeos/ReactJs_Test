@@ -28,6 +28,13 @@ const handleGetTopDoctorHomeService = (limit) => {
   return axios.get(`/api/top-doctor-home?limit=${limit}`);
 };
 
+const handleGetAllDoctorsService = () => {
+  return axios.get(`/api/get-all-doctors`);
+};
+
+const saveDetailDoctorService = (data) => {
+  return axios.post(`/api/save-info-doctors`, data);
+};
 export {
   handleLoginApi,
   handleGetAllUsers,
@@ -36,5 +43,7 @@ export {
   handleEditUserService,
   handleGetAllCodeService,
   handleGetTopDoctorHomeService,
+  handleGetAllDoctorsService,
+  saveDetailDoctorService,
 };
 
