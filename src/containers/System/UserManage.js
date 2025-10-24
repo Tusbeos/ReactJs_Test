@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./UserManage.scss";
 import {
   handleGetAllUsers,
@@ -170,14 +169,12 @@ class UserManage extends Component {
   }
 }
 
-const mapStateToProps = state => {
-    return {
-    };
+const mapStateToProps = (state) => {
+  return {};
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-    };
+const mapDispatchToProps = (dispatch) => {
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserManage);

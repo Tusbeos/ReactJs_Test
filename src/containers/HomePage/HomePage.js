@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import HomeHeader from './HomeHeader';
 import Specialty from "./Section/Specialty";
 import MedicalFacility from "./Section/MedicalFacility";
-import OSDoctor from "./Section/OSDoctor";
+import OutStandingDoctor from "./Section/OutStandingDoctor";
 import Handbook from "./Section/Handbook";
 import About from "./Section/About";
 import HomeFooter from "./HomeFooter";
@@ -53,10 +53,10 @@ class HomePage extends Component {
     };
     return (
       <div>
-        <HomeHeader />
+        <HomeHeader isShowBanner={true} />
         <Specialty settings={settings} />
         <MedicalFacility settings={settings} />
-        <OSDoctor settings={settings} />
+        <OutStandingDoctor settings={settings} />
         <Handbook settings={settings} />
         <About />
         <HomeFooter />
