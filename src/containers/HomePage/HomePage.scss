@@ -24,6 +24,16 @@
         margin: 0 -10px;     
         overflow: hidden;   
         }
+        &.section-os-doctor{
+          .doctor-card{
+            padding: 5px;
+
+          .doctor-name span,.doctor-specialty span{
+            cursor: pointer;
+            }
+          }
+          }
+        }
       .img-customize {
         background   : #fff;
         border       : 1.5px solid #f1f1f1;
@@ -59,6 +69,9 @@
               border-radius: 10px;
             }
           }
+          // &.section-os-doctor{
+          //   cursor: pointer;
+          // }
           &:hover {
             border-color: #45c3d2;
             box-shadow  : 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -77,7 +90,6 @@
         }
       }
     }
-}
 .home-footer{
   text-align: center;
   padding-top: 8px;
@@ -186,23 +198,19 @@ margin-top: 30px;
     transition     : border-color .2s, box-shadow .2s, transform .1s !important;
 }
 
-/* vị trí trái/phải */
 .sp-arrow.sp-prev { left: -28px; color: black;}
 .sp-arrow.sp-next { right: -28px;color: black; }
 
-/* hover */
 .sp-arrow:hover {
   background: #45c3d2 !important;
   color: #fff !important;                 /* khi hover: mũi tên trắng, nền xanh */
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15)!important;
 }
 
-/* active */
 .sp-arrow:active {
   transform: translateY(-50%) scale(0.95) !important;
 }
 
-/* disabled */
 .sp-arrow.slick-disabled {
   display: none !important;
 }

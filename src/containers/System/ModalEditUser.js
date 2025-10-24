@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { Modal,ModalHeader,ModalBody, ModalFooter, Input, Label, Form, FormGroup,} from 'reactstrap';
-import emitter from "../../utils/emitter";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import _ from "lodash";
 class ModalEditUser extends Component {
   constructor(props) {
@@ -19,16 +17,15 @@ class ModalEditUser extends Component {
   componentDidMount() {
     let user = this.props.currentUser;
     if (user && !_.isEmpty(user)) {
-        this.setState({
-            id: user.id,
-            email: user.email,
-            password: "harcode",
-            firstName: user.firstName,
-            lastName: user.lastName,
-            address: user.address,
-        })
+      this.setState({
+        id: user.id,
+        email: user.email,
+        password: "harcode",
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+      });
     }
-
   }
 
   toggle = () => {
@@ -155,16 +152,12 @@ class ModalEditUser extends Component {
   }
 }
 
-const mapStateToProps = state => {
-    return {
-    };
+const mapStateToProps = (state) => {
+  return {};
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-    };
+const mapDispatchToProps = (dispatch) => {
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalEditUser);
-
-

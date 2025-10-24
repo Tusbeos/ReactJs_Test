@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import specialtyImg from "../../../assets/doctor/105310-gs-ha-van-quyet.png";
 import Slider from "react-slick";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
 import { Buffer } from "buffer";
-class OSDoctor extends Component {
+import { withRouter } from 'react-router';
+
+class OutStandingDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,20 +24,23 @@ class OSDoctor extends Component {
       });
     }
   }
-
+  handleViewDetailDoctor = (doctor) => {
+  this.props.history.push(`/detail-doctor/${doctor.id}`)
+  };
+   
   render() {
     let language = this.props.language;
     let { arrDoctors } = this.state;
-    console.log("check state arrDoctors: ", arrDoctors);
-    console.log("check top doctors: ", this.props.topDoctors);
     return (
-      <div className="section-share section-os-doctor">
+      <div className="section-share">
         <div className="section-container">
           <div className="section-header">
             <span className="title-section">Bác sĩ nổi bật</span>
             <button className="btn-section">Tìm kiếm</button>
           </div>
-          <div className="section-body">
+          <div
+            className="section-body section-os-doctor"
+          >
             <Slider {...this.props.settings}>
               {arrDoctors &&
                 arrDoctors.length > 0 &&
@@ -51,7 +55,9 @@ class OSDoctor extends Component {
                   let nameVi = `${item.positionData.value_Vi}, ${item.lastName} ${item.firstName}`;
                   let nameEn = `${item.positionData.value_En}, ${item.firstName} ${item.lastName}`;
                   return (
-                    <div className="doctor-card">
+                    <div className="doctor-card" 
+                    onClick={() => this.handleViewDetailDoctor(item)}
+                    >
                       <div
                         className="img-customize section-os-doctor"
                         style={{
@@ -60,9 +66,9 @@ class OSDoctor extends Component {
                       ></div>
                       <div className="position text-center">
                         <div className="doctor-name">
-                          {language === LANGUAGES.VI ? nameVi : nameEn}
+                          <span>{language === LANGUAGES.VI ? nameVi : nameEn}</span>
                         </div>
-                        <div className="doctor-specialty"> Chuyên Khoa</div>
+                        <div className="doctor-specialty"> <span>Chuyên Khoa</span></div>
                       </div>
                     </div>
                   );
@@ -88,4 +94,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OSDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor));

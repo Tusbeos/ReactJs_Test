@@ -142,7 +142,6 @@ export const fetchTopDoctorStart = () => {
     try {
       let res = await handleGetTopDoctorHomeService(5);
       if (res && res.errCode === 0) {
-        console.log("check res1: ", res);
         dispatch({
           type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
           dataDoctor: res.data,
