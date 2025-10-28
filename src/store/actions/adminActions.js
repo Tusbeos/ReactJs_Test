@@ -140,7 +140,7 @@ export const editUserStart = (data) => {
 export const fetchTopDoctorStart = () => {
   return async (dispatch, getState) => {
     try {
-      let res = await handleGetTopDoctorHomeService(5);
+      let res = await handleGetTopDoctorHomeService(10);
       if (res && res.errCode === 0) {
         dispatch({
           type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,

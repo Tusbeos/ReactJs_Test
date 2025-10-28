@@ -37,8 +37,8 @@ async componentDidMount() {
     let nameVi = '';
     let nameEn = '';
     if(detailDoctor && detailDoctor.positionData){
-      nameVi = `${detailDoctor.positionData.value_Vi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`;
-      nameEn = `${detailDoctor.positionData.value_En}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
+      nameVi = `${detailDoctor.positionData.value_Vi}, Bác sĩ ${detailDoctor.lastName} ${detailDoctor.firstName}`;
+      nameEn = `${detailDoctor.positionData.value_En}, Doctor ${detailDoctor.firstName} ${detailDoctor.lastName}`;
     }
     
     return (
