@@ -4,11 +4,11 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
 import { ToastContainer } from "react-toastify";
-
 import {
   userIsAuthenticated,
   userIsNotAuthenticated,
 } from "../hoc/authentication";
+import Doctor from "routes/Doctor";
 
 import { path } from "../utils";
 
@@ -53,6 +53,10 @@ class App extends Component {
                   <Route
                     path={path.SYSTEM}
                     component={userIsAuthenticated(System)}
+                  />
+                  <Route
+                    path={"/doctor"}
+                    component={userIsAuthenticated(Doctor)}
                   />
                   <Route path={path.HOMEPAGE} component={HomePage} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
