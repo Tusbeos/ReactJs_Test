@@ -57,5 +57,11 @@
     "role": "Role",
     "save": "Save User",
     "edit": "Edit User"
+  },
+  "manage-schedule": {
+    "title": "Manage doctor's schedule",
+    "select-doctor": "Doctor",
+    "select-date": "Select date",
+    "save": "Save schedule"
   }
 }
