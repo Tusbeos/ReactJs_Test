@@ -34,13 +34,8 @@ class Login extends Component {
       if (!data || data.errCode !== 0) {
         return this.setState({ errMessage: data?.message || "Login failed" });
       }
-
-      // ✅ gọi qua props
       this.props.userLoginSuccess(data.user);
       console.log("Login success");
-      // (tuỳ chọn) điều hướng:
-      // this.props.navigate("/");
-
     } catch (e) {
       const msg =
         e?.response?.data?.message ||
@@ -53,6 +48,12 @@ class Login extends Component {
 
   handleOnChangeIconEyes = () => {
     this.setState((s) => ({ showPassword: !s.showPassword }));
+  };
+
+  handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.keyCode === 13) {
+      this.handleLogin();
+    }
   };
 
   render() {
@@ -72,6 +73,7 @@ class Login extends Component {
                 placeholder="Enter Your Username"
                 value={username}
                 onChange={this.handleOnChangeUsername}
+                onKeyDown={(event) => this.handleKeyDown(event)}
               />
             </div>
 
@@ -84,9 +86,12 @@ class Login extends Component {
                   placeholder="Enter Your Password"
                   value={password}
                   onChange={this.handleOnChangePassword}
+                  onKeyDown={(event) => this.handleKeyDown(event)}
                 />
                 <span onClick={this.handleOnChangeIconEyes}>
-                  <i className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"} />
+                  <i
+                    className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
+                  />
                 </span>
               </div>
             </div>
@@ -106,12 +111,13 @@ class Login extends Component {
             </div>
 
             <div className="col-12 text-center mt-3">
-              <span className="text-other-login text-center">Or Login with:</span>
+              <span className="text-other-login text-center">
+                Or Login with:
+              </span>
             </div>
 
             <div className="col-12 social-login">
               <i className="fab fa-google"></i>
-              {/* ✅ class -> className */}
               <i className="fab fa-facebook-f"></i>
             </div>
           </div>

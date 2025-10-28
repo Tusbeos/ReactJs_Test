@@ -57,5 +57,11 @@
     "role": "Vai trò",
     "save": "Lưu User",
     "edit": "Cập nhật User"
+  },
+  "manage-schedule": {
+    "title": "Quản lý lịch khám của bác sĩ",
+    "select-doctor": "Bác sĩ",
+    "select-date": "Chọn ngày",
+    "save": "Lưu lịch khám"
   }
 }
