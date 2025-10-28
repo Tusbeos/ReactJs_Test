@@ -57,7 +57,7 @@ class ManageSchedule extends Component {
     });
   };
 
-  handleChange = async (selectedDoctor) => {
+  handleChangeSelectDoctor = async (selectedDoctor) => {
     this.setState({ selectedDoctor });
   };
 
@@ -80,7 +80,7 @@ class ManageSchedule extends Component {
               <FormattedMessage id="manage-schedule.select-doctor" />
               <Select
                 value={this.state.selectedDoctor}
-                onChange={this.handleChange}
+                onChange={this.handleChangeSelectDoctor}
                 options={this.state.listDoctors}
               />
             </div>
@@ -88,8 +88,7 @@ class ManageSchedule extends Component {
               <FormattedMessage id="manage-schedule.select-date" />
               <DatePicker
                 className="form-control"
-                value={this.state.startDate[0]}
-                // selected={this.state.startDate}
+                value={this.state.startDate}
                 onChange={this.handleChange}
                 minDate={new Date()}
               />
