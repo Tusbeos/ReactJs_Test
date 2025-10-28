@@ -20,7 +20,7 @@
            
         
     }
-    .save-content-markdown{
+    .save-content-doctor{
         margin-top: 15px;
         margin-bottom: 15px;
         border-radius: 5px;
@@ -29,5 +29,23 @@
         background: orange;
         color: black;
         cursor: pointer;
+        &:hover{
+            background: darkorange;
+        }
+    }
+
+    .create-content-doctor{
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: none;
+        padding: 5px;
+        background: blue;
+        color: white;
+        cursor: pointer;
+
+        &:hover{
+            background: darkblue;
+        }
     }
 }
