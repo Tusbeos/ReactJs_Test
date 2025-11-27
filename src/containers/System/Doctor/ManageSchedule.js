@@ -4,10 +4,12 @@ import { connect } from "react-redux";
 import "./ManageSchedule.scss";
 import Select from "react-select";
 import * as actions from "../../../store/actions";
-import { LANGUAGES } from "utils";
+import { LANGUAGES, dateFormat } from "utils";
 import DatePicker from "../../../components/Input/DatePicker";
+import { toast } from "react-toastify";
 import moment from "moment";
-import { FormattedDate } from "components/Formating";
+import _ from "lodash";
+import { saveBulkScheduleDoctor } from "services/userService";
 
 class ManageSchedule extends Component {
   constructor(props) {
@@ -39,8 +41,15 @@ class ManageSchedule extends Component {
       });
     }
     if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
+      let data = this.props.allScheduleTime;
+      if (data && data.length > 0) {
+        data = data.map((item) => ({
+          ...item,
+          isSelected: false,
+        }));
+      }
       this.setState({
-        rangeTime: this.props.allScheduleTime,
+        rangeTime: data,
       });
     }
   }
@@ -64,9 +73,55 @@ class ManageSchedule extends Component {
   handleChange = (date) => {
     this.setState({ startDate: date[0] });
   };
+
+  handleClickTime = (time) => {
+    let { rangeTime } = this.state;
+    if (rangeTime && rangeTime.length > 0) {
+      rangeTime = rangeTime.map((item) => {
+        if (item.id === time.id) item.isSelected = !item.isSelected;
+
+        return item;
+      });
+      this.setState({ rangeTime: rangeTime });
+    }
+  };
+
+  handleSaveSchedule = async () => {
+    let { rangeTime, selectedDoctor, startDate } = this.state;
+
+    let result = [];
+    if (!startDate) {
+      toast.error("Invalid date!");
+    }
+    if (!selectedDoctor || _.isEmpty(selectedDoctor)) {
+      toast.error("Invalid selected doctor!");
+      return;
+    }
+    let formatDate = new Date(startDate).setHours(0, 0, 0, 0);
+    if (rangeTime && rangeTime.length > 0) {
+      let selectedTime = rangeTime.filter((item) => item.isSelected === true);
+      if (selectedTime && selectedTime.length > 0) {
+        selectedTime.map((item) => {
+          let object = {};
+          object.doctorId = selectedDoctor.value;
+          object.date = formatDate;
+          object.timeType = item.keyMap;
+          result.push(object);
+        });
+      } else {
+        toast.error("Invalid selected time!");
+        return;
+      }
+      let res = await saveBulkScheduleDoctor({
+        arrSchedule: result,
+        doctorId: selectedDoctor.value,
+        formattedDate: formatDate,
+      });
+      console.log("check res save bulk schedule", res);
+    }
+  };
+
   render() {
-    console.log("check state", this.state);
-    const { isLoggedIn } = this.props;
     let { rangeTime } = this.state;
     let { language } = this.props;
     return (
@@ -98,7 +153,15 @@ class ManageSchedule extends Component {
                 rangeTime.length > 0 &&
                 rangeTime.map((item, index) => {
                   return (
-                    <button className="btn btn-schedule" key={index}>
+                    <button
+                      className={
+                        item.isSelected == false
+                          ? "btn btn-schedule"
+                          : "btn btn-schedule active"
+                      }
+                      onClick={() => this.handleClickTime(item)}
+                      key={index}
+                    >
                       {language === LANGUAGES.VI
                         ? item.value_Vi
                         : item.value_En}
@@ -107,7 +170,10 @@ class ManageSchedule extends Component {
                 })}
             </div>
             <div className="col-12 form-group">
-              <button className="btn btn-primary btn-save-schedule">
+              <button
+                className="btn btn-primary btn-save-schedule"
+                onClick={() => this.handleSaveSchedule()}
+              >
                 <FormattedMessage id="manage-schedule.save" />
               </button>
             </div>
