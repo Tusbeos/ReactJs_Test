@@ -163,10 +163,7 @@ class DoctorSchedules extends Component {
                   <span>
                     <FormattedMessage id="patient.detail-doctor.choose" />
                     <i className="far fa-hand-point-up"></i>
-                    <FormattedMessage
-                      id="patient.detail-doctor.book-free"
-                      defaultMessage=" và đặt (Miễn phí)"
-                    />
+                    <FormattedMessage id="patient.detail-doctor.book-free" />
                   </span>
                 </div>
               </>
