@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import "./ManageSchedule.scss";
 import Select from "react-select";
 import * as actions from "../../../store/actions";
-import { LANGUAGES, dateFormat } from "utils";
+import { LANGUAGES } from "utils";
 import DatePicker from "../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
-import moment from "moment";
 import _ from "lodash";
-import { saveBulkScheduleDoctor } from "services/userService";
+import {
+  saveBulkScheduleDoctor,
+  getScheduleDoctorByDate,
+} from "services/userService";
 
 class ManageSchedule extends Component {
   constructor(props) {
@@ -71,7 +73,18 @@ class ManageSchedule extends Component {
   };
 
   handleChange = (date) => {
-    this.setState({ startDate: date[0] });
+    if (date && date.length > 0) {
+      this.setState(
+        {
+          startDate: date[0],
+        },
+        () => {
+          this.loadScheduleData();
+        }
+      );
+    } else {
+      console.log("Date picker closed without selection");
+    }
   };
 
   handleClickTime = (time) => {
@@ -88,8 +101,8 @@ class ManageSchedule extends Component {
 
   handleSaveSchedule = async () => {
     let { rangeTime, selectedDoctor, startDate } = this.state;
-
     let result = [];
+
     if (!startDate) {
       toast.error("Invalid date!");
     }
@@ -107,6 +120,7 @@ class ManageSchedule extends Component {
           object.date = formatDate;
           object.timeType = item.keyMap;
           result.push(object);
+          return item;
         });
       } else {
         toast.error("Invalid selected time!");
@@ -117,11 +131,60 @@ class ManageSchedule extends Component {
         doctorId: selectedDoctor.value,
         formattedDate: formatDate,
       });
-      console.log("check res save bulk schedule", res);
+      if (res && res.errCode === 0) {
+        toast.success("Save schedule succeed!");
+        this.setState({
+          selectedDoctor: {},
+          startDate: new Date(),
+          rangeTime: rangeTime.map((item) => {
+            return { ...item, isSelected: false };
+          }),
+        });
+      } else {
+        toast.error("Save schedule failed!");
+      }
     }
   };
 
+  loadScheduleData = async () => {
+    let { selectedDoctor, startDate, rangeTime } = this.state;
+    if (selectedDoctor && selectedDoctor.value && startDate) {
+      let doctorId = selectedDoctor.value;
+      let formattedDate = new Date(startDate).setHours(0, 0, 0, 0);
+      let res = await getScheduleDoctorByDate(doctorId, formattedDate);
+
+      if (res && res.errCode === 0) {
+        let dataDB = res.data;
+        let newRangeTime = rangeTime.map((item) => {
+          let isExist = false;
+          if (dataDB && dataDB.length > 0) {
+            dataDB.map((schedule) => {
+              if (schedule.timeType === item.keyMap) {
+                isExist = true;
+              }
+              return schedule;
+            });
+          }
+          return {
+            ...item,
+            isSelected: isExist,
+          };
+        });
+        this.setState({
+          rangeTime: newRangeTime,
+        });
+      }
+    }
+  };
+
+  handleChangeSelectDoctor = async (selectedDoctor) => {
+    this.setState({ selectedDoctor }, () => {
+      this.loadScheduleData();
+    });
+  };
   render() {
+    let currentDay = new Date();
+    currentDay.setHours(0, 0, 0, 0);
     let { rangeTime } = this.state;
     let { language } = this.props;
     return (
@@ -139,13 +202,13 @@ class ManageSchedule extends Component {
                 options={this.state.listDoctors}
               />
             </div>
-            <div className="col-2 form-group">
+            <div className="col-3 form-group">
               <FormattedMessage id="manage-schedule.select-date" />
               <DatePicker
                 className="form-control"
                 value={this.state.startDate}
                 onChange={this.handleChange}
-                minDate={new Date()}
+                minDate={currentDay}
               />
             </div>
             <div className="col-12 pick-hour-container">
