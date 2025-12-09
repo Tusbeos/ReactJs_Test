@@ -88,12 +88,17 @@
     }
 }
 .home-header-banner{
-    background         : url(../../assets/header-background.jpg) ;
+    background-image: 
+        linear-gradient(to bottom, rgba(255,255,255,0) 85%, rgba(255,255,255,1) 100%),
+        // linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+        url(../../assets/header-background.jpg);
     height             : 485px;
     background-size    : cover;
     background-position: center;
     display            : flex;
     flex-direction     : column;
+    background-repeat: no-repeat;
+    background-size: cover;
     
     
     .content-up{ 
