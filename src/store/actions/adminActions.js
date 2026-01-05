@@ -174,7 +174,7 @@ export const fetchAllDoctorsStart = () => {
     }
   };
 };
-// Save Info doctor
+// Save Info doctor to Markdown table
 export const saveDetailDoctorsStart = (data) => {
   return async (dispatch, getState) => {
     try {
@@ -195,6 +195,7 @@ export const saveDetailDoctorsStart = (data) => {
     }
   };
 };
+// Fetch all schedule time
 export const fetchAllScheduleTime = () => {
   return async (dispatch, getState) => {
     try {
@@ -213,6 +214,34 @@ export const fetchAllScheduleTime = () => {
     }
   };
 };
+// Fetch doctor price, payment, province
+export const fetchRequiredDoctorInfo = () => {
+  return async (dispatch, getState) => {
+    try {
+      let resPrice = await handleGetAllCodeService("PRICE");
+      let resPayment = await handleGetAllCodeService("PAYMENT");
+      let resProvince = await handleGetAllCodeService("PROVINCE");
+      if (resPrice && resPrice.errCode === 0
+        && resPayment && resPayment.errCode === 0
+        && resProvince && resProvince.errCode === 0
+      ) {
+        let data = {
+          resPrice: resPrice.data,
+          resPayment: resPayment.data,  
+          resProvince: resProvince.data,      
+        };
+        dispatch(fetchRequiredDoctorInfoSuccess(data));
+        }
+       else {
+        dispatch(fetchRequiredDoctorInfoFailed());
+      }
+    } catch (e) {
+      dispatch(fetchRequiredDoctorInfoFailed());
+      console.log(e);
+    }
+};
+}
+
 export const fetchGenderSuccess = (genderData) => ({
   type: actionTypes.FETCH_GENDER_SUCCESS,
   data: genderData,
@@ -272,3 +301,12 @@ export const deleteUserSuccess = (data) => ({
 export const deleteUserFailed = () => ({
   type: actionTypes.DELETE_USER_FAILED,
 });
+// Fetch doctor price, payment, province
+export const fetchRequiredDoctorInfoSuccess = (allRequiredData) => ({
+  type: actionTypes.FETCH_REQUIRED_DOCTOR_SUCCESS,
+  data: allRequiredData,
+});
+export const fetchRequiredDoctorInfoFailed = () => ({
+  type: actionTypes.FETCH_REQUIRED_DOCTOR_FAILED,
+});
+

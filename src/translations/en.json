@@ -40,6 +40,19 @@
       "manage-doctor": "Manage Doctor",
       "schedule": "Manage Schedule",
       "manage-schedule": "Manage Doctor's Schedule"
+    },
+    "manage-doctor": {
+      "title": "Manage doctor's information",
+      "select-doctor": "Choose doctor",
+      "introductory-information": "Introductory information",
+      "select-price": "Select price",
+      "price": "Price",
+      "select-payment": "Select payment method",
+      "payment": "Payment method",
+      "select-province": "Select province",
+      "province": "Examination place",
+      "save": "Save Information",
+      "edit": "Edit Information"
     }
   },
   "manage-user": {
