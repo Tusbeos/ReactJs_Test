@@ -5,8 +5,9 @@
         display: flex;
         margin-top: 30px;
         margin-bottom: 30px;
-        padding: 0px 120px;
+        padding: 0px 200px;
         .content-left{
+            
             width: 150px;
             height: 150px;
             border-radius: 50%;
@@ -38,24 +39,29 @@
     .schedule-doctor{
         margin: 0 100px;
         display: flex;
+        padding: 10px 100px;
         .content-left{
-            
-            width: 60%;
+            width: 55%;
             border-right: 1px solid #ddd;
             padding-right: 20px;
         }
         .content-right{
-            width: 30%;
+            width: 40%;
             padding-left: 20px;
         }
     }
     .detail-info{
         border-top: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
-        background-color: #f3f3f3;
-        padding: 10px 120px;
-        h2{padding-bottom: 10px;}
-        h3{padding-bottom: 10px;}
+        background-color: #f9f9f9;
+        padding: 50px 200px;
+        h2{
+            font-size: 22px;
+            font-weight: 600;
+            padding-bottom: 10px;}
+        h3{
+            font-size: 15px;
+            padding-bottom: 10px;}
         p{
             line-height: 1.8;
             font-size: 17px;}
