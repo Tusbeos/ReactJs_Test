@@ -1,5 +1,6 @@
 .manage-doctor-container{
     padding: 10px;
+    caret-color: transparent;
     .manage-doctor-title{
         font-size: 20px;
         text-align: center;
@@ -17,15 +18,17 @@
         .content-right{
             width: 60%;
         }
-           
-        
     }
     .more-info-extra{
         padding-bottom: 15px;
+        input{
+            caret-color: auto;
+        }
     .form-group{
         margin-bottom: 10px;
     }
     }
+
     .save-content-doctor{
         margin-top: 15px;
         margin-bottom: 15px;

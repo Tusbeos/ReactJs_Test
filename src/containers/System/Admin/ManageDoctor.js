@@ -9,9 +9,9 @@ import "react-markdown-editor-lite/lib/index.css";
 import Select from 'react-select';
 import { CRUD_ACTIONS, LANGUAGES } from "utils";
 import { getDetailInfoDoctor } from "../../../services/userService";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+const mdParser = new MarkdownIt();
 
 class ManageDoctor extends Component {
   constructor(props) {
@@ -151,52 +151,49 @@ class ManageDoctor extends Component {
   };
 
   handleSaveContentMarkDown = () => {
-    // [LOG 1] Kiểm tra xem nút bấm có hoạt động không
-    console.log(">>> 1. Bắt đầu lưu thông tin...");
-
     let { hasOldData } = this.state;
-
-    // VALIDATE
+    const { intl } = this.props;
     if (!this.state.selectedOption) {
-      console.log(">>> Bị chặn: Chưa chọn Bác sĩ"); // [LOG LỖI]
-      alert("Lỗi: Vui lòng chọn Bác sĩ!");
+      alert(
+        intl.formatMessage({ id: "menu.manage-doctor.error-selected-doctor" })
+      );
       return;
     }
     if (!this.state.selectedPrice) {
-      console.log(">>> Bị chặn: Chưa chọn Giá"); // [LOG LỖI]
-      alert("Lỗi: Vui lòng chọn Giá khám!");
+      alert(
+        intl.formatMessage({ id: "menu.manage-doctor.error-selected-price" })
+      );
       return;
     }
     if (!this.state.selectedPayment) {
-      console.log(">>> Bị chặn: Chưa chọn Phương thức thanh toán"); // [LOG LỖI]
-      alert("Lỗi: Vui lòng chọn Phương thức thanh toán!");
+      alert(
+        intl.formatMessage({ id: "menu.manage-doctor.error-selected-payment" })
+      );
       return;
     }
     if (!this.state.selectedProvince) {
-      console.log(">>> Bị chặn: Chưa chọn Tỉnh thành"); // [LOG LỖI]
-      alert("Lỗi: Vui lòng chọn Tỉnh thành!");
+      alert(
+        intl.formatMessage({ id: "menu.manage-doctor.error-selected-province" })
+      );
       return;
     }
-
-    // [LOG 2] Nếu in ra dòng này nghĩa là đã qua ải Validate
-    console.log(">>> 2. Đã qua validate, chuẩn bị gọi API...");
 
     this.props.saveInfoDoctor({
       contentHTML: this.state.contentHTML,
       contentMarkdown: this.state.contentMarkdown,
       description: this.state.description,
+
       doctorId: this.state.selectedOption.value,
       action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
+
       selectedPrice: this.state.selectedPrice.value,
       selectedPayment: this.state.selectedPayment.value,
       selectedProvince: this.state.selectedProvince.value,
+
       nameClinic: this.state.nameClinic,
       addressClinic: this.state.addressClinic,
       note: this.state.note,
     });
-
-    // [LOG 3] Đã gọi hàm Redux
-    console.log(">>> 3. Đã dispatch action Redux");
   };
 
   handleOnChangeText = (event, id) => {
@@ -284,7 +281,9 @@ class ManageDoctor extends Component {
             />
           </div>
           <div className="col-4 form-group">
-            <label>Tên phòng khám</label>
+            <label>
+              <FormattedMessage id="menu.manage-doctor.name-clinic" />
+            </label>
             <input
               className="form-control"
               onChange={(event) => this.handleOnChangeText(event, "nameClinic")}
@@ -292,7 +291,9 @@ class ManageDoctor extends Component {
             ></input>
           </div>
           <div className="col-4 form-group">
-            <label>Địa chỉ phòng khám</label>
+            <label>
+              <FormattedMessage id="menu.manage-doctor.address-clinic" />
+            </label>
             <input
               className="form-control"
               onChange={(event) =>
@@ -302,7 +303,9 @@ class ManageDoctor extends Component {
             ></input>
           </div>
           <div className="col-4 form-group">
-            <label>Note</label>
+            <label>
+              <FormattedMessage id="menu.manage-doctor.note" />
+            </label>
             <input
               className="form-control"
               onChange={(event) => this.handleOnChangeText(event, "note")}
@@ -357,4 +360,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageDoctor);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(ManageDoctor));

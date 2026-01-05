@@ -3,5 +3,6 @@
   "editor.formatOnSaveMode": "modifications", // chỉ format phần code thay đổi
   "files.watcherExclude": {
     "**/src/containers/Auth/Login.scss": true // file SCSS muốn bỏ qua auto format
-  }
+  },
+  "cSpell.words": ["Không", "nghiệm"]
 }

@@ -1,5 +1,6 @@
 .detail-doctor-container{   
     height: 500px;
+    caret-color: transparent;
     .intro-doctor{
         display: flex;
         margin-top: 30px;
@@ -38,8 +39,8 @@
         margin: 0 100px;
         display: flex;
         .content-left{
+            
             width: 60%;
-        ;
             border-right: 1px solid #ddd;
             padding-right: 20px;
         }
