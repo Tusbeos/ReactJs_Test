@@ -52,7 +52,7 @@ class HomePage extends Component {
       ],
     };
     return (
-      <div>
+      <div className="hide-caret">
         <HomeHeader isShowBanner={true} />
         <Specialty settings={settings} />
         <MedicalFacility settings={settings} />

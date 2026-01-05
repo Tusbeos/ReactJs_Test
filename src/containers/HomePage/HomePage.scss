@@ -1,3 +1,9 @@
+.no-select {
+  user-select: none;
+}
+.hide-caret {
+  caret-color: transparent;
+}
 .section-share{
     &.section-specialty{
       background: #f9f9f9;

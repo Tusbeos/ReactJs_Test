@@ -1,6 +1,7 @@
 @import "../../styles/common.scss";
 
 .header-container {
+    user-select: none;
     z-index: 99;
     display: flex;
     justify-content: space-between;

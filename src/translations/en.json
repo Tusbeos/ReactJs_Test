@@ -44,15 +44,22 @@
     "manage-doctor": {
       "title": "Manage doctor's information",
       "select-doctor": "Choose doctor",
+      "error-selected-doctor": "Error: Please select Doctor!",
       "introductory-information": "Introductory information",
       "select-price": "Select price",
+      "error-selected-price": "Error: Please select Price!",
       "price": "Price",
       "select-payment": "Select payment method",
+      "error-selected-payment": "Error: Please select Payment method!",
       "payment": "Payment method",
       "select-province": "Select province",
+      "error-selected-province": "Error: Please select Province!",
       "province": "Examination place",
       "save": "Save Information",
-      "edit": "Edit Information"
+      "edit": "Edit Information",
+      "name-clinic": "Clinic Name",
+      "address-clinic": "Clinic Address",
+      "note": "Note"
     }
   },
   "manage-user": {

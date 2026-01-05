@@ -44,15 +44,22 @@
     "manage-doctor": {
       "title": "Quản lý thông tin bác sĩ",
       "select-doctor": "Chọn bác sĩ",
+      "error-selected-doctor": "Lỗi: Vui lòng chọn Bác sĩ!",
       "introductory-information": "Thông tin giới thiệu",
       "select-price": "Chọn giá khám",
+      "error-selected-price": "Lỗi: Vui lòng chọn Giá khám!",
       "price": "Giá khám",
       "select-payment": "Chọn phương thức thanh toán",
+      "error-selected-payment": "Lỗi: Vui lòng chọn Phương thức thanh toán!",
       "payment": "Phương thức thanh toán",
       "select-province": "Chọn tỉnh thành",
+      "error-selected-province": "Lỗi: Vui lòng chọn Tỉnh thành!",
       "province": "Chọn tỉnh thành khám",
       "save": "Lưu thông tin",
-      "edit": "Chỉnh sửa thông tin"
+      "edit": "Chỉnh sửa thông tin",
+      "name-clinic": "Tên phòng khám",
+      "address-clinic": "Địa chỉ phòng khám",
+      "note": "Ghi chú"
     }
   },
   "manage-user": {
