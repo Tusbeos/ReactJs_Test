@@ -40,6 +40,19 @@
       "manage-doctor": "Quản lý bác sĩ",
       "schedule": "Quản Lý Lịch Khám",
       "manage-schedule": "Quản lý lịch khám của bác sĩ"
+    },
+    "manage-doctor": {
+      "title": "Quản lý thông tin bác sĩ",
+      "select-doctor": "Chọn bác sĩ",
+      "introductory-information": "Thông tin giới thiệu",
+      "select-price": "Chọn giá khám",
+      "price": "Giá khám",
+      "select-payment": "Chọn phương thức thanh toán",
+      "payment": "Phương thức thanh toán",
+      "select-province": "Chọn tỉnh thành",
+      "province": "Chọn tỉnh thành khám",
+      "save": "Lưu thông tin",
+      "edit": "Chỉnh sửa thông tin"
     }
   },
   "manage-user": {
