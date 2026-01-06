@@ -2,19 +2,19 @@
     width : 100%;
     height: 80px;
     user-select: none;
+    background-color: #edfffa;
     .home-header-content{
         width           : 100%;
         height          : 100%;
         display         : flex;
-        padding         : 0 100px;
-        background-color: rgb(242 244 244);;
+        padding         : 0 150px;
         .left-content{
             width      : 25%;
             display    : flex;
             align-items: center;
             .header-logo{
                 background: url(../../assets/Logo.svg) center center no-repeat;
-                width     : 50%;
+                width     : 80%;
                 height    : 50%;
                 cursor    : pointer;
             }
@@ -25,9 +25,9 @@
         }
         }
         .center-content{
-            width          : 50%;
+            width          : 60%;
             display        : flex;
-            justify-content: space-between;
+            gap            : 30px;
             align-items    : center;
             .child-content{
                 cursor     : pointer;
@@ -36,7 +36,7 @@
             }
         }
         .right-content{
-            width          : 25%;
+            width          : 20%;
             display        : flex;
             align-items    : center;
             justify-content: flex-end;

@@ -10,6 +10,7 @@ import Select from 'react-select';
 import { CRUD_ACTIONS, LANGUAGES } from "utils";
 import { getDetailInfoDoctor } from "../../../services/userService";
 import { FormattedMessage, injectIntl } from "react-intl";
+import DoctorServices from "./DoctorServices";
 
 const mdParser = new MarkdownIt();
 
@@ -36,11 +37,13 @@ class ManageDoctor extends Component {
       addressClinic: "",
       note: "",
     };
+    this.serviceRef = React.createRef();
   }
 
   componentDidMount() {
     this.props.getAllRequiredDoctorInfo();
     this.props.getAllDoctors();
+    this.props.saveDoctorServices();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -226,27 +229,36 @@ class ManageDoctor extends Component {
       );
       return;
     }
-
+    let arrDoctorService = [];
+    if (this.serviceRef.current) {
+      const childData = this.serviceRef.current.getDataFromChild();
+      if (childData.isValid === false) return;
+      arrDoctorService = childData.data;
+    }
+    console.log("arrDoctorService", arrDoctorService);
     this.props.saveInfoDoctor({
       contentHTML: this.state.contentHTML,
       contentMarkdown: this.state.contentMarkdown,
       description: this.state.description,
-
       doctorId: this.state.selectedOption.value,
-      action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
-
       selectedPrice: this.state.selectedPrice.value,
       selectedPayment: this.state.selectedPayment.value,
       selectedProvince: this.state.selectedProvince.value,
-
       nameClinic: this.state.nameClinic,
       addressClinic: this.state.addressClinic,
       note: this.state.note,
+      action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
     });
+
+    if (arrDoctorService && arrDoctorService.length > 0) {
+      this.props.saveDoctorServices({
+        arrDoctorService: arrDoctorService,
+        doctorId: this.state.selectedOption.value,
+      });
+    }
   };
 
   handleOnChangeText = (event, id) => {
-    console.log("event", id);
     let stateCopy = { ...this.state };
     stateCopy[id] = event.target.value;
     this.setState({
@@ -255,7 +267,6 @@ class ManageDoctor extends Component {
   };
 
   render() {
-    console.log("check state", this.state.selectedPayment);
     let { hasOldData } = this.state;
     return (
       <div className="manage-doctor-container">
@@ -362,6 +373,16 @@ class ManageDoctor extends Component {
             ></input>
           </div>
         </div>
+        <div className="doctor-services row">
+          <div className="col-12">
+            {this.state.selectedOption && (
+              <DoctorServices
+                ref={this.serviceRef}
+                doctorIdFromParent={this.state.selectedOption.value}
+              />
+            )}
+          </div>
+        </div>
         <div className="manage-doctor-editor">
           <MdEditor
             value={this.state.contentMarkdown}
@@ -406,6 +427,7 @@ const mapDispatchToProps = (dispatch) => {
     getAllDoctors: () => dispatch(actions.fetchAllDoctorsStart()),
     saveInfoDoctor: (data) => dispatch(actions.saveDetailDoctorsStart(data)),
     getAllRequiredDoctorInfo: () => dispatch(actions.fetchRequiredDoctorInfo()),
+    saveDoctorServices: (data) => dispatch(actions.saveDoctorServices(data)),
   };
 };
 
