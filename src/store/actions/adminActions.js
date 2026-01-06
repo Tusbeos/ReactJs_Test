@@ -9,6 +9,7 @@ import {
   handleGetTopDoctorHomeService,
   handleGetAllDoctorsService,
   saveDetailDoctorService,
+  saveBulkDoctorServices,
 } from "../../services/userService";
 
 export const fetchGenderStart = () => {
@@ -221,27 +222,48 @@ export const fetchRequiredDoctorInfo = () => {
       let resPrice = await handleGetAllCodeService("PRICE");
       let resPayment = await handleGetAllCodeService("PAYMENT");
       let resProvince = await handleGetAllCodeService("PROVINCE");
-      if (resPrice && resPrice.errCode === 0
-        && resPayment && resPayment.errCode === 0
-        && resProvince && resProvince.errCode === 0
+      if (
+        resPrice &&
+        resPrice.errCode === 0 &&
+        resPayment &&
+        resPayment.errCode === 0 &&
+        resProvince &&
+        resProvince.errCode === 0
       ) {
         let data = {
           resPrice: resPrice.data,
-          resPayment: resPayment.data,  
-          resProvince: resProvince.data,      
+          resPayment: resPayment.data,
+          resProvince: resProvince.data,
         };
         dispatch(fetchRequiredDoctorInfoSuccess(data));
-        }
-       else {
+      } else {
         dispatch(fetchRequiredDoctorInfoFailed());
       }
     } catch (e) {
       dispatch(fetchRequiredDoctorInfoFailed());
       console.log(e);
     }
+  };
 };
-}
-
+// Save doctor services
+export const saveDoctorServices = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await saveBulkDoctorServices(data);
+      if (res && res.errCode === 0) {
+        toast.success("Save doctor services success!");
+        dispatch({ type: actionTypes.SAVE_DOCTOR_SERVICES_SUCCESS });
+      } else {
+        toast.error("Save doctor services failed!");
+        dispatch({ type: actionTypes.SAVE_DOCTOR_SERVICES_FAILED });
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("Save doctor services failed!");
+      dispatch({ type: actionTypes.SAVE_DOCTOR_SERVICES_FAILED });
+    }
+  };
+};
 export const fetchGenderSuccess = (genderData) => ({
   type: actionTypes.FETCH_GENDER_SUCCESS,
   data: genderData,

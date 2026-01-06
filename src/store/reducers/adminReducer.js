@@ -118,6 +118,14 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case actionTypes.FETCH_DOCTOR_SERVICES_SUCCESS:
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_DOCTOR_SERVICES_FAILED:
+      return {
+        ...state,
+      };
   }
 };
 
