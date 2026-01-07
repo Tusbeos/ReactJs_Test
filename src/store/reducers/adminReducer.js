@@ -1,3 +1,4 @@
+import { all } from "axios";
 import actionTypes from "../actions/actionTypes";
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   allDoctors: [],
   allScheduleTime: [],
   allRequiredDoctorInfo: {},
+  allDoctorServices: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -109,7 +111,6 @@ const adminReducer = (state = initialState, action) => {
       return state;
     case actionTypes.FETCH_REQUIRED_DOCTOR_SUCCESS:
       state.allRequiredDoctorInfo = action.data;
-      console.log("check required reducer", action);
       return {
         ...state,
       };
@@ -119,6 +120,7 @@ const adminReducer = (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_DOCTOR_SERVICES_SUCCESS:
+      state.allDoctorServices = action.data;
       return {
         ...state,
       };

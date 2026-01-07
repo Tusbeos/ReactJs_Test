@@ -54,9 +54,7 @@ const saveBulkDoctorServices = (data) =>
   axios.post("/api/bulk-create-doctor-services", data);
 
 const getAllDoctorServices = (inputId) => {
-  return axios.get(`/api/get-list-doctor-services`, {
-    params: { id: inputId },
-  });
+  return axios.get(`/api/get-list-doctor-services?doctorId=${inputId}`);
 };
 
 export {

@@ -10,6 +10,7 @@ import {
   handleGetAllDoctorsService,
   saveDetailDoctorService,
   saveBulkDoctorServices,
+  getAllDoctorServices,
 } from "../../services/userService";
 
 export const fetchGenderStart = () => {
@@ -251,16 +252,31 @@ export const saveDoctorServices = (data) => {
     try {
       let res = await saveBulkDoctorServices(data);
       if (res && res.errCode === 0) {
-        toast.success("Save doctor services success!");
         dispatch({ type: actionTypes.SAVE_DOCTOR_SERVICES_SUCCESS });
       } else {
-        toast.error("Save doctor services failed!");
         dispatch({ type: actionTypes.SAVE_DOCTOR_SERVICES_FAILED });
       }
     } catch (e) {
-      console.log(e);
-      toast.error("Save doctor services failed!");
       dispatch({ type: actionTypes.SAVE_DOCTOR_SERVICES_FAILED });
+    }
+  };
+};
+// Fetch doctor services
+export const fetchDoctorServices = (doctorId) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllDoctorServices(doctorId);
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_DOCTOR_SERVICES_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({ type: actionTypes.FETCH_DOCTOR_SERVICES_FAILED });
+      }
+    } catch (e) {
+      dispatch({ type: actionTypes.FETCH_DOCTOR_SERVICES_FAILED });
+      console.log(e);
     }
   };
 };

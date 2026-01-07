@@ -43,7 +43,6 @@ class ManageDoctor extends Component {
   componentDidMount() {
     this.props.getAllRequiredDoctorInfo();
     this.props.getAllDoctors();
-    this.props.saveDoctorServices();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
