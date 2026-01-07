@@ -1,10 +1,13 @@
 .doctor-extra-info-container{
+    margin-top: 25px;
     .content-up{
+        border-bottom: solid 1px #f1f0f0;
     .text-address{
         font-weight: 600;
         font-size: 15px;
         text-transform: uppercase;
         color: #757575;
+        
     }
     .name-clinic{    
         font-size: 14px;
@@ -12,34 +15,86 @@
         color: #45c3d2;
     }
     .detail-address{
-        font-weight: 600;
-        margin-bottom: 15px;
+        font-size: 13px;
+        font-weight: 200;
+        margin-bottom: 5px;
     }
     }
     .content-down{
+        margin-top: 10px;
+        .tile-price{
+            font-weight: 600;
+            font-size: 15px;
+            color: #757575;
+            margin-bottom: 1px;
+            }
+        .price-title{
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 5px;
+            color: #757575;
+        }
+        .currency{
+            font-size: 15px;
+            margin: 0 5px;
+            color: black;
+        }
         .right{
             float: right;
         }
         .short-info{
-                span{
                     color:#74d2dd;
                     cursor: pointer;
-                }
             }
         .detail-price{
+            
+            margin-bottom: 10px;
             .price{
                 padding: 5px;
                 border: solid 1px #dddddd;
                 background-color: #f8f8f8;
                 .note{
                     margin-top: 5px;
-                    font-size: 13px;
+                    font-size: 14px;
                     color: #757575;
                 }
             }
+            .payment{
+                padding: 5px;
+                border: solid 1px #dddddd;
+                background-color: #eeeeee;
+                }
+        }
+        .title-service{
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 1px;
+            color: #757575;
+        }
+        .detail-service{
+            .service-item{
+                padding: 3px;
+                border: solid 1px #dddddd;
+                background-color: #f8f8f8;
+                border-bottom: none;
+                &:last-child{
+                    border-bottom: solid 1px #dddddd;
+                }
+                .service-price{
+                    float: right;
+                }
+            }
+            .description{
+                margin-top: 5px;
+                font-size: 14px;
+                color: #757575;
+            }
         }
         .show-info{
+            margin-top: 2px;
+            text-align: right;
                 span{
+                    font-weight: bolder;
                     color:#74d2dd;
                     cursor: pointer;
                 }
