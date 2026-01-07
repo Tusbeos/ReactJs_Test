@@ -291,7 +291,7 @@ class ManageDoctor extends Component {
               <FormattedMessage id="menu.manage-doctor.introductory-information" />
             </label>
             <textarea
-              className="form-control"
+              className="doctor-description form-control"
               rows="2"
               onChange={(event) =>
                 this.handleOnChangeText(event, "description")
