@@ -90,6 +90,15 @@
       "no-schedule": "No appointments available today",
       "choose": "Choose",
       "book-free": "Book a free appointment"
+    },
+    "extra-info-doctor": {
+      "clinic-address": "Clinic Address",
+      "price": "Examination Price:",
+      "detail": "See details",
+      "payment": "Patients can pay by: ",
+      "hide-price": "Hide price",
+      "service-price": "Related service prices:",
+      "no-services": "No services available"
     }
   }
 }

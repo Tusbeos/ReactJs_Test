@@ -1,4 +1,3 @@
-import { all } from "axios";
 import actionTypes from "../actions/actionTypes";
 
 const initialState = {
