@@ -80,11 +80,16 @@
                 &:last-child{
                     border-bottom: solid 1px #dddddd;
                 }
+                .service-name{
+                    font-size: 16px;
+                    color: #333333;
+                }
                 .service-price{
                     float: right;
                 }
             }
             .description{
+                white-space: pre-line;
                 margin-top: 5px;
                 font-size: 14px;
                 color: #757575;
