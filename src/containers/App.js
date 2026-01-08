@@ -18,6 +18,7 @@ import System from "../routes/System";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
+import BookingDoctor from "./Patient/Booking/BookingDoctor";
 class App extends Component {
   handlePersistorState = () => {
     const { persistor } = this.props;
@@ -60,6 +61,7 @@ class App extends Component {
                   />
                   <Route path={path.HOMEPAGE} component={HomePage} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                  <Route path={path.BOOKING_DOCTOR} component={BookingDoctor} />
                 </Switch>
               </CustomScrollbars>
             </div>
