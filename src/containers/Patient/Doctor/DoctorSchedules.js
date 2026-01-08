@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./DoctorSchedules.scss";
 import moment from "moment";
-import localization from "moment/locale/vi";
-import { LANGUAGES } from "../../../utils";
+import { LANGUAGES, path } from "../../../utils";
 import { getScheduleDoctorByDate } from "../../../services/userService";
 import { FormattedMessage } from "react-intl";
-
+import { withRouter } from "react-router";
 class DoctorSchedules extends Component {
   constructor(props) {
     super(props);
@@ -110,6 +109,23 @@ class DoctorSchedules extends Component {
     }
   };
 
+  handleBookingDoctor = (scheduleTime) => {
+    let doctorId = scheduleTime.doctorId || this.props.detailDoctorFromParent;
+    let language = this.props.language;
+
+    if (path.BOOKING_DOCTOR && doctorId) {
+      let linkRedirect = path.BOOKING_DOCTOR.replace(":id", doctorId);
+
+      this.props.history.push({
+        pathname: linkRedirect,
+        state: {
+          dataTime: scheduleTime,
+          language: language,
+        },
+      });
+    }
+  };
+
   render() {
     let { allDays, availableTime } = this.state;
     let { language } = this.props;
@@ -145,9 +161,9 @@ class DoctorSchedules extends Component {
                       language === LANGUAGES.VI
                         ? item.timeTypeData.value_Vi
                         : item.timeTypeData.value_En;
-
                     return (
                       <button
+                        onClick={() => this.handleBookingDoctor(item)}
                         key={index}
                         className={
                           language === LANGUAGES.VI ? "btn-vi" : "btn-en"
@@ -189,4 +205,6 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoctorSchedules);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DoctorSchedules)
+);

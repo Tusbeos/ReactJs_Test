@@ -4,5 +4,5 @@
   "files.watcherExclude": {
     "**/src/containers/Auth/Login.scss": true // file SCSS muốn bỏ qua auto format
   },
-  "cSpell.words": ["bằng", "Không", "nghiệm"]
+  "cSpell.words": ["bằng", "cộng", "Không", "nghiệm", "Nhập", "Persistor"]
 }
