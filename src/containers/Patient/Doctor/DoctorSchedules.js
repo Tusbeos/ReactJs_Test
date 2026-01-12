@@ -111,16 +111,12 @@ class DoctorSchedules extends Component {
 
   handleBookingDoctor = (scheduleTime) => {
     let doctorId = scheduleTime.doctorId || this.props.detailDoctorFromParent;
-    let language = this.props.language;
-
     if (path.BOOKING_DOCTOR && doctorId) {
       let linkRedirect = path.BOOKING_DOCTOR.replace(":id", doctorId);
-
       this.props.history.push({
         pathname: linkRedirect,
         state: {
           dataTime: scheduleTime,
-          language: language,
         },
       });
     }

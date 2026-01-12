@@ -8,6 +8,7 @@ import {
 import { LANGUAGES } from "utils";
 import { NumericFormat } from "react-number-format";
 import { FormattedMessage } from "react-intl";
+import "moment/locale/vi";
 
 class DoctorExtraInfo extends Component {
   constructor(props) {

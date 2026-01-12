@@ -22,14 +22,17 @@
             top : 0;
             z-index: 100;
 
-
-            .doctor-image img {
-                width: 70px;
-                height: 70px;
-                border-radius: 50%;
-                object-fit: cover;
-            }
-
+            .doctor-image {
+                width: 140px;       
+                height: 140px;
+                border-radius: 50%; 
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border: 1px solid #e1e1e1;         
+                margin-right: 20px;                
+                flex-shrink: 0;                   
+                }
             .doctor-details {
                 display: flex;
                 flex-direction: column;
@@ -42,13 +45,13 @@
                     margin-bottom: 5px;
                 }
                 .doctor-name {
-                    font-size: 15px;
+                    font-size: 18px;
                     font-weight: bold;
                     color: #577ab7;
                     margin-bottom: 5px;
                 }
                 .time-booking {
-                    font-size: 16px;
+                    font-size: 18px;
                     font-weight: bold;
                     color: #fec206;
                     i{
@@ -59,8 +62,8 @@
                     }
                 }
                 .name-clinic{
-                    font-size: 14px;
-                    color: #333;
+                    font-size: 17px;
+                    color: #555555;
                     font-weight: 600;
                     margin-top: 5px;
                     i{
@@ -70,7 +73,7 @@
                     }
                 }
                 .address-clinic{
-                    font-size: 14px;
+                    font-size: 16px;
                     color: #333;
                     margin: 5px 0px 0px 25px;
                 }
@@ -80,10 +83,26 @@
         .price-section {
             width: 40%;
             margin: 0 auto;
-            padding: 10px 20px;
+            padding: 10px 0px;
             font-size: 16px;
             color: #333;
+            .price-box{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid orange;
+                border-radius: 2px;
+                width: 170px;
+                height: 65px;
+                box-shadow: 1px 1px   #ccc;
+                cursor: pointer;
+                transition: all 0.2s;
+                background-color: white;
+            &:hover {
+                background-color: #f1f1f1;
+            }
         }
+    }
 
     .booking-modal-body {
         width: 40%;  
@@ -131,15 +150,13 @@
             border: 1px solid #ccc;
             outline: none;
             font-size: 14px;
-            
-            // Màu chữ placeholder (chữ mờ)
             &::placeholder {
                 color: #888;
                 font-weight: 400;
             }
 
             &:focus {
-                border-color: #45c3d2; // Màu xanh khi bấm vào
+                border-color: #45c3d2;
                 background-color: #f7fcfd;
             }
         }
@@ -247,9 +264,9 @@
         line-height: 1.5; 
     }
     .note-list {
+        font-weight: lighter;
         padding-left: 20px; 
         margin-bottom: 0;
-        
         li {
             list-style-type: disc;
             margin-bottom: 5px;
@@ -258,7 +275,7 @@
             // &::marker { color: black; } 
         }
     }
-        height:160px;
+        height:130px;
         padding: 10px;
         border-radius: 5px;
         background-color: #d4effc;

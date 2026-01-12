@@ -47,14 +47,12 @@
             outline: none;
             border: none;
             background-color: #eeeeee;
-            border-radius: 7px;
             font-size: 17px;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: #3f3f3f;
             &:hover{
                 cursor: pointer;
-                background-color: #50ccf2;
-                color: white;
+                border: 2px solid #33b0e3;
             }
         
         }
