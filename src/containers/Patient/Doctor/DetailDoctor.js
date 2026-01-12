@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import HomeHeader from 'containers/HomePage/HomeHeader';
-import "./DetailDoctor.scss" 
-import {getDetailInfoDoctor} from "../../../services/userService"
-import { LANGUAGES } from 'utils';
+import HomeHeader from "containers/HomePage/HomeHeader";
+import "./DetailDoctor.scss";
+import { getDetailInfoDoctor } from "../../../services/userService";
+import { LANGUAGES } from "utils";
 import DoctorSchedules from "./DoctorSchedules";
 import DoctorExtraInfo from "./DoctorExtraInfo";
 class DetailDoctor extends Component {
@@ -103,9 +103,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-    };
+const mapDispatchToProps = (dispatch) => {
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailDoctor);
