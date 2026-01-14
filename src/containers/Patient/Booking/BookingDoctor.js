@@ -6,11 +6,26 @@ import moment from "moment";
 import { NumericFormat } from "react-number-format";
 import { FormattedMessage } from "react-intl";
 import HomeHeader from "containers/HomePage/HomeHeader";
-import { getDetailInfoDoctor } from "../../../services/userService";
+import {
+  getDetailInfoDoctor,
+  postPatientBookAppointment,
+} from "../../../services/userService";
+import DatePicker from "../../../components/Input/DatePicker";
+import { toast } from "react-toastify";
+
 class BookingModel extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      fullName: "",
+      gender: "",
+      phoneNumber: "",
+      email: "",
+      birthday: "",
+      address: "",
+      reason: "",
+      doctorId: "",
+      timeType: "",
       detailDoctor: {},
       timeBooking: {},
       doctorInfo: {},
@@ -20,15 +35,18 @@ class BookingModel extends Component {
   async componentDidMount() {
     if (this.props.location && this.props.location.state) {
       let { id } = this.props.match.params;
-      let { dataTime } = this.props.location.state;
+      let { dataTime, doctorIdFromParent } = this.props.location.state;
       try {
+        const doctorId = doctorIdFromParent;
         const time = dataTime;
         const res = await getDetailInfoDoctor(id);
         if (res && res.errCode === 0) {
           this.setState({
+            doctorId: doctorId,
             doctorInfo: res.data.DoctorInfo,
             timeBooking: time,
             detailDoctor: res.data,
+            timeType: time.timeType,
           });
         }
       } catch (e) {}
@@ -81,16 +99,59 @@ class BookingModel extends Component {
     return "none";
   };
 
+  buildDoctorName = (detailDoctor) => {
+    let { language } = this.props;
+    if (detailDoctor && detailDoctor.positionData) {
+      let nameVi = `${detailDoctor.positionData.value_Vi}, ${
+        detailDoctor.roleData?.value_Vi || ""
+      } ${detailDoctor.lastName} ${detailDoctor.firstName}`;
+      let nameEn = `${detailDoctor.positionData.value_En}, ${
+        detailDoctor.roleData?.value_En || ""
+      } ${detailDoctor.firstName} ${detailDoctor.lastName}`;
+
+      return language === LANGUAGES.VI ? nameVi : nameEn;
+    }
+    return "";
+  };
+
+  handleOnChangeInput = (event, id) => {
+    let valueInput = event.target.value;
+    let stateCopy = { ...this.state };
+    stateCopy[id] = valueInput;
+    this.setState({
+      ...stateCopy,
+    });
+  };
+
+  handleChangeDatePicker = (date) => {
+    this.setState({
+      birthday: date[0],
+    });
+  };
+  handleConfirmBooking = async () => {
+    let date = new Date(this.state.birthday).getTime();
+    let res = await postPatientBookAppointment({
+      fullName: this.state.fullName,
+      gender: this.state.gender,
+      phoneNumber: this.state.phoneNumber,
+      email: this.state.email,
+      date: date,
+      address: this.state.address,
+      reason: this.state.reason,
+      doctorId: this.state.doctorId,
+      timeType: this.state.timeType,
+    });
+    console.log("check data", res);
+    if (res && res.errCode == 0) {
+      toast.success("Booking a new appointment succeed!");
+    } else {
+      toast.error("Booking a new appointment error!");
+    }
+  };
+
   render() {
     let { language } = this.props;
     let { detailDoctor, timeBooking, doctorInfo } = this.state;
-    let nameVi = "";
-    let nameEn = "";
-    if (detailDoctor && detailDoctor.positionData) {
-      nameVi = `${detailDoctor.positionData.value_Vi}, ${detailDoctor.roleData.value_Vi}  ${detailDoctor.lastName} ${detailDoctor.firstName}`;
-      nameEn = `${detailDoctor.positionData.value_En}, ${detailDoctor.roleData.value_En} ${detailDoctor.firstName} ${detailDoctor.lastName}`;
-    }
-
     console.log("check props booking modal", this.state);
     return (
       <>
@@ -107,9 +168,7 @@ class BookingModel extends Component {
               <div className="doctor-details">
                 <div className="title-booking">ĐẶT LỊCH KHÁM</div>
                 <div className="doctor-name">
-                  <div className="up">
-                    {language === LANGUAGES.VI ? nameVi : nameEn}
-                  </div>
+                  <div className="up">{this.buildDoctorName(detailDoctor)}</div>
                 </div>
                 <div className="time-booking">
                   <div>
@@ -175,23 +234,41 @@ class BookingModel extends Component {
                       className="form-control"
                       type="text"
                       placeholder="Nhập họ tên..."
+                      value={this.state.fullName}
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "fullName")
+                      }
                     />
                   </div>
                 </div>
+
                 <div className="col-12 form-group">
                   <div className="gender-options">
                     <label>
-                      <input type="radio" name="gender" value="M" /> Nam
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="M"
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "gender")
+                        }
+                      />{" "}
+                      Nam
                     </label>
                     <label style={{ marginLeft: "20px" }}>
-                      <input type="radio" name="gender" value="F" /> Nữ
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="F"
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "gender")
+                        }
+                      />{" "}
+                      Nữ
                     </label>
                   </div>
                 </div>
-              </div>
 
-              <div className="row">
-                <div></div>
                 <div className="col-12 form-group">
                   <div className="input-icon-group">
                     <i class="fas fa-phone"></i>
@@ -199,12 +276,14 @@ class BookingModel extends Component {
                       className="form-control"
                       type="text"
                       placeholder="Nhập số điện thoại..."
+                      value={this.state.phoneNumber}
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "phoneNumber")
+                      }
                     />
                   </div>
                 </div>
-              </div>
 
-              <div className="row">
                 <div className="col-12 form-group">
                   <div className="input-icon-group">
                     <i class="fas fa-envelope"></i>
@@ -212,51 +291,23 @@ class BookingModel extends Component {
                       className="form-control"
                       type="email"
                       placeholder="Nhập email..."
+                      value={this.state.email}
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "email")
+                      }
                     />
                   </div>
                 </div>
-              </div>
 
-              <div className="row">
                 <div className="col-12 form-group">
                   <div className="input-icon-group">
                     <i class="fas fa-calendar-alt"></i>
-                    <input className="form-control" type="date" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <select className="form-control">
-                      <option value="">-- Chọn Tỉnh/Thành --</option>
-                      <option value="HN">Hà Nội</option>
-                      <option value="HCM">TP. Hồ Chí Minh</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <select className="form-control">
-                      <option value="">-- Chọn Quận/Huyện --</option>
-                      <option value="CauGiay">Quận Cầu Giấy</option>
-                      <option value="HoanKiem">Quận Hoàn Kiếm</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <select className="form-control">
-                      <option value="">-- Chọn Phường/Xã --</option>
-                      <option value="YenHoa">Phường Yên Hòa</option>
-                      <option value="DichVong">Phường Dịch Vọng</option>
-                    </select>
+                    <DatePicker
+                      className="form-control"
+                      value={this.state.birthday}
+                      onChange={this.handleChangeDatePicker}
+                      placeholder="Ngày Sinh"
+                    />
                   </div>
                 </div>
 
@@ -267,12 +318,14 @@ class BookingModel extends Component {
                       className="form-control"
                       type="text"
                       placeholder="Nhập địa chỉ cụ thể..."
+                      value={this.state.address}
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "address")
+                      }
                     />
                   </div>
                 </div>
-              </div>
 
-              <div className="row">
                 <div className="col-12 form-group">
                   <div className="input-icon-group">
                     <i class="fas fa-plus-circle"></i>
@@ -280,9 +333,14 @@ class BookingModel extends Component {
                       className="form-control"
                       type="text"
                       placeholder="Mô tả triệu chứng..."
+                      value={this.state.reason}
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "reason")
+                      }
                     />
                   </div>
                 </div>
+
                 <div className="col-12">
                   <label className="payment">Hình Thức Thanh Toán:</label>
                   <div className="payment-options">
@@ -390,7 +448,10 @@ class BookingModel extends Component {
             </div>
 
             <div className="booking-modal-footer">
-              <button className="btn-booking-confirm col-12">
+              <button
+                className="btn-booking-confirm col-12"
+                onClick={() => this.handleConfirmBooking()}
+              >
                 Xác nhận đặt khám
               </button>
             </div>
