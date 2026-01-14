@@ -110,17 +110,15 @@ class DoctorSchedules extends Component {
   };
 
   handleBookingDoctor = (scheduleTime) => {
-    let doctorIdFromProps =
-      this.props.detailDoctorFromParent && this.props.detailDoctorFromParent.id
-        ? this.props.detailDoctorFromParent.id
-        : this.props.detailDoctorFromParent;
-    let doctorId = scheduleTime.doctorId || doctorIdFromProps;
+    let doctorId =
+      scheduleTime.doctorId ||
+      (this.props.detailDoctorFromParent &&
+        this.props.detailDoctorFromParent.id);
     if (path.BOOKING_DOCTOR && doctorId) {
       let linkRedirect = path.BOOKING_DOCTOR.replace(":id", doctorId);
       this.props.history.push({
         pathname: linkRedirect,
         state: {
-          doctorIdFromParent: doctorId,
           dataTime: scheduleTime,
         },
       });

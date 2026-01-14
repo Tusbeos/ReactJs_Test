@@ -122,6 +122,7 @@
         padding: 0 10px;
     }
     .form-group {
+        caret-color: auto;
         margin-bottom: 15px;
         .payment{
             color:#3f86c0;
@@ -188,6 +189,7 @@
                 font-weight: normal;
             }
             input {
+                caret-color: auto;
                 margin-right: 5px;
             }
         }
