@@ -150,18 +150,13 @@ class DatePicker extends Component {
             options.minDate = minDate;
         }
         return (
-            <Flatpickr
-                ref={this.nodeRef}
-                value={value}
-                onChange={onChange}
-                options={options}
-                // render={
-                //     ({ defaultValue, value, ...props }, ref) => {
-                //         return <CustomInput defaultValue={defaultValue} inputRef={ref} onInputChange={this.onInputChange} onInputBlur={this.onInputBlur} />
-                //     }
-                // }
-                {...otherProps}
-            />
+          <Flatpickr
+            ref={this.nodeRef}
+            value={value}
+            onChange={onChange}
+            options={options}
+            {...otherProps}
+          />
         );
     }
 }
