@@ -26,6 +26,8 @@ class BookingModel extends Component {
       reason: "",
       doctorId: "",
       timeType: "",
+      bookingTimeText: "",
+      doctorName: "",
       detailDoctor: {},
       timeBooking: {},
       doctorInfo: {},
@@ -35,14 +37,14 @@ class BookingModel extends Component {
   async componentDidMount() {
     if (this.props.location && this.props.location.state) {
       let { id } = this.props.match.params;
-      let { dataTime, doctorIdFromParent } = this.props.location.state;
+      let { dataTime } = this.props.location.state;
       try {
-        const doctorId = doctorIdFromParent;
         const time = dataTime;
         const res = await getDetailInfoDoctor(id);
         if (res && res.errCode === 0) {
           this.setState({
-            doctorId: doctorId,
+
+            doctorId: this.props.match.params.id,
             doctorInfo: res.data.DoctorInfo,
             timeBooking: time,
             detailDoctor: res.data,
@@ -87,7 +89,8 @@ class BookingModel extends Component {
           dateResult = `${dayNameEn} - ${dateFormatted}`;
         }
       }
-      return `${time} - ${dateResult}`;
+      let bookingTime = `${time} - ${dateResult}`;
+      return bookingTime;
     }
     return "";
   };
@@ -129,7 +132,10 @@ class BookingModel extends Component {
     });
   };
   handleConfirmBooking = async () => {
+    let timeString = this.renderTimeBooking(this.state.timeBooking);
+    let doctorName = this.buildDoctorName(this.state.detailDoctor);
     let date = new Date(this.state.birthday).getTime();
+
     let res = await postPatientBookAppointment({
       fullName: this.state.fullName,
       gender: this.state.gender,
@@ -140,10 +146,15 @@ class BookingModel extends Component {
       reason: this.state.reason,
       doctorId: this.state.doctorId,
       timeType: this.state.timeType,
+      language: this.props.language,
+      timeString: timeString,
+      doctorName: doctorName,
     });
     console.log("check data", res);
-    if (res && res.errCode == 0) {
+
+    if (res && res.errCode === 0) {
       toast.success("Booking a new appointment succeed!");
+      this.props.history.push(`/detail-doctor/${this.state.doctorId}`);
     } else {
       toast.error("Booking a new appointment error!");
     }

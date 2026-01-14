@@ -28,16 +28,23 @@ class DetailDoctor extends Component {
   }
   componentDidUpdate(prevProps, prevState, snapShot) {}
 
+  buildDoctorName = (detailDoctor) => {
+    let { language } = this.props;
+    if (detailDoctor && detailDoctor.positionData) {
+      let nameVi = `${detailDoctor.positionData.value_Vi}, ${
+        detailDoctor.roleData?.value_Vi || ""
+      } ${detailDoctor.lastName} ${detailDoctor.firstName}`;
+      let nameEn = `${detailDoctor.positionData.value_En}, ${
+        detailDoctor.roleData?.value_En || ""
+      } ${detailDoctor.firstName} ${detailDoctor.lastName}`;
+
+      return language === LANGUAGES.VI ? nameVi : nameEn;
+    }
+    return "";
+  };
   render() {
     console.log("DetailDoctor state=", this.state);
     let { detailDoctor } = this.state;
-    let { language } = this.props;
-    let nameVi = "";
-    let nameEn = "";
-    if (detailDoctor && detailDoctor.positionData) {
-      nameVi = `${detailDoctor.positionData.value_Vi}, ${detailDoctor.roleData.value_Vi}  ${detailDoctor.lastName} ${detailDoctor.firstName}`;
-      nameEn = `${detailDoctor.positionData.value_En}, ${detailDoctor.roleData.value_En} ${detailDoctor.firstName} ${detailDoctor.lastName}`;
-    }
 
     return (
       <>
@@ -53,9 +60,7 @@ class DetailDoctor extends Component {
               }}
             ></div>
             <div className="content-right">
-              <div className="up">
-                {language === LANGUAGES.VI ? nameVi : nameEn}
-              </div>
+              <div className="up">{this.buildDoctorName(detailDoctor)}</div>
               <div className="down">
                 {detailDoctor.Markdown && detailDoctor.Markdown.description && (
                   <span>{detailDoctor.Markdown.description}</span>
