@@ -6,6 +6,7 @@ export const path = {
   SYSTEM: "/system",
   DETAIL_DOCTOR: "/detail-doctor/:id",
   BOOKING_DOCTOR: "/booking-doctor/:id",
+  VERIFY_EMAIL_BOOKING: "/verify-booking",
 };
 
 export const LANGUAGES = {
