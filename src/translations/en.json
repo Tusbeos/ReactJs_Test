@@ -9,7 +9,12 @@
     "fee": "Fee",
     "check-health": "Check health",
     "support": "Support",
-    "welcome": "Welcome, "
+    "popular-speciality": "Popular specialty",
+    "top-doctor": "Top doctor",
+    "see-more": "See more",
+    "handbook": "Handbook",
+    "all-article": "See all articles",
+    "about-us": "Media about us"
   },
   "banner": {
     "select-hospital": "Select hospital for checkup",
@@ -60,6 +65,15 @@
       "name-clinic": "Clinic Name",
       "address-clinic": "Clinic Address",
       "note": "Note"
+    },
+    "manage-specialty": {
+      "title": "Manage specialty information",
+      "name-specialty": "Specialty Name",
+      "image-specialty": "Specialty Image",
+      "upload-image": "Upload Image",
+      "description": "Description",
+      "save": "Save Specialty",
+      "edit": "Edit Specialty"
     }
   },
   "manage-user": {
@@ -99,6 +113,31 @@
       "hide-price": "Hide price",
       "service-price": "Related service prices:",
       "no-services": "No services available"
+    }
+  },
+  "booking": {
+    "booking-doctor": {
+      "title-booking": "Book a doctor's appointment",
+      "full-name": "Full name",
+      "phone-number": "Phone number",
+      "male": "Male",
+      "female": "Female",
+      "email": "Email",
+      "reason": "Reason for visit",
+      "address": "Address",
+      "birthday": "Date of birth",
+      "payment-method": "Payment method",
+      "payment-attention": "Payment at the hospital",
+      "price": "Price",
+      "booking-fee": "Booking fee",
+      "free": "Free",
+      "total": "Total",
+      "note": "Please fill in all information to save time for procedures!",
+      "attention": "ATTENTION",
+      "note-info": "The information you provide will be used for your medical records. When filling in the information, please:",
+      "info-1": "Write your full name and exact date of birth, e.g., John Doe, 01/01/1990",
+      "info-2": "Fill in all information correctly and double-check before clicking \"Confirm\"",
+      "confirm-booking": "Confirm appointment"
     }
   }
 }

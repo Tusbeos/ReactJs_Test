@@ -1,52 +1,64 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import logo1 from "../../../assets/about/110757-dantrilogo.png"
-import logo2 from "../../../assets/about/142415-logo-vnnet.png"
-import logo3 from "../../../assets/about/vnexpress.png"
-import logo4 from "../../../assets/about/vtv1.png"
-import logo5 from "../../../assets/about/suckhoedoisong.png"
-import logo6 from "../../../assets/about/165432-vtcnewslogosvg.png"
+import { FormattedMessage } from "react-intl";
+// Import ảnh
+import logo1 from "../../../assets/about/110757-dantrilogo.png";
+import logo2 from "../../../assets/about/142415-logo-vnnet.png";
+import logo3 from "../../../assets/about/vnexpress.png";
+import logo4 from "../../../assets/about/vtv1.png";
+import logo5 from "../../../assets/about/suckhoedoisong.png";
+import logo6 from "../../../assets/about/165432-vtcnewslogosvg.png";
 
 class About extends Component {
+  constructor(props) {
+    super(props);
+    // Khai báo danh sách logo ở đây cho gọn
+    this.state = {
+      mediaLogos: [
+        { src: logo1, alt: "Dân trí" },
+        { src: logo2, alt: "VietnamNet" },
+        { src: logo3, alt: "VnExpress" },
+        { src: logo4, alt: "VTV1" },
+        { src: logo5, alt: "Sức khỏe đời sống" },
+        { src: logo6, alt: "VTC News" },
+      ],
+    };
+  }
+
   render() {
+    let { mediaLogos } = this.state;
+
     return (
       <div className="section-share section-about">
         <div className="section-about-header">
-          Truyền thông nói về chúng tôi
+          <FormattedMessage id="home-header.about-us" />
         </div>
+
         <div className="section-about-content">
           <div className="content-left">
-            <iframe
-              width="587"
-              height="330"
-              src="https://www.youtube.com/embed/FyDQljKtWnI"
-              title="CÀ PHÊ KHỞI NGHIỆP VTV1 - BOOKINGCARE - HỆ THỐNG ĐẶT LỊCH KHÁM TRỰC TUYẾN"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+            <div className="video-container">
+              <iframe
+                width="100%"
+                height="320px"
+                src="https://www.youtube.com/embed/FyDQljKtWnI"
+                title="BookingCare Media"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
 
           <div className="content-right">
-            <div className="img-logo">
-              <img src={logo1}></img>
-            </div>
-            <div className="img-logo">
-              <img src={logo2}></img>
-            </div>
-            <div className="img-logo">
-              <img src={logo3}></img>
-            </div>
-            <div className="img-logo">
-              <img src={logo4}></img>
-            </div>
-            <div className="img-logo">
-              <img src={logo5}></img>
-            </div>
-            <div className="img-logo">
-              <img src={logo6}></img>
-            </div>
+            {mediaLogos &&
+              mediaLogos.length > 0 &&
+              mediaLogos.map((item, index) => {
+                return (
+                  <div className="img-logo-container" key={index}>
+                    <img src={item.src} alt={item.alt} />
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
@@ -54,10 +66,10 @@ class About extends Component {
   }
 }
 
-// Redux
 const mapStateToProps = (state) => {
   return {};
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {};
 };

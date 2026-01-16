@@ -4,7 +4,7 @@ import "./BookingDoctor.scss";
 import { LANGUAGES } from "utils";
 import moment from "moment";
 import { NumericFormat } from "react-number-format";
-import { FormattedMessage } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl";
 import HomeHeader from "containers/HomePage/HomeHeader";
 import {
   getDetailInfoDoctor,
@@ -43,12 +43,12 @@ class BookingModel extends Component {
         const res = await getDetailInfoDoctor(id);
         if (res && res.errCode === 0) {
           this.setState({
-
             doctorId: this.props.match.params.id,
             doctorInfo: res.data.DoctorInfo,
             timeBooking: time,
             detailDoctor: res.data,
             timeType: time.timeType,
+            paymentMethod: "cash",
           });
         }
       } catch (e) {}
@@ -161,7 +161,7 @@ class BookingModel extends Component {
   };
 
   render() {
-    let { language } = this.props;
+    let { intl, language } = this.props;
     let { detailDoctor, timeBooking, doctorInfo } = this.state;
     console.log("check props booking modal", this.state);
     return (
@@ -177,7 +177,9 @@ class BookingModel extends Component {
                 }}
               ></div>
               <div className="doctor-details">
-                <div className="title-booking">ĐẶT LỊCH KHÁM</div>
+                <div className="title-booking">
+                  <FormattedMessage id="booking.booking-doctor.title-booking" />
+                </div>
                 <div className="doctor-name">
                   <div className="up">{this.buildDoctorName(detailDoctor)}</div>
                 </div>
@@ -204,8 +206,14 @@ class BookingModel extends Component {
             <div className="price-section">
               <label className="price-box">
                 <div>
-                  <input type="radio" name="payment" value="Payment" />
-                  &nbsp;Giá Khám:{""}
+                  <input
+                    type="radio"
+                    name="priceGroup"
+                    value="fixedPrice"
+                    defaultChecked={true}
+                  />
+                  &nbsp;
+                  <FormattedMessage id="booking.booking-doctor.price" />:{""}
                 </div>
                 <div>
                   {doctorInfo &&
@@ -244,7 +252,9 @@ class BookingModel extends Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="Nhập họ tên..."
+                      placeholder={intl.formatMessage({
+                        id: "booking.booking-doctor.full-name",
+                      })}
                       value={this.state.fullName}
                       onChange={(event) =>
                         this.handleOnChangeInput(event, "fullName")
@@ -264,7 +274,7 @@ class BookingModel extends Component {
                           this.handleOnChangeInput(event, "gender")
                         }
                       />{" "}
-                      Nam
+                      <FormattedMessage id="booking.booking-doctor.male" />
                     </label>
                     <label style={{ marginLeft: "20px" }}>
                       <input
@@ -275,7 +285,7 @@ class BookingModel extends Component {
                           this.handleOnChangeInput(event, "gender")
                         }
                       />{" "}
-                      Nữ
+                      <FormattedMessage id="booking.booking-doctor.female" />
                     </label>
                   </div>
                 </div>
@@ -286,7 +296,9 @@ class BookingModel extends Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="Nhập số điện thoại..."
+                      placeholder={intl.formatMessage({
+                        id: "booking.booking-doctor.phone-number",
+                      })}
                       value={this.state.phoneNumber}
                       onChange={(event) =>
                         this.handleOnChangeInput(event, "phoneNumber")
@@ -301,7 +313,9 @@ class BookingModel extends Component {
                     <input
                       className="form-control"
                       type="email"
-                      placeholder="Nhập email..."
+                      placeholder={intl.formatMessage({
+                        id: "booking.booking-doctor.email",
+                      })}
                       value={this.state.email}
                       onChange={(event) =>
                         this.handleOnChangeInput(event, "email")
@@ -317,7 +331,9 @@ class BookingModel extends Component {
                       className="form-control"
                       value={this.state.birthday}
                       onChange={this.handleChangeDatePicker}
-                      placeholder="Ngày Sinh"
+                      placeholder={intl.formatMessage({
+                        id: "booking.booking-doctor.birthday",
+                      })}
                     />
                   </div>
                 </div>
@@ -328,7 +344,9 @@ class BookingModel extends Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="Nhập địa chỉ cụ thể..."
+                      placeholder={intl.formatMessage({
+                        id: "booking.booking-doctor.address",
+                      })}
                       value={this.state.address}
                       onChange={(event) =>
                         this.handleOnChangeInput(event, "address")
@@ -343,7 +361,9 @@ class BookingModel extends Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="Mô tả triệu chứng..."
+                      placeholder={intl.formatMessage({
+                        id: "booking.booking-doctor.reason",
+                      })}
                       value={this.state.reason}
                       onChange={(event) =>
                         this.handleOnChangeInput(event, "reason")
@@ -353,11 +373,19 @@ class BookingModel extends Component {
                 </div>
 
                 <div className="col-12">
-                  <label className="payment">Hình Thức Thanh Toán:</label>
+                  <label className="payment">
+                    <FormattedMessage id="booking.booking-doctor.payment-method" />
+                  </label>
                   <div className="payment-options">
                     <label>
-                      <input type="radio" name="payment" value="Payment" />{" "}
-                      &nbsp;Thanh Toán sau tại cơ sở y tế
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="cash"
+                        checked={this.state.paymentMethod === "cash"}
+                      />{" "}
+                      &nbsp;
+                      <FormattedMessage id="booking.booking-doctor.payment-attention" />
                     </label>
                   </div>
                 </div>
@@ -365,7 +393,9 @@ class BookingModel extends Component {
             </div>
             <div className="more-info">
               <div className="tag-price">
-                <span className="left">Giá Khám</span>
+                <span className="left">
+                  <FormattedMessage id="booking.booking-doctor.price" />
+                </span>
                 <span className="right">
                   {" "}
                   <div>
@@ -397,11 +427,17 @@ class BookingModel extends Component {
                 </span>
               </div>
               <div className="tag-price">
-                <span className="left">Phí Đặt Lịch</span>
-                <span className="right">Miễn Phí</span>
+                <span className="left">
+                  <FormattedMessage id="booking.booking-doctor.booking-fee" />
+                </span>
+                <span className="right">
+                  <FormattedMessage id="booking.booking-doctor.free" />
+                </span>
               </div>
               <div className="tag-price">
-                <span className="left">Tổng cộng</span>
+                <span className="left">
+                  <FormattedMessage id="booking.booking-doctor.total" />
+                </span>
                 <span className="right text-danger">
                   {" "}
                   <div>
@@ -435,24 +471,22 @@ class BookingModel extends Component {
             </div>
             <div className="note-booking">
               <div className="note-title">
-                Quý khách vui lòng điền đầy đủ thông tin để tiết kiệm thời gian
-                làm thủ tục khám
+                <FormattedMessage id="booking.booking-doctor.note" />
               </div>
 
               <div className="note-table">
-                <span className="note">LƯU Ý</span>
+                <span className="note">
+                  <FormattedMessage id="booking.booking-doctor.attention" />
+                </span>
                 <p className="note-desc">
-                  Thông tin anh/chị cung cấp sẽ được sử dụng làm hồ sơ khám
-                  bệnh, khi điền thông tin anh/chị vui lòng:
+                  <FormattedMessage id="booking.booking-doctor.note-info" />
                 </p>
                 <ul className="note-list">
                   <li>
-                    Ghi rõ họ và tên, viết hoa những chữ cái đầu tiên, ví dụ:{" "}
-                    <b>Trần Văn Phú</b>
+                    <FormattedMessage id="booking.booking-doctor.info-1" />
                   </li>
                   <li>
-                    Điền đầy đủ, đúng và vui lòng kiểm tra lại thông tin trước
-                    khi ấn "Xác nhận"
+                    <FormattedMessage id="booking.booking-doctor.info-2" />
                   </li>
                 </ul>
               </div>
@@ -463,7 +497,7 @@ class BookingModel extends Component {
                 className="btn-booking-confirm col-12"
                 onClick={() => this.handleConfirmBooking()}
               >
-                Xác nhận đặt khám
+                <FormattedMessage id="booking.booking-doctor.confirm-booking" />
               </button>
             </div>
           </div>
@@ -483,4 +517,7 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingModel);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(BookingModel));
