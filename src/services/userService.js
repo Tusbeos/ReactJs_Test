@@ -72,6 +72,10 @@ const handleVerifyEmail = (data) => {
 const createNewSpecialtyService = (data) => {
   return axios.post("/api/create-new-specialty", data);
 };
+
+const handleGetAllSpecialties = () => {
+  return axios.get("/api/get-specialty");
+};
 export {
   handleLoginApi,
   handleGetAllUsers,
@@ -91,4 +95,5 @@ export {
   postPatientBookAppointment,
   handleVerifyEmail,
   createNewSpecialtyService,
+  handleGetAllSpecialties,
 };

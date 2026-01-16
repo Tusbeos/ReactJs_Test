@@ -6,7 +6,7 @@ import './styles/styles.scss';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import IntlProviderWrapper from "./hoc/IntlProviderWrapper";
-
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { Provider } from 'react-redux';
 import reduxStore, { persistor } from './redux';

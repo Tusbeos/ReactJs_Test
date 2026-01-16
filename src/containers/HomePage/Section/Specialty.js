@@ -1,49 +1,68 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Slider from "react-slick";
+import { FormattedMessage } from "react-intl";
+import { handleGetAllSpecialties } from "../../../services/userService"; // Kiểm tra lại đường dẫn service của bạn
+import { withRouter } from "react-router";
 
-import specialtyImg from "../../../assets/specialty/co-xuong-khop.png";
+// Import Component chung đã xử lý logic ảnh
+import SectionItem from "./SectionItem";
 
 class Specialty extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSpecialty: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getAllSpecialties();
+  }
+
+  getAllSpecialties = async () => {
+    let res = await handleGetAllSpecialties();
+    if (res && res.errCode === 0) {
+      this.setState({
+        dataSpecialty: res.data ? res.data : [],
+      });
+    }
+  };
+
+  handleViewDetailSpecialty = (item) => {
+    if (this.props.history) {
+      this.props.history.push(`/detail-specialty/${item.id}`);
+    }
+  };
+
   render() {
+    let { dataSpecialty } = this.state;
+
     return (
       <div className="section-share section-specialty">
         <div className="section-container">
           <div className="section-header">
-            <span className="title-section">Chuyên Khoa</span>
-            <button className="btn-section">Xem Thêm</button>
+            <span className="title-section">
+              <FormattedMessage id="home-header.popular-speciality" />
+            </span>
+            <button className="btn-section">
+              <FormattedMessage id="home-header.see-more" />
+            </button>
           </div>
           <div className="section-body">
             <Slider {...this.props.settings}>
-              <div className="img-customize section-specialty">
-                <img src={specialtyImg} alt="Cơ xương khớp 1" />
-                <div>Cơ xương khớp 1</div>
-              </div>
-
-              <div className="img-customize section-specialty">
-                <img src={specialtyImg} alt="Chuyên khoa 2" />
-                <div>Chuyên khoa 2</div>
-              </div>
-
-              <div className="img-customize section-specialty">
-                <img src={specialtyImg} alt="Chuyên khoa 3" />
-                <div>Chuyên khoa 3</div>
-              </div>
-
-              <div className="img-customize section-specialty">
-                <img src={specialtyImg} alt="Chuyên khoa 4" />
-                <div>Chuyên khoa 4</div>
-              </div>
-
-              <div className="img-customize section-specialty">
-                <img src={specialtyImg} alt="Chuyên khoa 5" />
-                <div>Chuyên khoa 5</div>
-              </div>
-
-              <div className="img-customize section-specialty">
-                <img src={specialtyImg} alt="Chuyên khoa 6" />
-                <div>Chuyên khoa 6</div>
-              </div>
+              {dataSpecialty &&
+                dataSpecialty.length > 0 &&
+                dataSpecialty.map((item, index) => {
+                  return (
+                    <SectionItem
+                      key={index}
+                      item={item}
+                      isCircular={false}
+                      onClick={this.handleViewDetailSpecialty}
+                    />
+                  );
+                })}
             </Slider>
           </div>
         </div>
@@ -52,12 +71,14 @@ class Specialty extends Component {
   }
 }
 
-// Redux
 const mapStateToProps = (state) => {
   return {};
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Specialty)
+);

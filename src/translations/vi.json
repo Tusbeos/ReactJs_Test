@@ -9,7 +9,12 @@
     "fee": "Gói khám",
     "check-health": "Khám sức khỏe tổng quát",
     "support": "Hỗ trợ",
-    "welcome": "Xin chào, "
+    "popular-speciality": "Chuyên khoa phổ biến",
+    "top-doctor": "Bác sĩ nổi bật",
+    "see-more": "Xem thêm",
+    "handbook": "Cẩm nang",
+    "all-article": "Xem tất cả bài viết",
+    "about-us": "Truyền Thông nói về chúng tôi"
   },
   "banner": {
     "select-hospital": "Chọn bệnh viện để khám",
@@ -60,6 +65,14 @@
       "name-clinic": "Tên phòng khám",
       "address-clinic": "Địa chỉ phòng khám",
       "note": "Ghi chú"
+    },
+    "manage-specialty": {
+      "title": "Quản lý chuyên khoa",
+      "name-specialty": "Tên chuyên khoa",
+      "image-specialty": "Ảnh chuyên khoa",
+      "upload-image": "Tải ảnh",
+      "description": "Mô tả Chuyên Khoa",
+      "save": "Lưu Thông Tin"
     }
   },
   "manage-user": {
@@ -99,6 +112,31 @@
       "hide-price": "Ẩn bảng giá",
       "service-price": "GIÁ DỊCH VỤ LIÊN QUAN:",
       "no-services": "Không có dịch vụ nào"
+    }
+  },
+  "booking": {
+    "booking-doctor": {
+      "title-booking": "ĐẶT LỊCH KHÁM",
+      "full-name": "Nhập họ tên",
+      "phone-number": "Nhập Số điện thoại",
+      "male": "Nam",
+      "female": "Nữ",
+      "email": "Nhập email",
+      "address": "Nhập địa chỉ",
+      "reason": "Mô tả triệu chứng",
+      "birthday": "Ngày sinh",
+      "payment-method": "Phương thức thanh toán",
+      "payment-attention": "Thanh toán tại cơ sở ý tế",
+      "price": "Giá khám",
+      "booking-fee": "Phí đặt lịch",
+      "free": "Miễn phí",
+      "total": "Tổng cộng",
+      "note": "Quý khách vui lòng điền đầy đủ thông tin để tiết kiệm thời gian làm thủ tục!",
+      "attention": "LƯU Ý",
+      "note-info": "Thông tin anh/chị cung cấp sẽ được sử dụng làm hồ sơ khám bệnh, khi điền thông tin anh/chị vui lòng:",
+      "info-1": "Ghi rõ họ tên và ngày sinh chính xác, ví dụ: Nguyễn Văn A, 01/01/1990",
+      "info-2": "Điền đầy đủ, đúng và vui lòng kiểm tra lại thông tin trước khi ấn \"Xác nhận\"",
+      "confirm-booking": "Xác nhận đặt lịch"
     }
   }
 }
