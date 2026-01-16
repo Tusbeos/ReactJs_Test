@@ -7,7 +7,6 @@ import { withRouter } from "react-router";
 import SectionItem from "./SectionItem";
 
 class MedicalFacility extends Component {
-  // Hàm chuyển hướng khi click vào cơ sở y tế
   handleViewDetailClinic = (clinic) => {
     if (this.props.history) {
       this.props.history.push(`/detail-clinic/${clinic.id}`);
@@ -15,7 +14,6 @@ class MedicalFacility extends Component {
   };
 
   render() {
-    // Lấy dữ liệu từ props (được truyền từ HomePage hoặc Redux)
     let { dataClinics } = this.props;
 
     return (
@@ -34,7 +32,7 @@ class MedicalFacility extends Component {
                     <SectionItem
                       key={index}
                       item={item}
-                      isCircular={false} // Cơ sở y tế dùng ảnh chữ nhật
+                      isCircular={false}
                       onClick={this.handleViewDetailClinic}
                     />
                   );
