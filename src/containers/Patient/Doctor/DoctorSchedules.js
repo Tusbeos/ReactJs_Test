@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./DoctorSchedules.scss";
 import moment from "moment";
 import { LANGUAGES, path } from "../../../utils";
-import { getScheduleDoctorByDate } from "../../../services/userService";
+import { getScheduleDoctorByDate } from "../../../services/doctorService";
 import { FormattedMessage } from "react-intl";
 import { withRouter } from "react-router";
 class DoctorSchedules extends Component {

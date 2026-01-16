@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { getBase64FromBuffer } from "../../../utils/CommonUtils";
 import HomeHeader from "containers/HomePage/HomeHeader";
 import "./DetailDoctor.scss";
-import { getDetailInfoDoctor } from "../../../services/userService";
+import { getDetailInfoDoctor } from "../../../services/doctorService";
 import { LANGUAGES } from "utils";
 import DoctorSchedules from "./DoctorSchedules";
 import DoctorExtraInfo from "./DoctorExtraInfo";
@@ -10,7 +11,10 @@ class DetailDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detailDoctor: {},
+      detailDoctor: {
+        image: "",
+        positionData: {},
+      },
     };
   }
 
@@ -24,9 +28,10 @@ class DetailDoctor extends Component {
           detailDoctor: res.data,
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error("Lỗi khi lấy chi tiết bác sĩ:", e);
+    }
   }
-  componentDidUpdate(prevProps, prevState, snapShot) {}
 
   buildDoctorName = (detailDoctor) => {
     let { language } = this.props;
@@ -43,7 +48,6 @@ class DetailDoctor extends Component {
     return "";
   };
   render() {
-    console.log("DetailDoctor state=", this.state);
     let { detailDoctor } = this.state;
 
     return (

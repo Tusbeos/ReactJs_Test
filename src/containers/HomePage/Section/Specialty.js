@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Slider from "react-slick";
 import { FormattedMessage } from "react-intl";
-import { handleGetAllSpecialties } from "../../../services/userService"; // Kiểm tra lại đường dẫn service của bạn
+import { handleGetAllSpecialties } from "../../../services/specialtyService";
 import { withRouter } from "react-router";
 
 // Import Component chung đã xử lý logic ảnh

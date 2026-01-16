@@ -5,7 +5,7 @@ import * as actions from "../../../store/actions";
 // import { LANGUAGES } from 'utils';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getAllDoctorServices } from "../../../services/userService";
+import { getAllDoctorServices } from "../../../services/doctorService";
 class DoctorServices extends Component {
   constructor(props) {
     super(props);

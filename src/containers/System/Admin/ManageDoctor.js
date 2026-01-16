@@ -8,7 +8,7 @@ import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from 'react-select';
 import { CRUD_ACTIONS, LANGUAGES } from "utils";
-import { getDetailInfoDoctor } from "../../../services/userService";
+import { getDetailInfoDoctor } from "../../../services/doctorService";
 import { FormattedMessage, injectIntl } from "react-intl";
 import DoctorServices from "./DoctorServices";
 

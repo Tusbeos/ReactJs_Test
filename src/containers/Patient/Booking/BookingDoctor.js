@@ -6,10 +6,8 @@ import moment from "moment";
 import { NumericFormat } from "react-number-format";
 import { injectIntl, FormattedMessage } from "react-intl";
 import HomeHeader from "containers/HomePage/HomeHeader";
-import {
-  getDetailInfoDoctor,
-  postPatientBookAppointment,
-} from "../../../services/userService";
+import { getDetailInfoDoctor } from "../../../services/doctorService";
+import { postPatientBookAppointment } from "../../../services/bookingService";
 import DatePicker from "../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
 

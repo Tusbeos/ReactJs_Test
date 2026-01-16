@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./VerifyEmail.scss";
-import { handleVerifyEmail } from "../../services/userService";
+import { handleVerifyEmail } from "../../services/bookingService";
 
 class VerifyEmail extends Component {
   constructor(props) {

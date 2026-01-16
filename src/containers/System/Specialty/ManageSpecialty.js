@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import { CommonUtils } from '../../../utils';
-import { createNewSpecialtyService } from '../../../services/userService';
+import { createNewSpecialtyService } from "../../../services/specialtyService";
 import { toast } from "react-toastify";
 
 const mdParser = new MarkdownIt();

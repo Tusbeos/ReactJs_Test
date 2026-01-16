@@ -6,6 +6,11 @@ import { LANGUAGES } from "../../utils";
 import { changeLanguageApp } from "../../store/actions/appActions";
 import { withRouter } from "react-router";
 class HomeHeader extends Component {
+  handleSpecialtyClick = () => {
+    if (this.props.history) {
+      this.props.history.push("/specialty");
+    }
+  };
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
@@ -28,7 +33,11 @@ class HomeHeader extends Component {
               ></div>
             </div>
             <div className="center-content">
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={this.handleSpecialtyClick}
+                style={{ cursor: "pointer" }}
+              >
                 <>
                   <b>
                     <FormattedMessage id="home-header.speciality" />
