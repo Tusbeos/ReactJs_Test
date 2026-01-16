@@ -50,7 +50,7 @@ class Handbook extends Component {
                     <SectionItem
                       key={index}
                       item={item}
-                      isCircular={false} // Cẩm nang thường là ảnh chữ nhật
+                      isCircular={false}
                       onClick={this.handleViewDetailHandbook}
                     />
                   );

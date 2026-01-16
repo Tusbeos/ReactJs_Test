@@ -5,6 +5,7 @@
     "**/src/containers/Auth/Login.scss": true // file SCSS muốn bỏ qua auto format
   },
   "cSpell.words": [
+    "Axios",
     "bằng",
     "biến",
     "chính",
@@ -19,6 +20,8 @@
     "Persistor",
     "thất",
     "thực",
-    "Truyền"
+    "Tiếng",
+    "Truyền",
+    "Việt"
   ]
 }
