@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HomeHeader from "./HomeHeader";
 import Specialty from "./Section/Specialty";
-import MedicalFacility from "./Section/MedicalFacility";
 import OutStandingDoctor from "./Section/OutStandingDoctor";
 import Handbook from "./Section/Handbook";
 import About from "./Section/About";

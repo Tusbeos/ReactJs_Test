@@ -8,7 +8,7 @@ import Header from "containers/Header/Header";
 import ManageSpecialty from "containers/System/Specialty/ManageSpecialty";
 class System extends Component {
   render() {
-    const { systemMenuPath, isLoggedIn } = this.props;
+    const { isLoggedIn } = this.props;
     return (
       <React.Fragment>
         {isLoggedIn && <Header />}

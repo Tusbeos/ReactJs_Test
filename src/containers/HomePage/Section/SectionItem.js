@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Buffer } from 'buffer';
 import { connect } from "react-redux";
-import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils/constant";
 class SectionItem extends Component {
 
