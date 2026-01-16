@@ -1,0 +1,59 @@
+.specialty-list-container {
+  background-color: #fff;
+    padding: 10px 150px ;
+     caret-color: transparent;
+        .specialty-list-title {
+    font-size: 25px;      
+    font-weight: 700;  
+    color: #333;        
+    padding: 20px;
+    text-align: left;  
+    text-transform: none;
+  }
+  .specialty-list-items {
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+    .specialty-item {
+  display: flex;   
+  height: 200px;    
+  align-items: center;   
+  padding: 12px 0;      
+  border-bottom: 1px solid #cccccc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #fbfbfb;
+    
+    .specialty-item__name {
+      color: #45c3d2; }
+  }
+  &.last {
+    border-bottom: none;
+  }
+  &__icon {
+    width: auto;
+    height: 130px;
+    background-color: #e8fafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;        
+    flex-shrink: 0;
+
+    img {
+      width: auto;           
+      height: 130px;
+      object-fit: contain;}
+  }
+
+  &__name {
+    font-size: 25px;  
+    color: #333;
+    font-weight: 500;
+  }
+}
+  }
+}
+

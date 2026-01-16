@@ -6,65 +6,18 @@ import {
   handleGetAllUsers,
   handleDeleteUserService,
   handleEditUserService,
+} from "../../services/userService";
+import {
   handleGetTopDoctorHomeService,
   handleGetAllDoctorsService,
   saveDetailDoctorService,
   saveBulkDoctorServices,
   getAllDoctorServices,
-} from "../../services/userService";
+} from "../../services/doctorService";
 
-export const fetchGenderStart = () => {
-  return async (dispatch, getState) => {
-    try {
-      dispatch({ type: actionTypes.FETCH_GENDER_START });
-
-      let res = await handleGetAllCodeService("GENDER");
-      if (res && res.errCode === 0) {
-        dispatch(fetchGenderSuccess(res.data));
-      } else {
-        dispatch(fetchGenderFailed());
-      }
-    } catch (e) {
-      dispatch(fetchGenderFailed());
-      console.log(e);
-    }
-  };
-};
-
-export const fetchPositionStart = () => {
-  return async (dispatch, getState) => {
-    try {
-      let res = await handleGetAllCodeService("POSITION");
-      if (res && res.errCode === 0) {
-        dispatch(fetchPositionSuccess(res.data));
-      } else {
-        dispatch(fetchPositionFailed());
-      }
-    } catch (e) {
-      dispatch(fetchPositionFailed());
-      console.log(e);
-    }
-  };
-};
-
-export const fetchRoleStart = () => {
-  return async (dispatch, getState) => {
-    try {
-      let res = await handleGetAllCodeService("ROLE");
-      if (res && res.errCode === 0) {
-        dispatch(fetchRoleSuccess(res.data));
-      } else {
-        dispatch(fetchRoleFailed());
-      }
-    } catch (e) {
-      dispatch(fetchRoleFailed());
-      console.log(e);
-    }
-  };
-};
 // Create a new user
 export const createNewUser = (data) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await handleCreateNewUserService(data);
       console.log("check create user redux", res);
@@ -77,13 +30,13 @@ export const createNewUser = (data) => {
       }
     } catch (e) {
       dispatch(saveUserFailed());
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Fetch all users
 export const fetchAllUsersStart = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await handleGetAllUsers("ALL");
       if (res && res.errCode === 0) {
@@ -95,13 +48,13 @@ export const fetchAllUsersStart = () => {
     } catch (e) {
       toast.error("Fetch all users failed!");
       dispatch(fetchAllUsersFailed());
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Delete a user
 export const deleteUserStart = (userId) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await handleDeleteUserService(userId);
       if (res && res.errCode === 0) {
@@ -115,13 +68,13 @@ export const deleteUserStart = (userId) => {
     } catch (e) {
       toast.error("Delete the user failed!");
       dispatch(deleteUserFailed());
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Edit a user
 export const editUserStart = (data) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await handleEditUserService(data);
       if (res && res.errCode === 0) {
@@ -134,13 +87,13 @@ export const editUserStart = (data) => {
     } catch (e) {
       toast.error("Update the user failed!");
       dispatch(editUserFailed());
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Fetch top doctors for home page
 export const fetchTopDoctorStart = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await handleGetTopDoctorHomeService(10);
       if (res && res.errCode === 0) {
@@ -153,13 +106,13 @@ export const fetchTopDoctorStart = () => {
       }
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_TOP_DOCTORS_FAILED });
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Fetch all doctors
 export const fetchAllDoctorsStart = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await handleGetAllDoctorsService();
       if (res && res.errCode === 0) {
@@ -172,13 +125,13 @@ export const fetchAllDoctorsStart = () => {
       }
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ALL_DOCTORS_FAILED });
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Save Info doctor to Markdown table
 export const saveDetailDoctorsStart = (data) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await saveDetailDoctorService(data);
       if (res && res.errCode === 0) {
@@ -193,13 +146,13 @@ export const saveDetailDoctorsStart = (data) => {
     } catch (e) {
       toast.error("Save info doctor failed!");
       dispatch({ type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED });
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Fetch all schedule time
 export const fetchAllScheduleTime = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await handleGetAllCodeService("TIME");
       if (res && res.errCode === 0) {
@@ -212,13 +165,13 @@ export const fetchAllScheduleTime = () => {
       }
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED });
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Fetch doctor price, payment, province
 export const fetchRequiredDoctorInfo = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let resPrice = await handleGetAllCodeService("PRICE");
       let resPayment = await handleGetAllCodeService("PAYMENT");
@@ -242,13 +195,13 @@ export const fetchRequiredDoctorInfo = () => {
       }
     } catch (e) {
       dispatch(fetchRequiredDoctorInfoFailed());
-      console.log(e);
+      console.error(e);
     }
   };
 };
 // Save doctor services
 export const saveDoctorServices = (data) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await saveBulkDoctorServices(data);
       if (res && res.errCode === 0) {
@@ -263,7 +216,7 @@ export const saveDoctorServices = (data) => {
 };
 // Fetch doctor services
 export const fetchDoctorServices = (doctorId) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let res = await getAllDoctorServices(doctorId);
       if (res && res.errCode === 0) {
@@ -276,10 +229,59 @@ export const fetchDoctorServices = (doctorId) => {
       }
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_DOCTOR_SERVICES_FAILED });
-      console.log(e);
+      console.error(e);
     }
   };
 };
+export const fetchGenderStart = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_GENDER_START });
+      let res = await handleGetAllCodeService("GENDER");
+      if (res && res.errCode === 0) {
+        dispatch(fetchGenderSuccess(res.data));
+      } else {
+        dispatch(fetchGenderFailed());
+      }
+    } catch (e) {
+      dispatch(fetchGenderFailed());
+      console.error(e);
+    }
+  };
+};
+
+export const fetchPositionStart = () => {
+  return async (dispatch) => {
+    try {
+      let res = await handleGetAllCodeService("POSITION");
+      if (res && res.errCode === 0) {
+        dispatch(fetchPositionSuccess(res.data));
+      } else {
+        dispatch(fetchPositionFailed());
+      }
+    } catch (e) {
+      dispatch(fetchPositionFailed());
+      console.error(e);
+    }
+  };
+};
+
+export const fetchRoleStart = () => {
+  return async (dispatch) => {
+    try {
+      let res = await handleGetAllCodeService("ROLE");
+      if (res && res.errCode === 0) {
+        dispatch(fetchRoleSuccess(res.data));
+      } else {
+        dispatch(fetchRoleFailed());
+      }
+    } catch (e) {
+      dispatch(fetchRoleFailed());
+      console.error(e);
+    }
+  };
+};
+
 export const fetchGenderSuccess = (genderData) => ({
   type: actionTypes.FETCH_GENDER_SUCCESS,
   data: genderData,

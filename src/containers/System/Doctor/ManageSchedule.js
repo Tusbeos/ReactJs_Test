@@ -11,7 +11,7 @@ import _ from "lodash";
 import {
   saveBulkScheduleDoctor,
   getScheduleDoctorByDate,
-} from "services/userService";
+} from "../../../services/doctorService";
 
 class ManageSchedule extends Component {
   constructor(props) {

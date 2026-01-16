@@ -1,0 +1,86 @@
+import React, { Component } from "react";
+import { handleGetAllSpecialties } from "../../services/specialtyService";
+import "./SpecialtyList.scss";
+import HomeHeader from "containers/HomePage/HomeHeader";
+import { getBase64FromBuffer } from "../../utils/CommonUtils";
+class SpecialtyItem extends Component {
+  render() {
+    const { name, imageUrl, isLast } = this.props;
+    return (
+      <li className={`specialty-item${isLast ? " last" : ""}`}>
+        <div className="specialty-item__icon">
+          <img
+            src={imageUrl}
+            alt="icon"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://via.placeholder.com/60?text=No+Img"; // Ảnh thay thế nếu link lỗi
+            }}
+          />
+        </div>
+        <span className="specialty-item__name">{name}</span>
+      </li>
+    );
+  }
+}
+
+// Component cha: Quản lý danh sách
+class SpecialtyList extends Component {
+  state = {
+    specialties: [],
+  };
+
+  componentDidMount() {
+    this.fetchSpecialties();
+  }
+
+  fetchSpecialties = async () => {
+    try {
+      const res = await handleGetAllSpecialties();
+      if (res && res.errCode === 0 && res.data && Array.isArray(res.data)) {
+        const dataArr = res.data;
+        const specialties = dataArr.map((item) => ({
+          id: item.id,
+          name: item.name,
+          imageUrl: getBase64FromBuffer(item.image) || "https://via.placeholder.com/60?text=No+Img",
+        }));
+
+        this.setState({ specialties });
+      } else {
+        console.log("Fetch failed or no data:", res);
+        this.setState({ specialties: [] });
+      }
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách chuyên khoa:", error);
+    }
+  };
+
+  render() {
+    const { specialties } = this.state;
+    
+    return (
+        <><HomeHeader/>
+      <div className="specialty-list-container">
+        <h1 className="specialty-list-title">Chuyên khoa dành cho bạn</h1>
+        <ul className="specialty-list-items">
+          {specialties && specialties.length > 0 ? (
+            specialties.map((item, idx) => (
+              <SpecialtyItem
+                key={item.id}
+                name={item.name}
+                imageUrl={item.imageUrl}
+                isLast={idx === specialties.length - 1}
+              />
+            ))
+          ) : (
+            <li className="specialty-item" style={{justifyContent: 'center'}}>
+                <span>Không có dữ liệu chuyên khoa</span>
+            </li>
+          )}
+        </ul>
+      </div></>
+    );
+  }
+}
+
+export default SpecialtyList;

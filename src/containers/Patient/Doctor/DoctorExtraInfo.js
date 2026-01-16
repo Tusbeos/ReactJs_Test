@@ -4,7 +4,7 @@ import "./DoctorExtraInfo.scss";
 import {
   getExtraInfoDoctorById,
   getAllDoctorServices,
-} from "../../../services/userService";
+} from "../../../services/doctorService";
 import { LANGUAGES } from "utils";
 import { NumericFormat } from "react-number-format";
 import { FormattedMessage } from "react-intl";
