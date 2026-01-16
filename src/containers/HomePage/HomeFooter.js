@@ -5,7 +5,12 @@ class HomeFooter extends Component {
   render() {
     return (
       <div className="home-footer">
-        <p>&copy; 2025 Lê Tuấn Tú. <a target='_blank' href="https://github.com/Tusbeos">More information, Visit my Github</a></p>
+        <p>
+          &copy; 2025 Lê Tuấn Tú.{" "}
+          <a target="_blank" rel="noreferrer" href="https://github.com/Tusbeos">
+            More information, Visit my Github
+          </a>
+        </p>
       </div>
     );
   }

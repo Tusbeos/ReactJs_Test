@@ -35,8 +35,8 @@ class OutStandingDoctor extends Component {
 
   render() {
     let { arrDoctors } = this.state;
-    let { language } = this.props;
 
+    // Đã xóa biến language không dùng để fix warning ESLint
     return (
       <div className="section-share section-os-doctor">
         <div className="section-container">

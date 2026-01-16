@@ -177,11 +177,6 @@ class ManageSchedule extends Component {
     }
   };
 
-  handleChangeSelectDoctor = async (selectedDoctor) => {
-    this.setState({ selectedDoctor }, () => {
-      this.loadScheduleData();
-    });
-  };
   render() {
     let currentDay = new Date();
     currentDay.setHours(0, 0, 0, 0);
@@ -218,7 +213,7 @@ class ManageSchedule extends Component {
                   return (
                     <button
                       className={
-                        item.isSelected == false
+                        item.isSelected === false
                           ? "btn btn-schedule"
                           : "btn btn-schedule active"
                       }
