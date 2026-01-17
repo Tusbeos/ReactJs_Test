@@ -18,26 +18,28 @@ class MedicalFacility extends Component {
 
     return (
       <div className="section-share section-medical-facility">
-        <div className="section-container">
-          <div className="section-header">
-            <span className="title-section">Cơ sở y tế nổi bật</span>
-            <button className="btn-section">Tìm kiếm</button>
-          </div>
-          <div className="section-body">
-            <Slider {...this.props.settings}>
-              {dataClinics &&
-                dataClinics.length > 0 &&
-                dataClinics.map((item, index) => {
-                  return (
-                    <SectionItem
-                      key={index}
-                      item={item}
-                      isCircular={false}
-                      onClick={this.handleViewDetailClinic}
-                    />
-                  );
-                })}
-            </Slider>
+        <div className="booking-container">
+          <div className="section-container">
+            <div className="section-header">
+              <span className="title-section">Cơ sở y tế nổi bật</span>
+              <button className="btn-section">Tìm kiếm</button>
+            </div>
+            <div className="section-body">
+              <Slider {...this.props.settings}>
+                {dataClinics &&
+                  dataClinics.length > 0 &&
+                  dataClinics.map((item, index) => {
+                    return (
+                      <SectionItem
+                        key={index}
+                        item={item}
+                        isCircular={false}
+                        onClick={this.handleViewDetailClinic}
+                      />
+                    );
+                  })}
+              </Slider>
+            </div>
           </div>
         </div>
       </div>

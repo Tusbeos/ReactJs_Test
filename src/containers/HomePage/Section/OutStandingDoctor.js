@@ -39,32 +39,34 @@ class OutStandingDoctor extends Component {
     // Đã xóa biến language không dùng để fix warning ESLint
     return (
       <div className="section-share section-os-doctor">
-        <div className="section-container">
-          <div className="section-header">
-            <span className="title-section">
-              <FormattedMessage id="home-header.top-doctor" />
-            </span>
-            <button className="btn-section">
-              <FormattedMessage id="home-header.see-more" />
-            </button>
-          </div>
+        <div className="booking-container">
+          <div className="section-container">
+            <div className="section-header">
+              <span className="title-section">
+                <FormattedMessage id="home-header.top-doctor" />
+              </span>
+              <button className="btn-section">
+                <FormattedMessage id="home-header.see-more" />
+              </button>
+            </div>
 
-          <div className="section-body">
-            <Slider {...this.props.settings}>
-              {arrDoctors &&
-                arrDoctors.length > 0 &&
-                arrDoctors.map((item, index) => {
-                  return (
-                    <SectionItem
-                      key={index}
-                      item={item}
-                      onClick={this.handleViewDetailDoctor}
-                      isCircular={true}
-                      subTitle="Chuyên khoa"
-                    />
-                  );
-                })}
-            </Slider>
+            <div className="section-body">
+              <Slider {...this.props.settings}>
+                {arrDoctors &&
+                  arrDoctors.length > 0 &&
+                  arrDoctors.map((item, index) => {
+                    return (
+                      <SectionItem
+                        key={index}
+                        item={item}
+                        onClick={this.handleViewDetailDoctor}
+                        isCircular={true}
+                        subTitle="Chuyên khoa"
+                      />
+                    );
+                  })}
+              </Slider>
+            </div>
           </div>
         </div>
       </div>

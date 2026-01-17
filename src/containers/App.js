@@ -57,6 +57,11 @@ class App extends Component {
                     path={path.SYSTEM}
                     component={userIsAuthenticated(System)}
                   />
+                  {/* Route chi tiết chuyên khoa */}
+                  <Route
+                    path="/detail-specialty/:id"
+                    component={require("./Specialty/DetailSpecialty").default}
+                  />
                   <Route
                     path={"/doctor"}
                     component={userIsAuthenticated(Doctor)}
@@ -68,7 +73,7 @@ class App extends Component {
                     path={path.VERIFY_EMAIL_BOOKING}
                     component={VerifyEmail}
                   />
-                  <Route path="/specialty" component={SpecialtyList} />
+                  <Route path={path.LIST_SPECIALTY} component={SpecialtyList} />
                 </Switch>
               </CustomScrollbars>
             </div>

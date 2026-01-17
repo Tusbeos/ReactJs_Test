@@ -32,30 +32,32 @@ class Handbook extends Component {
 
     return (
       <div className="section-share section-handbook">
-        <div className="section-container">
-          <div className="section-header">
-            <span className="title-section">
-              <FormattedMessage id="home-header.handbook" />
-            </span>
-            <button className="btn-section">
-              <FormattedMessage id="home-header.all-article" />
-            </button>
-          </div>
-          <div className="section-body">
-            <Slider {...this.props.settings}>
-              {dataHandbooks &&
-                dataHandbooks.length > 0 &&
-                dataHandbooks.map((item, index) => {
-                  return (
-                    <SectionItem
-                      key={index}
-                      item={item}
-                      isCircular={false}
-                      onClick={this.handleViewDetailHandbook}
-                    />
-                  );
-                })}
-            </Slider>
+        <div className="booking-container">
+          <div className="section-container">
+            <div className="section-header">
+              <span className="title-section">
+                <FormattedMessage id="home-header.handbook" />
+              </span>
+              <button className="btn-section">
+                <FormattedMessage id="home-header.all-article" />
+              </button>
+            </div>
+            <div className="section-body">
+              <Slider {...this.props.settings}>
+                {dataHandbooks &&
+                  dataHandbooks.length > 0 &&
+                  dataHandbooks.map((item, index) => {
+                    return (
+                      <SectionItem
+                        key={index}
+                        item={item}
+                        isCircular={false}
+                        onClick={this.handleViewDetailHandbook}
+                      />
+                    );
+                  })}
+              </Slider>
+            </div>
           </div>
         </div>
       </div>

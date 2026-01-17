@@ -31,7 +31,7 @@ class Specialty extends Component {
 
   handleViewDetailSpecialty = (item) => {
     if (this.props.history) {
-      this.props.history.push(`/detail-specialty/${item.id}`);
+      this.props.history.push(`/specialty/detail-specialty/${item.id}`);
     }
   };
 
@@ -40,30 +40,32 @@ class Specialty extends Component {
 
     return (
       <div className="section-share section-specialty">
-        <div className="section-container">
-          <div className="section-header">
-            <span className="title-section">
-              <FormattedMessage id="home-header.popular-speciality" />
-            </span>
-            <button className="btn-section">
-              <FormattedMessage id="home-header.see-more" />
-            </button>
-          </div>
-          <div className="section-body">
-            <Slider {...this.props.settings}>
-              {dataSpecialty &&
-                dataSpecialty.length > 0 &&
-                dataSpecialty.map((item, index) => {
-                  return (
-                    <SectionItem
-                      key={index}
-                      item={item}
-                      isCircular={false}
-                      onClick={this.handleViewDetailSpecialty}
-                    />
-                  );
-                })}
-            </Slider>
+        <div className="booking-container">
+          <div className="section-container">
+            <div className="section-header">
+              <span className="title-section">
+                <FormattedMessage id="home-header.popular-speciality" />
+              </span>
+              <button className="btn-section">
+                <FormattedMessage id="home-header.see-more" />
+              </button>
+            </div>
+            <div className="section-body">
+              <Slider {...this.props.settings}>
+                {dataSpecialty &&
+                  dataSpecialty.length > 0 &&
+                  dataSpecialty.map((item, index) => {
+                    return (
+                      <SectionItem
+                        key={index}
+                        item={item}
+                        isCircular={false}
+                        onClick={this.handleViewDetailSpecialty}
+                      />
+                    );
+                  })}
+              </Slider>
+            </div>
           </div>
         </div>
       </div>
