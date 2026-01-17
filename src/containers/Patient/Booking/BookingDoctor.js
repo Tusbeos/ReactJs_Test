@@ -166,236 +166,56 @@ class BookingModel extends Component {
       <>
         <HomeHeader isShowBanner={false} />
         <div className="booking-modal-container">
-          <div className="booking-modal-content">
-            <div className="doctor-info-section">
-              <div
-                className="doctor-image"
-                style={{
-                  backgroundImage: this.getDoctorImage(detailDoctor),
-                }}
-              ></div>
-              <div className="doctor-details">
-                <div className="title-booking">
-                  <FormattedMessage id="booking.booking-doctor.title-booking" />
+          <div className="booking-container">
+            <div className="booking-modal-content">
+              <div className="doctor-info-section">
+                <div
+                  className="doctor-image"
+                  style={{
+                    backgroundImage: this.getDoctorImage(detailDoctor),
+                  }}
+                ></div>
+                <div className="doctor-details">
+                  <div className="title-booking">
+                    <FormattedMessage id="booking.booking-doctor.title-booking" />
+                  </div>
+                  <div className="doctor-name">
+                    <div className="up">
+                      {this.buildDoctorName(detailDoctor)}
+                    </div>
+                  </div>
+                  <div className="time-booking">
+                    <div>
+                      <i className="fas fa-calendar-alt"></i>
+                      {this.renderTimeBooking(timeBooking)}
+                    </div>
+                  </div>
+                  <div className="name-clinic">
+                    <i class="fas fa-clinic-medical"></i>
+                    {doctorInfo && doctorInfo.nameClinic
+                      ? doctorInfo.nameClinic
+                      : ""}
+                  </div>
+                  <div className="address-clinic">
+                    {doctorInfo && doctorInfo.addressClinic
+                      ? doctorInfo.addressClinic
+                      : ""}
+                  </div>
                 </div>
-                <div className="doctor-name">
-                  <div className="up">{this.buildDoctorName(detailDoctor)}</div>
-                </div>
-                <div className="time-booking">
+              </div>
+
+              <div className="price-section">
+                <label className="price-box">
                   <div>
-                    <i className="fas fa-calendar-alt"></i>
-                    {this.renderTimeBooking(timeBooking)}
-                  </div>
-                </div>
-                <div className="name-clinic">
-                  <i class="fas fa-clinic-medical"></i>
-                  {doctorInfo && doctorInfo.nameClinic
-                    ? doctorInfo.nameClinic
-                    : ""}
-                </div>
-                <div className="address-clinic">
-                  {doctorInfo && doctorInfo.addressClinic
-                    ? doctorInfo.addressClinic
-                    : ""}
-                </div>
-              </div>
-            </div>
-
-            <div className="price-section">
-              <label className="price-box">
-                <div>
-                  <input
-                    type="radio"
-                    name="priceGroup"
-                    value="fixedPrice"
-                    defaultChecked={true}
-                  />
-                  &nbsp;
-                  <FormattedMessage id="booking.booking-doctor.price" />:{""}
-                </div>
-                <div>
-                  {doctorInfo &&
-                    doctorInfo.priceTypeData &&
-                    language === LANGUAGES.VI && (
-                      <NumericFormat
-                        className="currency"
-                        value={doctorInfo.priceTypeData.value_Vi}
-                        thousandsGroupStyle="thousand"
-                        thousandSeparator=","
-                        suffix="đ"
-                        displayType="text"
-                      />
-                    )}
-                  {doctorInfo &&
-                    doctorInfo.priceTypeData &&
-                    language === LANGUAGES.EN && (
-                      <NumericFormat
-                        className="currency"
-                        value={doctorInfo.priceTypeData.value_En}
-                        thousandsGroupStyle="thousand"
-                        thousandSeparator=","
-                        suffix="$"
-                        displayType="text"
-                      />
-                    )}
-                </div>
-              </label>
-            </div>
-
-            <div className="booking-modal-body">
-              <div className="row">
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-user"></i>
                     <input
-                      className="form-control"
-                      type="text"
-                      placeholder={intl.formatMessage({
-                        id: "booking.booking-doctor.full-name",
-                      })}
-                      value={this.state.fullName}
-                      onChange={(event) =>
-                        this.handleOnChangeInput(event, "fullName")
-                      }
+                      type="radio"
+                      name="priceGroup"
+                      value="fixedPrice"
+                      defaultChecked={true}
                     />
+                    &nbsp;
+                    <FormattedMessage id="booking.booking-doctor.price" />:{""}
                   </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="gender-options">
-                    <label>
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="M"
-                        onChange={(event) =>
-                          this.handleOnChangeInput(event, "gender")
-                        }
-                      />{" "}
-                      <FormattedMessage id="booking.booking-doctor.male" />
-                    </label>
-                    <label style={{ marginLeft: "20px" }}>
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="F"
-                        onChange={(event) =>
-                          this.handleOnChangeInput(event, "gender")
-                        }
-                      />{" "}
-                      <FormattedMessage id="booking.booking-doctor.female" />
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-phone"></i>
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder={intl.formatMessage({
-                        id: "booking.booking-doctor.phone-number",
-                      })}
-                      value={this.state.phoneNumber}
-                      onChange={(event) =>
-                        this.handleOnChangeInput(event, "phoneNumber")
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-envelope"></i>
-                    <input
-                      className="form-control"
-                      type="email"
-                      placeholder={intl.formatMessage({
-                        id: "booking.booking-doctor.email",
-                      })}
-                      value={this.state.email}
-                      onChange={(event) =>
-                        this.handleOnChangeInput(event, "email")
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-calendar-alt"></i>
-                    <DatePicker
-                      className="form-control"
-                      value={this.state.birthday}
-                      onChange={this.handleChangeDatePicker}
-                      placeholder={intl.formatMessage({
-                        id: "booking.booking-doctor.birthday",
-                      })}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder={intl.formatMessage({
-                        id: "booking.booking-doctor.address",
-                      })}
-                      value={this.state.address}
-                      onChange={(event) =>
-                        this.handleOnChangeInput(event, "address")
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="col-12 form-group">
-                  <div className="input-icon-group">
-                    <i class="fas fa-plus-circle"></i>
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder={intl.formatMessage({
-                        id: "booking.booking-doctor.reason",
-                      })}
-                      value={this.state.reason}
-                      onChange={(event) =>
-                        this.handleOnChangeInput(event, "reason")
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <label className="payment">
-                    <FormattedMessage id="booking.booking-doctor.payment-method" />
-                  </label>
-                  <div className="payment-options">
-                    <label>
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="cash"
-                        checked={this.state.paymentMethod === "cash"}
-                      />{" "}
-                      &nbsp;
-                      <FormattedMessage id="booking.booking-doctor.payment-attention" />
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="more-info">
-              <div className="tag-price">
-                <span className="left">
-                  <FormattedMessage id="booking.booking-doctor.price" />
-                </span>
-                <span className="right">
-                  {" "}
                   <div>
                     {doctorInfo &&
                       doctorInfo.priceTypeData &&
@@ -422,81 +242,265 @@ class BookingModel extends Component {
                         />
                       )}
                   </div>
-                </span>
+                </label>
               </div>
-              <div className="tag-price">
-                <span className="left">
-                  <FormattedMessage id="booking.booking-doctor.booking-fee" />
-                </span>
-                <span className="right">
-                  <FormattedMessage id="booking.booking-doctor.free" />
-                </span>
-              </div>
-              <div className="tag-price">
-                <span className="left">
-                  <FormattedMessage id="booking.booking-doctor.total" />
-                </span>
-                <span className="right text-danger">
-                  {" "}
-                  <div>
-                    {doctorInfo &&
-                      doctorInfo.priceTypeData &&
-                      language === LANGUAGES.VI && (
-                        <NumericFormat
-                          className="currency"
-                          value={doctorInfo.priceTypeData.value_Vi}
-                          thousandsGroupStyle="thousand"
-                          thousandSeparator=","
-                          suffix="đ"
-                          displayType="text"
-                        />
-                      )}
-                    {doctorInfo &&
-                      doctorInfo.priceTypeData &&
-                      language === LANGUAGES.EN && (
-                        <NumericFormat
-                          className="currency"
-                          value={doctorInfo.priceTypeData.value_En}
-                          thousandsGroupStyle="thousand"
-                          thousandSeparator=","
-                          suffix="$"
-                          displayType="text"
-                        />
-                      )}
+
+              <div className="booking-modal-body">
+                <div className="row">
+                  <div className="col-12 form-group">
+                    <div className="input-icon-group">
+                      <i class="fas fa-user"></i>
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder={intl.formatMessage({
+                          id: "booking.booking-doctor.full-name",
+                        })}
+                        value={this.state.fullName}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "fullName")
+                        }
+                      />
+                    </div>
                   </div>
-                </span>
+
+                  <div className="col-12 form-group">
+                    <div className="gender-options">
+                      <label>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="M"
+                          onChange={(event) =>
+                            this.handleOnChangeInput(event, "gender")
+                          }
+                        />{" "}
+                        <FormattedMessage id="booking.booking-doctor.male" />
+                      </label>
+                      <label style={{ marginLeft: "20px" }}>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="F"
+                          onChange={(event) =>
+                            this.handleOnChangeInput(event, "gender")
+                          }
+                        />{" "}
+                        <FormattedMessage id="booking.booking-doctor.female" />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-12 form-group">
+                    <div className="input-icon-group">
+                      <i class="fas fa-phone"></i>
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder={intl.formatMessage({
+                          id: "booking.booking-doctor.phone-number",
+                        })}
+                        value={this.state.phoneNumber}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "phoneNumber")
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12 form-group">
+                    <div className="input-icon-group">
+                      <i class="fas fa-envelope"></i>
+                      <input
+                        className="form-control"
+                        type="email"
+                        placeholder={intl.formatMessage({
+                          id: "booking.booking-doctor.email",
+                        })}
+                        value={this.state.email}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "email")
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12 form-group">
+                    <div className="input-icon-group">
+                      <i class="fas fa-calendar-alt"></i>
+                      <DatePicker
+                        className="form-control"
+                        value={this.state.birthday}
+                        onChange={this.handleChangeDatePicker}
+                        placeholder={intl.formatMessage({
+                          id: "booking.booking-doctor.birthday",
+                        })}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12 form-group">
+                    <div className="input-icon-group">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder={intl.formatMessage({
+                          id: "booking.booking-doctor.address",
+                        })}
+                        value={this.state.address}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "address")
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12 form-group">
+                    <div className="input-icon-group">
+                      <i class="fas fa-plus-circle"></i>
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder={intl.formatMessage({
+                          id: "booking.booking-doctor.reason",
+                        })}
+                        value={this.state.reason}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "reason")
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <label className="payment">
+                      <FormattedMessage id="booking.booking-doctor.payment-method" />
+                    </label>
+                    <div className="payment-options">
+                      <label>
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="cash"
+                          checked={this.state.paymentMethod === "cash"}
+                        />{" "}
+                        &nbsp;
+                        <FormattedMessage id="booking.booking-doctor.payment-attention" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="note-booking">
-              <div className="note-title">
-                <FormattedMessage id="booking.booking-doctor.note" />
+              <div className="more-info">
+                <div className="tag-price">
+                  <span className="left">
+                    <FormattedMessage id="booking.booking-doctor.price" />
+                  </span>
+                  <span className="right">
+                    {" "}
+                    <div>
+                      {doctorInfo &&
+                        doctorInfo.priceTypeData &&
+                        language === LANGUAGES.VI && (
+                          <NumericFormat
+                            className="currency"
+                            value={doctorInfo.priceTypeData.value_Vi}
+                            thousandsGroupStyle="thousand"
+                            thousandSeparator=","
+                            suffix="đ"
+                            displayType="text"
+                          />
+                        )}
+                      {doctorInfo &&
+                        doctorInfo.priceTypeData &&
+                        language === LANGUAGES.EN && (
+                          <NumericFormat
+                            className="currency"
+                            value={doctorInfo.priceTypeData.value_En}
+                            thousandsGroupStyle="thousand"
+                            thousandSeparator=","
+                            suffix="$"
+                            displayType="text"
+                          />
+                        )}
+                    </div>
+                  </span>
+                </div>
+                <div className="tag-price">
+                  <span className="left">
+                    <FormattedMessage id="booking.booking-doctor.booking-fee" />
+                  </span>
+                  <span className="right">
+                    <FormattedMessage id="booking.booking-doctor.free" />
+                  </span>
+                </div>
+                <div className="tag-price">
+                  <span className="left">
+                    <FormattedMessage id="booking.booking-doctor.total" />
+                  </span>
+                  <span className="right text-danger">
+                    {" "}
+                    <div>
+                      {doctorInfo &&
+                        doctorInfo.priceTypeData &&
+                        language === LANGUAGES.VI && (
+                          <NumericFormat
+                            className="currency"
+                            value={doctorInfo.priceTypeData.value_Vi}
+                            thousandsGroupStyle="thousand"
+                            thousandSeparator=","
+                            suffix="đ"
+                            displayType="text"
+                          />
+                        )}
+                      {doctorInfo &&
+                        doctorInfo.priceTypeData &&
+                        language === LANGUAGES.EN && (
+                          <NumericFormat
+                            className="currency"
+                            value={doctorInfo.priceTypeData.value_En}
+                            thousandsGroupStyle="thousand"
+                            thousandSeparator=","
+                            suffix="$"
+                            displayType="text"
+                          />
+                        )}
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div className="note-booking">
+                <div className="note-title">
+                  <FormattedMessage id="booking.booking-doctor.note" />
+                </div>
+
+                <div className="note-table">
+                  <span className="note">
+                    <FormattedMessage id="booking.booking-doctor.attention" />
+                  </span>
+                  <p className="note-desc">
+                    <FormattedMessage id="booking.booking-doctor.note-info" />
+                  </p>
+                  <ul className="note-list">
+                    <li>
+                      <FormattedMessage id="booking.booking-doctor.info-1" />
+                    </li>
+                    <li>
+                      <FormattedMessage id="booking.booking-doctor.info-2" />
+                    </li>
+                  </ul>
+                </div>
               </div>
 
-              <div className="note-table">
-                <span className="note">
-                  <FormattedMessage id="booking.booking-doctor.attention" />
-                </span>
-                <p className="note-desc">
-                  <FormattedMessage id="booking.booking-doctor.note-info" />
-                </p>
-                <ul className="note-list">
-                  <li>
-                    <FormattedMessage id="booking.booking-doctor.info-1" />
-                  </li>
-                  <li>
-                    <FormattedMessage id="booking.booking-doctor.info-2" />
-                  </li>
-                </ul>
+              <div className="booking-modal-footer">
+                <button
+                  className="btn-booking-confirm col-12"
+                  onClick={() => this.handleConfirmBooking()}
+                >
+                  <FormattedMessage id="booking.booking-doctor.confirm-booking" />
+                </button>
               </div>
-            </div>
-
-            <div className="booking-modal-footer">
-              <button
-                className="btn-booking-confirm col-12"
-                onClick={() => this.handleConfirmBooking()}
-              >
-                <FormattedMessage id="booking.booking-doctor.confirm-booking" />
-              </button>
             </div>
           </div>
         </div>

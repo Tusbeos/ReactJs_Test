@@ -30,35 +30,37 @@ class About extends Component {
 
     return (
       <div className="section-share section-about">
-        <div className="section-about-header">
-          <FormattedMessage id="home-header.about-us" />
-        </div>
-
-        <div className="section-about-content">
-          <div className="content-left">
-            <div className="video-container">
-              <iframe
-                width="100%"
-                height="320px"
-                src="https://www.youtube.com/embed/FyDQljKtWnI"
-                title="BookingCare Media"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+        <div className="booking-container">
+          <div className="section-about-header">
+            <FormattedMessage id="home-header.about-us" />
           </div>
 
-          <div className="content-right">
-            {mediaLogos &&
-              mediaLogos.length > 0 &&
-              mediaLogos.map((item, index) => {
-                return (
-                  <div className="img-logo-container" key={index}>
-                    <img src={item.src} alt={item.alt} />
-                  </div>
-                );
-              })}
+          <div className="section-about-content">
+            <div className="content-left">
+              <div className="video-container">
+                <iframe
+                  width="100%"
+                  height="320px"
+                  src="https://www.youtube.com/embed/FyDQljKtWnI"
+                  title="BookingCare Media"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+
+            <div className="content-right">
+              {mediaLogos &&
+                mediaLogos.length > 0 &&
+                mediaLogos.map((item, index) => {
+                  return (
+                    <div className="img-logo-container" key={index}>
+                      <img src={item.src} alt={item.alt} />
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>

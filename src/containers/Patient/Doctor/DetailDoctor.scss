@@ -5,7 +5,6 @@
         display: flex;
         margin-top: 30px;
         margin-bottom: 30px;
-        padding: 0px 150px;
         .content-left{
             width: 150px;
             height: 150px;
@@ -38,7 +37,6 @@
     }
     .schedule-doctor{
         display: flex;
-        padding: 10px 100px;
         .content-left{
             width: 55%;
             border-right: 1px solid #ddd;
@@ -54,7 +52,7 @@
         border-top: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
         background-color: #f9f9f9;
-        padding: 50px 160px;
+        padding-top: 10px;
         h2{
             font-size: 22px;
             font-weight: 600;

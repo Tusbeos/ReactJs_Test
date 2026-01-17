@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getBase64FromBuffer } from "../../../utils/CommonUtils";
 import HomeHeader from "containers/HomePage/HomeHeader";
+import Breadcrumb from "../../../components/Breadcrumb";
+import "../../../components/Breadcrumb.scss";
 import "./DetailDoctor.scss";
 import { getDetailInfoDoctor } from "../../../services/doctorService";
 import { LANGUAGES } from "utils";
@@ -50,56 +52,66 @@ class DetailDoctor extends Component {
   render() {
     let { detailDoctor } = this.state;
 
+    const breadcrumbItems = [
+      { label: "Trang chủ", to: "/" },
+      { label: "Bác sĩ", to: "/doctor" },
+      { label: this.buildDoctorName(detailDoctor) || "Chi tiết bác sĩ" },
+    ];
+
     return (
       <>
         <HomeHeader isShowBanner={false} />
+        <Breadcrumb items={breadcrumbItems} />
         <div className="detail-doctor-container">
-          <div className="intro-doctor">
-            <div
-              className="content-left"
-              style={{
-                backgroundImage: `url(data:image/jpeg;base64,${
-                  detailDoctor.image ? detailDoctor.image : ""
-                })`,
-              }}
-            ></div>
-            <div className="content-right">
-              <div className="up">{this.buildDoctorName(detailDoctor)}</div>
-              <div className="down">
-                {detailDoctor.Markdown && detailDoctor.Markdown.description && (
-                  <span>{detailDoctor.Markdown.description}</span>
-                )}
+          <div className="booking-container">
+            <div className="intro-doctor">
+              <div
+                className="content-left"
+                style={{
+                  backgroundImage: `url(data:image/jpeg;base64,${
+                    detailDoctor.image ? detailDoctor.image : ""
+                  })`,
+                }}
+              ></div>
+              <div className="content-right">
+                <div className="up">{this.buildDoctorName(detailDoctor)}</div>
+                <div className="down">
+                  {detailDoctor.Markdown &&
+                    detailDoctor.Markdown.description && (
+                      <span>{detailDoctor.Markdown.description}</span>
+                    )}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="schedule-doctor">
-            <div className="content-left">
-              <DoctorSchedules
-                detailDoctorFromParent={
-                  detailDoctor && detailDoctor.id ? detailDoctor.id : -1
-                }
-              />
+            <div className="schedule-doctor">
+              <div className="content-left">
+                <DoctorSchedules
+                  detailDoctorFromParent={
+                    detailDoctor && detailDoctor.id ? detailDoctor.id : -1
+                  }
+                />
+              </div>
+              <div className="content-right">
+                <DoctorExtraInfo
+                  detailDoctorFromParent={
+                    detailDoctor && detailDoctor.id ? detailDoctor.id : -1
+                  }
+                />
+              </div>
             </div>
-            <div className="content-right">
-              <DoctorExtraInfo
-                detailDoctorFromParent={
-                  detailDoctor && detailDoctor.id ? detailDoctor.id : -1
-                }
-              />
+            <div className="detail-info">
+              {detailDoctor &&
+                detailDoctor.Markdown &&
+                detailDoctor.Markdown.contentHTML && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: detailDoctor.Markdown.contentHTML,
+                    }}
+                  ></div>
+                )}
             </div>
+            <div className="comment-doctor"></div>
           </div>
-          <div className="detail-info">
-            {detailDoctor &&
-              detailDoctor.Markdown &&
-              detailDoctor.Markdown.contentHTML && (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: detailDoctor.Markdown.contentHTML,
-                  }}
-                ></div>
-              )}
-          </div>
-          <div className="comment-doctor"></div>
         </div>
       </>
     );
