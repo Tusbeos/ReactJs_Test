@@ -64,7 +64,9 @@
       "edit": "Chỉnh sửa thông tin",
       "name-clinic": "Tên phòng khám",
       "address-clinic": "Địa chỉ phòng khám",
-      "note": "Ghi chú"
+      "note": "Ghi chú",
+      "select-clinic": "Chọn phòng khám",
+      "select-specialty": "Chọn chuyên khoa"
     },
     "manage-specialty": {
       "title": "Quản lý chuyên khoa",

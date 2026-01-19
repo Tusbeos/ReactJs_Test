@@ -9,6 +9,7 @@ import "react-markdown-editor-lite/lib/index.css";
 import Select from 'react-select';
 import { CRUD_ACTIONS, LANGUAGES } from "utils";
 import { getDetailInfoDoctor } from "../../../services/doctorService";
+import { handleGetAllSpecialties } from "../../../services/specialtyService";
 import { FormattedMessage, injectIntl } from "react-intl";
 import DoctorServices from "./DoctorServices";
 
@@ -36,20 +37,35 @@ class ManageDoctor extends Component {
       nameClinic: "",
       addressClinic: "",
       note: "",
+      listSpecialty: [],
+      selectedSpecialty: null,
+      selectedClinic: null,
     };
     this.serviceRef = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.getAllRequiredDoctorInfo();
     this.props.getAllDoctors();
+    try {
+      const res = await handleGetAllSpecialties();
+      if (res && res.errCode === 0 && Array.isArray(res.data)) {
+        const dataSelectSpecialty = this.buildDataSpecialtySelect(res.data);
+        this.setState({ listSpecialty: dataSelectSpecialty });
+      } else {
+        this.setState({ listSpecialty: [] });
+      }
+    } catch (e) {
+      console.error("Lỗi khi lấy chuyên khoa:", e);
+      this.setState({ listSpecialty: [] });
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.allDoctors !== this.props.allDoctors) {
       let dataSelect = this.buildDataInputSelect(
         this.props.allDoctors,
-        "USERS"
+        "USERS",
       );
       this.setState({
         listDoctors: dataSelect,
@@ -58,7 +74,7 @@ class ManageDoctor extends Component {
     if (prevProps.language !== this.props.language) {
       let dataSelect = this.buildDataInputSelect(
         this.props.allDoctors,
-        "USERS"
+        "USERS",
       );
       let { resPrice, resPayment, resProvince } =
         this.props.allRequiredDoctorInfo;
@@ -66,7 +82,7 @@ class ManageDoctor extends Component {
       let dataSelectPayment = this.buildDataInputSelect(resPayment, "PAYMENT");
       let dataSelectProvince = this.buildDataInputSelect(
         resProvince,
-        "PROVINCE"
+        "PROVINCE",
       );
       this.setState({
         listDoctors: dataSelect,
@@ -82,7 +98,7 @@ class ManageDoctor extends Component {
       let dataSelectPayment = this.buildDataInputSelect(resPayment, "PAYMENT");
       let dataSelectProvince = this.buildDataInputSelect(
         resProvince,
-        "PROVINCE"
+        "PROVINCE",
       );
       this.setState({
         listPrice: dataSelectPrice,
@@ -91,6 +107,23 @@ class ManageDoctor extends Component {
       });
     }
   }
+
+  buildDataSpecialtySelect = (inputData = []) => {
+    return inputData
+      .filter((item) => item && item.id && item.name)
+      .map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+  };
+
+  handleChangeSelectSpecialty = (selectedSpecialty) => {
+    this.setState({ selectedSpecialty });
+  };
+
+  handleChangeSelectClinic = (selectedClinic) => {
+    this.setState({ selectedClinic });
+  };
 
   buildDataInputSelect = (inputData, type) => {
     const { language } = this.props;
@@ -124,7 +157,7 @@ class ManageDoctor extends Component {
   handleChange = async (selectedOption) => {
     this.setState({ selectedOption });
 
-    let { listPrice, listPayment, listProvince } = this.state;
+    let { listPrice, listPayment, listProvince, listSpecialty } = this.state;
     let res = await getDetailInfoDoctor(selectedOption.value);
 
     if (res && res.errCode === 0 && res.data) {
@@ -136,7 +169,8 @@ class ManageDoctor extends Component {
         note = "";
       let selectedPayment = null,
         selectedPrice = null,
-        selectedProvince = null;
+        selectedProvince = null,
+        selectedSpecialty = null;
       let contentHTML = "",
         contentMarkdown = "",
         description = "";
@@ -155,14 +189,19 @@ class ManageDoctor extends Component {
         note = doctorInfo.note;
         hasOldData = true;
         selectedPayment = listPayment.find(
-          (item) => item.value === doctorInfo.paymentId
+          (item) => item.value === doctorInfo.paymentId,
         );
         selectedPrice = listPrice.find(
-          (item) => item.value === doctorInfo.priceId
+          (item) => item.value === doctorInfo.priceId,
         );
         selectedProvince = listProvince.find(
-          (item) => item.value === doctorInfo.provinceId
+          (item) => item.value === doctorInfo.provinceId,
         );
+        if (listSpecialty && listSpecialty.length > 0) {
+          selectedSpecialty = listSpecialty.find(
+            (item) => item.value === doctorInfo.specialtyId,
+          );
+        }
       }
       this.setState({
         contentHTML: contentHTML,
@@ -175,6 +214,7 @@ class ManageDoctor extends Component {
         selectedPayment: selectedPayment,
         selectedPrice: selectedPrice,
         selectedProvince: selectedProvince,
+        selectedSpecialty: selectedSpecialty,
       });
     } else {
       this.setState({
@@ -188,6 +228,7 @@ class ManageDoctor extends Component {
         selectedPayment: null,
         selectedPrice: null,
         selectedProvince: null,
+        selectedSpecialty: null,
       });
     }
   };
@@ -206,25 +247,27 @@ class ManageDoctor extends Component {
     const { intl } = this.props;
     if (!this.state.selectedOption) {
       alert(
-        intl.formatMessage({ id: "menu.manage-doctor.error-selected-doctor" })
+        intl.formatMessage({ id: "menu.manage-doctor.error-selected-doctor" }),
       );
       return;
     }
     if (!this.state.selectedPrice) {
       alert(
-        intl.formatMessage({ id: "menu.manage-doctor.error-selected-price" })
+        intl.formatMessage({ id: "menu.manage-doctor.error-selected-price" }),
       );
       return;
     }
     if (!this.state.selectedPayment) {
       alert(
-        intl.formatMessage({ id: "menu.manage-doctor.error-selected-payment" })
+        intl.formatMessage({ id: "menu.manage-doctor.error-selected-payment" }),
       );
       return;
     }
     if (!this.state.selectedProvince) {
       alert(
-        intl.formatMessage({ id: "menu.manage-doctor.error-selected-province" })
+        intl.formatMessage({
+          id: "menu.manage-doctor.error-selected-province",
+        }),
       );
       return;
     }
@@ -246,6 +289,9 @@ class ManageDoctor extends Component {
       nameClinic: this.state.nameClinic,
       addressClinic: this.state.addressClinic,
       note: this.state.note,
+      specialtyId: this.state.selectedSpecialty
+        ? this.state.selectedSpecialty.value
+        : null,
       action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
     });
 
@@ -266,6 +312,7 @@ class ManageDoctor extends Component {
   };
 
   render() {
+    let { intl } = this.props;
     let { hasOldData } = this.state;
     return (
       <div className="manage-doctor-container">
@@ -370,6 +417,41 @@ class ManageDoctor extends Component {
               onChange={(event) => this.handleOnChangeText(event, "note")}
               value={this.state.note}
             ></input>
+          </div>
+          <div className="col-4 form-group">
+            <label>
+              <FormattedMessage
+                id="menu.manage-doctor.select-specialty"
+                defaultMessage="Chuyên khoa"
+              />
+            </label>
+            <Select
+              value={this.state.selectedSpecialty}
+              onChange={this.handleChangeSelectSpecialty}
+              options={this.state.listSpecialty}
+              name="selectedSpecialty"
+              placeholder={intl.formatMessage({
+                id: "menu.manage-doctor.select-specialty",
+              })}
+            />
+          </div>
+
+          <div className="col-4 form-group">
+            <label>
+              <FormattedMessage
+                id="menu.manage-doctor.select-clinic"
+                defaultMessage="Phòng khám"
+              />
+            </label>
+            <Select
+              value={this.state.selectedClinic}
+              onChange={this.handleChangeSelectClinic}
+              options={[]}
+              name="selectedClinic"
+              placeholder={intl.formatMessage({
+                id: "menu.manage-doctor.select-clinic",
+              })}
+            />
           </div>
         </div>
         <div className="doctor-services row">

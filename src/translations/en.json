@@ -64,7 +64,9 @@
       "edit": "Edit Information",
       "name-clinic": "Clinic Name",
       "address-clinic": "Clinic Address",
-      "note": "Note"
+      "note": "Note",
+      "select-clinic": "Select Clinic",
+      "select-specialty": "Select Specialty"
     },
     "manage-specialty": {
       "title": "Manage specialty information",
