@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getBase64FromBuffer } from "../../../utils/CommonUtils";
+// ...existing code...
 import HomeHeader from "containers/HomePage/HomeHeader";
 import Breadcrumb from "../../../components/Breadcrumb";
 import "../../../components/Breadcrumb.scss";
@@ -61,7 +61,10 @@ class DetailDoctor extends Component {
     return (
       <>
         <HomeHeader isShowBanner={false} />
-        <Breadcrumb items={breadcrumbItems} />
+        <Breadcrumb
+          items={breadcrumbItems}
+          containerClassName="booking-container"
+        />
         <div className="detail-doctor-container">
           <div className="booking-container">
             <div className="intro-doctor">

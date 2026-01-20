@@ -16,11 +16,15 @@ class DoctorExtraInfo extends Component {
     this.state = {
       isShowDetailInfo: false,
       extraInfo: {},
-      listDoctorServices: {},
+      listDoctorServices: [],
     };
   }
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    if (this.props.detailDoctorFromParent) {
+      await this.fetchExtraInfo(this.props.detailDoctorFromParent);
+    }
+  }
 
   async componentDidUpdate(prevProps, prevState, snapShot) {
     if (this.props.language !== prevProps.language) {
@@ -28,22 +32,29 @@ class DoctorExtraInfo extends Component {
     if (
       this.props.detailDoctorFromParent !== prevProps.detailDoctorFromParent
     ) {
-      let data = await getExtraInfoDoctorById(
-        this.props.detailDoctorFromParent
-      );
-      let listDoctorServices = await getAllDoctorServices(
-        this.props.detailDoctorFromParent
-      );
+      await this.fetchExtraInfo(this.props.detailDoctorFromParent);
+    }
+  }
+
+  fetchExtraInfo = async (doctorId) => {
+    try {
+      let data = await getExtraInfoDoctorById(doctorId);
+      let listDoctorServices = await getAllDoctorServices(doctorId);
       if (data && data.errCode === 0) {
         this.setState({
           extraInfo: data && data.data ? data.data : {},
           listDoctorServices: listDoctorServices.data
             ? listDoctorServices.data
-            : {},
+            : [],
         });
       }
+    } catch (e) {
+      this.setState({
+        extraInfo: {},
+        listDoctorServices: [],
+      });
     }
-  }
+  };
 
   showHideDetailInfo = (status) => {
     this.setState({

@@ -86,7 +86,10 @@ class SpecialtyList extends Component {
     return (
       <>
         <HomeHeader />
-        <Breadcrumb items={breadcrumbItems} />
+        <Breadcrumb
+          items={breadcrumbItems}
+          containerClassName="booking-container"
+        />
         <div className="booking-container">
           <div className="specialty-list-container">
             <h1 className="specialty-list-title">Chuyên khoa dành cho bạn</h1>

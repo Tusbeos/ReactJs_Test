@@ -10,7 +10,6 @@
         flex-direction: column;
         padding-bottom: 20px;
 
-
         .doctor-info-section {
             justify-content: center;
             background-color: #f6f6f6;
@@ -81,7 +80,7 @@
         }
         
         .price-section {
-            width: 40%;
+            width: 60%;
             margin: 0 auto;
             padding: 10px 0px;
             font-size: 16px;
@@ -105,7 +104,7 @@
     }
 
     .booking-modal-body {
-        width: 40%;  
+        width: 60%;  
         margin: 0 auto;
     .row {
         display: flex;
@@ -212,7 +211,7 @@
             }
 
             .btn-booking-confirm {
-                width: 40%; 
+                width: 60%; 
                 margin: 0 auto;
                 background-color: #ffc107;
                 color:white;
@@ -222,9 +221,9 @@
     }
     }
     .more-info {
-    width: 40%; 
+    width: 60%; 
     margin: 0 auto;
-    background-color: #f6f6f6; 
+    background-color: #dbd3d36c; 
     padding: 15px;
     border-radius: 5px;
     margin-top: 10px; 
@@ -248,7 +247,7 @@
     }
 }
     .note-booking {
-    width: 40%; 
+    width: 60%; 
     margin: 10px auto;
     
     .note-title{
