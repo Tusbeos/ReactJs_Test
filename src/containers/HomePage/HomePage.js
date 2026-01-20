@@ -5,6 +5,7 @@ import Specialty from "./Section/Specialty";
 import OutStandingDoctor from "./Section/OutStandingDoctor";
 import Handbook from "./Section/Handbook";
 import About from "./Section/About";
+import MedicalFacility from "./Section/MedicalFacility";
 import HomeFooter from "./HomeFooter";
 import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
@@ -63,7 +64,7 @@ class HomePage extends Component {
       <div className="hide-caret">
         <HomeHeader isShowBanner={true} />
         <Specialty settings={settings} />
-        {/* <MedicalFacility settings={settings} /> */}
+        <MedicalFacility settings={settings} />
         <OutStandingDoctor settings={settings} />
         <Handbook settings={settings} />
 

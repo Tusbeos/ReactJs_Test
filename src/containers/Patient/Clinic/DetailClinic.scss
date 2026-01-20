@@ -1,0 +1,231 @@
+.detail-clinic-wrapper {
+  background-color: #f9f9f9; // Nền tổng thể màu xám rất nhạt
+  padding-bottom: 80px; // Chừa chỗ cho Sticky Footer
+
+  .booking-container {
+    width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+    @media (max-width: 1200px) { width: 100%; }
+  }
+
+  /* 1. HERO BANNER */
+  .clinic-hero-container {
+    position: relative;
+    
+    .hero-cover {
+      height: 380px; // Chiều cao giống ảnh mẫu
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      display: flex;
+      align-items: flex-end; // Đẩy nội dung xuống đáy
+
+      .overlay-gradient {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        // Gradient đen mờ dần từ dưới lên để chữ trắng dễ đọc
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%);
+      }
+
+      .hero-content {
+        position: relative; // Để nổi lên trên overlay
+        z-index: 2;
+        padding-bottom: 20px;
+        color: #fff;
+
+        .profile-box {
+          display: flex;
+          align-items: flex-end; // Logo và Text căn đáy với nhau
+
+          .clinic-logo {
+            width: 120px;
+            height: 120px;
+            background-color: #fff;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 8px; // Logo hình vuông bo góc nhẹ (giống ảnh Việt Đức)
+            margin-right: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+          }
+
+          .clinic-info-header {
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+
+            .clinic-name-hero {
+              font-size: 30px;
+              font-weight: 600;
+              margin: 0 0 8px 0;
+            }
+
+            .clinic-addr-hero {
+              font-size: 14px;
+              opacity: 0.95;
+              i { margin-right: 6px; }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* 2. NAV TABS */
+  .clinic-nav-tabs {
+    background: #fff;
+    border-bottom: 1px solid #e1e1e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+    .tab-list {
+      display: flex;
+      gap: 35px;
+      
+      .tab-item {
+        padding: 15px 0;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+        color: #444;
+        cursor: pointer;
+        position: relative;
+        transition: color 0.2s;
+
+        &:hover, &.active {
+          color: #45c3d2; // Màu xanh đặc trưng BookingCare
+          
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #45c3d2;
+          }
+        }
+      }
+    }
+  }
+
+  /* 3. BODY CONTENT */
+  .clinic-body-section {
+    padding-top: 30px;
+
+    .intro-section {
+        margin-bottom: 30px;
+
+        .notice-box-yellow {
+            background-color: #fff4d8;
+            padding: 20px;
+            border-radius: 4px;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .info-box-blue {
+            background-color: #dbf4f8; // Nền xanh nhạt
+            padding: 20px;
+            border-radius: 4px;
+            
+            p { font-weight: 600; margin-bottom: 10px; color: #333; }
+            ul {
+                padding-left: 20px;
+                li { margin-bottom: 5px; color: #333; font-size: 14px;}
+            }
+        }
+    }
+
+    .clinic-html-content {
+      background: #fff; // Nội dung chính nền trắng
+      padding: 30px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      
+      font-size: 15px;
+      line-height: 1.7;
+      color: #333;
+      
+      img { max-width: 100%; height: auto; margin: 15px 0; }
+      h2, h3 { color: #333; margin: 20px 0 10px; font-weight: bold; }
+    }
+  }
+
+  /* 4. AGENT STICKY FOOTER */
+  .agent-sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1); // Bóng đổ ngược lên trên
+    z-index: 999;
+    padding: 12px 0;
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .agent-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .vr-line {
+            width: 1px;
+            height: 30px;
+            background: #ddd;
+        }
+
+        .agent-stat {
+          display: flex;
+          flex-direction: column;
+
+          .label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 2px;}
+          .value { font-size: 16px; font-weight: 700; color: #333; }
+          .highlight { color: #28a745; }
+        }
+      }
+
+      .agent-actions {
+        display: flex;
+        gap: 15px;
+
+        button {
+          height: 44px;
+          padding: 0 25px;
+          border-radius: 22px; // Nút bo tròn 2 đầu
+          border: none;
+          font-weight: 600;
+          cursor: pointer;
+          font-size: 14px;
+          transition: 0.2s;
+        }
+
+        .btn-support {
+          background-color: #f1f1f1;
+          color: #333;
+          &:hover { background-color: #e5e5e5; }
+          i { margin-right: 5px; }
+        }
+
+        .btn-book-now {
+          background-color: #45c3d2; // Màu xanh BookingCare
+          color: #fff;
+          text-transform: uppercase;
+          box-shadow: 0 4px 10px rgba(69, 195, 210, 0.4);
+
+          &:hover { 
+              background-color: #38aebc;
+              transform: translateY(-1px);
+          }
+        }
+      }
+    }
+  }
+}

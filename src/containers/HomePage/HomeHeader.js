@@ -11,6 +11,11 @@ class HomeHeader extends Component {
       this.props.history.push("/specialty");
     }
   };
+  handleClinicClick = () => {
+    if (this.props.history) {
+      this.props.history.push("/clinic/detail-clinic/:id");
+    }
+  };
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
@@ -47,7 +52,11 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.search-doctor" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={this.handleClinicClick}
+                style={{ cursor: "pointer" }}
+              >
                 <>
                   <b>
                     <FormattedMessage id="home-header.medical-facility" />

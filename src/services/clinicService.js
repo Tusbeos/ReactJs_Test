@@ -5,4 +5,14 @@ const createNewClinicService = (data) => {
   return axios.post("/api/create-new-clinic", data);
 };
 
-export { createNewClinicService };
+const getDetailClinicById = (clinicId) => {
+  return axios.get("/api/get-detail-clinic-by-id", {
+    params: { id: clinicId },
+  });
+};
+
+const handleGetAllClinics = () => {
+  return axios.get("/api/get-all-clinic");
+};
+
+export { createNewClinicService, getDetailClinicById, handleGetAllClinics };
