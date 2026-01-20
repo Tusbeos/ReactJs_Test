@@ -1,4 +1,11 @@
 {
+  "components": {
+    "doctor-card": {
+      "no-schedule": "Không có lịch hẹn trong thời gian này",
+      "no-doctors": "Chưa có bác sĩ phù hợp",
+      "more-info": "Xem thêm"
+    }
+  },
   "home-header": {
     "speciality": "Chuyên khoa",
     "search-doctor": "Tìm bác sĩ theo chuyên khoa",
@@ -91,7 +98,9 @@
     "image": "Ảnh đại diện",
     "role": "Vai trò",
     "save": "Lưu User",
-    "edit": "Cập nhật User"
+    "edit": "Cập nhật User",
+    "loading": "Đang tải...",
+    "upload-image": "Tải ảnh"
   },
   "manage-schedule": {
     "title": "Quản lý lịch khám của bác sĩ",
@@ -114,6 +123,14 @@
       "hide-price": "Ẩn bảng giá",
       "service-price": "GIÁ DỊCH VỤ LIÊN QUAN:",
       "no-services": "Không có dịch vụ nào"
+    }
+  },
+  "specialty": {
+    "detail-specialty": {
+      "select-province": "Chọn tỉnh thành",
+      "all": "Toàn quốc",
+      "see-more": "Xem thêm",
+      "hide-detail": "Thu gọn"
     }
   },
   "booking": {

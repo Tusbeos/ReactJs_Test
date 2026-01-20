@@ -1,4 +1,11 @@
 {
+  "components": {
+    "doctor-card": {
+      "no-schedule": "No schedule available for this day",
+      "no-doctors": "No suitable doctors available",
+      "more-info": "View details"
+    }
+  },
   "home-header": {
     "speciality": "Medical specialty",
     "search-doctor": "Search doctor by specialty",
@@ -92,7 +99,9 @@
     "image": "Avatar",
     "role": "Role",
     "save": "Save User",
-    "edit": "Edit User"
+    "edit": "Edit User",
+    "loading": "Loading...",
+    "upload-image": "Upload Image"
   },
   "manage-schedule": {
     "title": "Manage doctor's schedule",
@@ -115,6 +124,14 @@
       "hide-price": "Hide price",
       "service-price": "Related service prices:",
       "no-services": "No services available"
+    }
+  },
+  "specialty": {
+    "detail-specialty": {
+      "select-province": "Select province",
+      "all": "All",
+      "see-more": "See more",
+      "hide-detail": "Hide details"
     }
   },
   "booking": {

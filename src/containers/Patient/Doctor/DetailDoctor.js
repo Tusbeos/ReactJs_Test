@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// ...existing code...
 import HomeHeader from "containers/HomePage/HomeHeader";
 import Breadcrumb from "../../../components/Breadcrumb";
 import "../../../components/Breadcrumb.scss";
@@ -30,9 +29,7 @@ class DetailDoctor extends Component {
           detailDoctor: res.data,
         });
       }
-    } catch (e) {
-      console.error("Lỗi khi lấy chi tiết bác sĩ:", e);
-    }
+    } catch (e) {}
   }
 
   buildDoctorName = (detailDoctor) => {
@@ -53,9 +50,21 @@ class DetailDoctor extends Component {
     let { detailDoctor } = this.state;
 
     const breadcrumbItems = [
-      { label: "Trang chủ", to: "/" },
-      { label: "Bác sĩ", to: "/doctor" },
-      { label: this.buildDoctorName(detailDoctor) || "Chi tiết bác sĩ" },
+      {
+        label: this.props.language === LANGUAGES.VI ? "Trang chủ" : "Home",
+        to: "/home",
+      },
+      {
+        label: this.props.language === LANGUAGES.VI ? "Bác sĩ" : "Doctor",
+        to: "/doctor",
+      },
+      {
+        label:
+          this.buildDoctorName(detailDoctor) ||
+          (this.props.language === LANGUAGES.VI
+            ? "Chi tiết bác sĩ"
+            : "Doctor Detail"),
+      },
     ];
 
     return (

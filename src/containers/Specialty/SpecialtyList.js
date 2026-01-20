@@ -6,6 +6,7 @@ import HomeHeader from "containers/HomePage/HomeHeader";
 import { getBase64FromBuffer } from "../../utils/CommonUtils";
 import Breadcrumb from "../../components/Breadcrumb";
 import "../../components/Breadcrumb.scss";
+import { LANGUAGES } from "utils";
 
 class SpecialtyItem extends Component {
   render() {
@@ -73,15 +74,21 @@ class SpecialtyList extends Component {
 
   handleViewDetailSpecialty = (id) => {
     if (this.props.history) {
-      this.props.history.push(`/detail-specialty/${id}`);
+      this.props.history.push(`/specialty/detail-specialty/${id}`);
     }
   };
 
   render() {
     const { specialties } = this.state;
     const breadcrumbItems = [
-      { label: "Trang chủ", to: "/" },
-      { label: "Chuyên khoa" },
+      {
+        label: this.props.language === LANGUAGES.VI ? "Trang chủ" : "Home",
+        to: "/home",
+      },
+      {
+        label:
+          this.props.language === LANGUAGES.VI ? "Chuyên khoa" : "Specialty",
+      },
     ];
     return (
       <>

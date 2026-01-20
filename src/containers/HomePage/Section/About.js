@@ -12,7 +12,6 @@ import logo6 from "../../../assets/about/165432-vtcnewslogosvg.png";
 class About extends Component {
   constructor(props) {
     super(props);
-    // Khai báo danh sách logo ở đây cho gọn
     this.state = {
       mediaLogos: [
         { src: logo1, alt: "Dân trí" },

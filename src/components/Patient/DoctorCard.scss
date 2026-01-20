@@ -5,11 +5,11 @@ $bg-white: #ffffff;
 $border-color: #eee;
 
 .doctor-specialty-container {
-    background-color: #f5f5f5; 
-    // Sửa lại background tổng thể xám nhẹ để nổi bật thẻ trắng
+    background-color: #f5f5f5;
 
     .doctor-specialty-filter {
-        margin-bottom: 20px;
+        background-color: $bg-white;
+        padding:0px 0px 20px 0px;
         .province-select {
             padding: 10px;
             border-radius: 4px;
@@ -106,7 +106,6 @@ $border-color: #eee;
             }
         }
 
-        /* --- CỘT PHẢI --- */
         .doctor-card-right {
             width: 50%;
             padding-left: 15px;
@@ -145,7 +144,7 @@ $border-color: #eee;
                     margin-bottom: 10px;
 
                     .time-btn {
-                        background-color: #fff04b; // Màu vàng nhạt giống BookingCare
+                        background-color: #fff04b; 
                         border: none;
                         padding: 10px 15px;
                         font-size: 14px;

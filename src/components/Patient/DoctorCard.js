@@ -37,8 +37,10 @@ class DoctorCard extends Component {
     if (this.props.language !== prevProps.language) {
       this.setState({});
     }
-    if (this.props.specialtyId !== prevProps.specialtyId || 
-        this.props.clinicId !== prevProps.clinicId) {
+    if (
+      this.props.specialtyId !== prevProps.specialtyId ||
+      this.props.clinicId !== prevProps.clinicId
+    ) {
       await this.fetchDoctors();
     }
   }
@@ -68,16 +70,16 @@ class DoctorCard extends Component {
       if (specialtyId) {
         res = await HandleGetDoctorSpecialtyById(specialtyId);
       } else if (clinicId) {
-        //  res = await handleGetDetailClinicById(clinicId); 
+        //  res = await handleGetDetailClinicById(clinicId);
       } else {
         res = await handleGetAllDoctorsService();
       }
       if (res && res.errCode === 0) {
         let list = [];
-        if(clinicId && res.data && res.data.doctorClinic) {
-            list = res.data.doctorClinic;
+        if (clinicId && res.data && res.data.doctorClinic) {
+          list = res.data.doctorClinic;
         } else if (Array.isArray(res.data)) {
-            list = res.data;
+          list = res.data;
         }
 
         const detailPromises = list.map((item) => {
@@ -99,7 +101,7 @@ class DoctorCard extends Component {
           .map((item) => this.normalizeDoctor(item.data));
 
         const provinceOptions = this.buildProvinceOptions(doctors);
-        
+
         this.setState(
           {
             doctors,
@@ -114,10 +116,14 @@ class DoctorCard extends Component {
                 this.handleFetchSchedule(doc.id, defaultDate);
               }
             });
-          }
+          },
         );
       } else {
-        this.setState({ doctors: [], filteredDoctors: [], provinceOptions: [] });
+        this.setState({
+          doctors: [],
+          filteredDoctors: [],
+          provinceOptions: [],
+        });
       }
     } catch (e) {
       console.error(e);
@@ -129,18 +135,21 @@ class DoctorCard extends Component {
     const { language } = this.props;
     const positionVi = data.positionData?.value_Vi || "";
     const positionEn = data.positionData?.value_En || "";
-    const nameVi = `${positionVi} ${data.lastName || ""} ${data.firstName || ""}`.trim();
-    const nameEn = `${positionEn} ${data.firstName || ""} ${data.lastName || ""}`.trim();
+    const nameVi =
+      `${positionVi} ${data.lastName || ""} ${data.firstName || ""}`.trim();
+    const nameEn =
+      `${positionEn} ${data.firstName || ""} ${data.lastName || ""}`.trim();
     const name = language === LANGUAGES.VI ? nameVi : nameEn;
 
     return {
       id: data.id,
       name,
-      desc: data.Markdown?.description || "Chưa có mô tả", 
+      desc: data.Markdown?.description || "Chưa có mô tả",
       image: data.image ? getBase64FromBuffer(data.image) : "",
       province:
         data.DoctorInfo?.provinceTypeData?.value_Vi ||
-        data.DoctorInfo?.provinceTypeData?.value_En || "",
+        data.DoctorInfo?.provinceTypeData?.value_En ||
+        "",
       address: data.DoctorInfo?.addressClinic || "",
     };
   };
@@ -199,127 +208,167 @@ class DoctorCard extends Component {
     });
   };
 
-  render() {
+  handleViewDetailDoctor = (doctorId) => {
+    if (this.props.history) {
+      this.props.history.push(`/detail-doctor/${doctorId}`);
+    }
+  };
+
+  handleChangeDate = (doctorId, event) => {
+    const dateValue = Number(event.target.value);
+    this.handleFetchSchedule(doctorId, dateValue);
+  };
+
+  renderProvinceOptions = () => {
+    const { provinceOptions, selectedProvince } = this.state;
+    return (
+      <select
+        className="province-select"
+        value={selectedProvince}
+        onChange={this.handleFilterProvince}
+      >
+        {provinceOptions.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  renderScheduleTimes = (schedules, doctorId) => {
+    const { language } = this.props;
+    if (schedules && schedules.length > 0) {
+      return schedules.map((item, idx) => (
+        <button
+          className="time-btn"
+          key={idx}
+          onClick={() => this.handleBookingDoctor(item, doctorId)}
+        >
+          {language === LANGUAGES.VI
+            ? item.timeTypeData?.value_Vi
+            : item.timeTypeData?.value_En}
+        </button>
+      ));
+    }
+    return (
+      <div className="no-schedule">
+        <FormattedMessage id="patient.detail-doctor.no-schedule" />
+      </div>
+    );
+  };
+
+  renderDoctorList = () => {
     const {
       filteredDoctors,
       schedulesByDoctor,
       selectedDateByDoctor,
       dateOptions,
-      provinceOptions,
-      selectedProvince,
     } = this.state;
     const { language, clinicId } = this.props;
-    
     const displayDoctors = filteredDoctors || [];
+
+    if (displayDoctors.length === 0) {
+      return (
+        <div className="doctor-empty">
+          <FormattedMessage id="components.doctor-card.no-doctors" />
+        </div>
+      );
+    }
+
+    return displayDoctors.map((doctor) => {
+      const schedules = schedulesByDoctor[doctor.id] || [];
+      const selectedDate =
+        selectedDateByDoctor[doctor.id] || dateOptions[0]?.value;
+
+      return (
+        <div className="doctor-card" key={doctor.id}>
+          <div className="doctor-card-left">
+            <div className="doctor-intro">
+              <div
+                className="doctor-avatar"
+                style={{ backgroundImage: `url(${doctor.image})` }}
+                onClick={() => this.handleViewDetailDoctor(doctor.id)}
+              ></div>
+              <div className="doctor-info">
+                <div
+                  className="doctor-name"
+                  onClick={() => this.handleViewDetailDoctor(doctor.id)}
+                >
+                  {doctor.name}
+                </div>
+                <div className="doctor-desc">{doctor.desc}</div>
+                <div className="location-text">
+                  <i className="fas fa-map-marker-alt"></i>{" "}
+                  {doctor.province || "Hà Nội"}
+                </div>
+                <span
+                  className="doctor-view-more"
+                  onClick={() => this.handleViewDetailDoctor(doctor.id)}
+                >
+                  <FormattedMessage id="components.doctor-card.more-info" />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="doctor-card-right">
+            <div className="doctor-schedule">
+              <div className="schedule-header">
+                <select
+                  className="schedule-select"
+                  value={selectedDate}
+                  onChange={(e) => this.handleChangeDate(doctor.id, e)}
+                >
+                  {dateOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="schedule-title">
+                <i className="fas fa-calendar-alt"></i>
+                <span>
+                  <FormattedMessage
+                    id="patient.detail-doctor.schedule"
+                    defaultMessage="LỊCH KHÁM"
+                  />
+                </span>
+              </div>
+
+              <div className="schedule-times">
+                {this.renderScheduleTimes(schedules, doctor.id)}
+              </div>
+
+              <div className="book-free-text">
+                <FormattedMessage id="patient.detail-doctor.choose" />{" "}
+                <i className="far fa-hand-point-up"></i>{" "}
+                <FormattedMessage id="patient.detail-doctor.book-free" />
+              </div>
+            </div>
+
+            <div className="doctor-extra-info-container">
+              <DoctorExtraInfo detailDoctorFromParent={doctor.id} />
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  render() {
+    const { clinicId } = this.props;
 
     return (
       <div className="doctor-specialty-container">
         {!clinicId && (
-            <div className="doctor-specialty-filter">
-            <select
-                className="province-select"
-                value={selectedProvince}
-                onChange={this.handleFilterProvince}
-            >
-                {provinceOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                </option>
-                ))}
-            </select>
-            </div>
+          <div className="doctor-specialty-filter">
+            {this.renderProvinceOptions()}
+          </div>
         )}
-
-        <div className="doctor-specialty-list">
-          {displayDoctors.length > 0 ? (
-            displayDoctors.map((doctor) => {
-              const schedules = schedulesByDoctor[doctor.id] || [];
-              const selectedDate = selectedDateByDoctor[doctor.id] || dateOptions[0]?.value;
-              
-              return (
-                <div className="doctor-card" key={doctor.id}>
-                  <div className="doctor-card-left">
-                    <div className="doctor-intro">
-                        <div
-                        className="doctor-avatar"
-                        style={{ backgroundImage: `url(${doctor.image})` }}
-                        onClick={() => this.props.history.push(`/detail-doctor/${doctor.id}`)}
-                        ></div>
-                        <div className="doctor-info">
-                            <div className="doctor-name" onClick={() => this.props.history.push(`/detail-doctor/${doctor.id}`)}>
-                                {doctor.name}
-                            </div>
-                            <div className="doctor-desc">{doctor.desc}</div>
-                            <div className="location-text">
-                                <i className="fas fa-map-marker-alt"></i> {doctor.province || "Hà Nội"}
-                            </div>
-                            <span
-                                className="doctor-view-more"
-                                onClick={() => this.props.history.push(`/detail-doctor/${doctor.id}`)}
-                            >
-                                <FormattedMessage id="homepage.more-info" defaultMessage="Xem thêm" />
-                            </span>
-                        </div>
-                    </div>
-                  </div>
-
-                  <div className="doctor-card-right">
-                    <div className="doctor-schedule">
-                      <div className="schedule-header">
-                         <select
-                            className="schedule-select"
-                            value={selectedDate}
-                            onChange={(e) => this.handleFetchSchedule(doctor.id, Number(e.target.value))}
-                        >
-                            {dateOptions.map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                                {opt.label}
-                            </option>
-                            ))}
-                        </select>
-                      </div>
-                      
-                      <div className="schedule-title">
-                        <i className="fas fa-calendar-alt"></i>
-                        <span><FormattedMessage id="patient.detail-doctor.schedule" defaultMessage="LỊCH KHÁM" /></span>
-                      </div>
-
-                      <div className="schedule-times">
-                        {schedules && schedules.length > 0 ? (
-                          schedules.map((item, idx) => (
-                            <button
-                              className="time-btn"
-                              key={idx}
-                              onClick={() => this.handleBookingDoctor(item, doctor.id)}
-                            >
-                              {language === LANGUAGES.VI
-                                ? item.timeTypeData?.value_Vi
-                                : item.timeTypeData?.value_En}
-                            </button>
-                          ))
-                        ) : (
-                          <div className="no-schedule"><FormattedMessage id="patient.detail-doctor.no-schedule" defaultMessage="Không có lịch hẹn trong thời gian này" /></div>
-                        )}
-                      </div>
-                      
-                      <div className="book-free-text">
-                        <FormattedMessage id="patient.detail-doctor.choose" defaultMessage="Chọn" /> 
-                        <i className="far fa-hand-point-up"></i> 
-                        <FormattedMessage id="patient.detail-doctor.book-free" defaultMessage="và đặt (Miễn phí)" />
-                      </div>
-                    </div>
-                    
-                    <div className="doctor-extra-info-container">
-                        <DoctorExtraInfo detailDoctorFromParent={doctor.id} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="doctor-empty">Chưa có bác sĩ phù hợp</div>
-          )}
-        </div>
+        <div className="doctor-specialty-list">{this.renderDoctorList()}</div>
       </div>
     );
   }

@@ -229,7 +229,8 @@ class UserRedux extends Component {
                 </span>
                 {isLoadingGenderRedux && (
                   <span className="loading-text ml-3">
-                    <i className="fas fa-spinner fa-spin"></i> Loading data...
+                    <i className="fas fa-spinner fa-spin"></i>{" "}
+                    <FormattedMessage id="manage-user.loading" />
                   </span>
                 )}
               </div>
@@ -394,8 +395,8 @@ class UserRedux extends Component {
                       />
                       {!this.state.previewImgURL && (
                         <span className="upload-text">
-                          <i className="fas fa-cloud-upload-alt"></i> Tải ảnh
-                          đại diện
+                          <i className="fas fa-cloud-upload-alt"></i>{" "}
+                          <FormattedMessage id="manage-user.upload-image" />
                         </span>
                       )}
                     </div>
@@ -430,7 +431,8 @@ class UserRedux extends Component {
                 <div className="info-card">
                   <div className="card-header">
                     <span>
-                      <i className="fas fa-users"></i> Danh sách người dùng
+                      <i className="fas fa-users"></i>{" "}
+                      <FormattedMessage id="manage-user.title" />
                     </span>
                   </div>
                   <div className="card-body p-0">

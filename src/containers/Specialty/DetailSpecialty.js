@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
+
+import { injectIntl } from "react-intl";
 import { handleGetAllSpecialties } from "../../services/specialtyService";
 import HomeHeader from "containers/HomePage/HomeHeader";
 import Breadcrumb from "../../components/Breadcrumb";
@@ -7,6 +9,7 @@ import "../../components/Breadcrumb.scss";
 import { getBase64FromBuffer } from "../../utils/CommonUtils";
 import "./DetailSpecialty.scss";
 import DoctorCard from "components/Patient/DoctorCard";
+import { LANGUAGES } from "utils";
 
 class DetailSpecialty extends Component {
   constructor(props) {
@@ -43,15 +46,27 @@ class DetailSpecialty extends Component {
   };
 
   render() {
+    let intl = this.props.intl;
     const { specialty, isShowDetail } = this.state;
     let backgroundImage = specialty ? `url(${specialty.imageUrl})` : "";
 
     const breadcrumbItems = [
-      { label: "Trang chủ", to: "/" },
-      { label: "Chuyên khoa", to: "/specialty" },
+      {
+        label: this.props.language === LANGUAGES.VI ? "Trang chủ" : "Home",
+        to: "/home",
+      },
       {
         label:
-          specialty && specialty.name ? specialty.name : "Chi tiết chuyên khoa",
+          this.props.language === LANGUAGES.VI ? "Chuyên khoa" : "Specialty",
+        to: "/specialty",
+      },
+      {
+        label:
+          specialty && specialty.name
+            ? specialty.name
+            : this.props.language === LANGUAGES.VI
+              ? "Chi tiết chuyên khoa"
+              : "Specialty Detail",
       },
     ];
 
@@ -91,7 +106,13 @@ class DetailSpecialty extends Component {
                         onClick={() => this.handleShowHideDetail()}
                         className="view-more-btn"
                       >
-                        {isShowDetail ? "Thu gọn" : "Xem thêm"}
+                        {isShowDetail
+                          ? intl.formatMessage({
+                              id: "specialty.detail-specialty.hide-detail",
+                            })
+                          : intl.formatMessage({
+                              id: "specialty.detail-specialty.see-more",
+                            })}
                       </span>
                     </div>
                   </div>
@@ -106,4 +127,4 @@ class DetailSpecialty extends Component {
   }
 }
 
-export default withRouter(DetailSpecialty);
+export default withRouter(injectIntl(DetailSpecialty));
