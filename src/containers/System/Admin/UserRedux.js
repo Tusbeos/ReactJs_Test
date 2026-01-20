@@ -84,6 +84,7 @@ class UserRedux extends Component {
         roleArr: arrRoles,
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
         avatar: "",
+        previewImgURL: "", // Reset ảnh preview
         actions: CRUD_ACTIONS.CREATE,
       });
     }
@@ -112,7 +113,6 @@ class UserRedux extends Component {
     if (isValid === false) return;
     let { actions } = this.state;
     if (actions === CRUD_ACTIONS.CREATE) {
-      //fire redux create user
       this.props.createNewUser({
         email: this.state.email,
         password: this.state.password,
@@ -125,9 +125,7 @@ class UserRedux extends Component {
         positionId: this.state.position,
         avatar: this.state.avatar,
       });
-      console.log("check state: ", this.state);
     } else if (actions === CRUD_ACTIONS.EDIT) {
-      //fire redux edit user
       this.props.editAUserRedux({
         id: this.state.userEditId,
         email: this.state.email,
@@ -141,7 +139,6 @@ class UserRedux extends Component {
         positionId: this.state.position,
         avatar: this.state.avatar,
       });
-      console.log("check state: ", this.state);
     }
   };
 
@@ -171,9 +168,7 @@ class UserRedux extends Component {
   onChangeInput = (event, id) => {
     let copyState = { ...this.state };
     copyState[id] = event.target.value;
-    this.setState({
-      ...copyState,
-    });
+    this.setState({ ...copyState });
   };
 
   handleEditUserFromParent = (user) => {
@@ -217,6 +212,7 @@ class UserRedux extends Component {
       role,
       avatar,
     } = this.state;
+
     return (
       <div className="user-crud-redux-container">
         <div className="title">
@@ -225,236 +221,231 @@ class UserRedux extends Component {
 
         <div className="user-redux-body">
           <div className="container">
-            <div className="row">
-              <div className="col-12 my-3">
-                <FormattedMessage id="manage-user.add" />
+            <div className="info-card">
+              <div className="card-header">
+                <span>
+                  <i className="fas fa-user-plus"></i>{" "}
+                  <FormattedMessage id="manage-user.add" />
+                </span>
+                {isLoadingGenderRedux && (
+                  <span className="loading-text ml-3">
+                    <i className="fas fa-spinner fa-spin"></i> Loading data...
+                  </span>
+                )}
               </div>
 
-              <div className="col-12 my-3">
-                {isLoadingGenderRedux === true ? "Loading Gender" : ""}
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.email" />
-                </label>
-                <input
-                  className="form-control"
-                  type="email"
-                  value={email}
-                  onChange={(event) => {
-                    this.onChangeInput(event, "email");
-                  }}
-                  disabled={
-                    this.state.actions === CRUD_ACTIONS.EDIT ? true : false
-                  }
-                />
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.password" />
-                </label>
-                <input
-                  className="form-control"
-                  type="password"
-                  value={password}
-                  onChange={(event) => {
-                    this.onChangeInput(event, "password");
-                  }}
-                  disabled={
-                    this.state.actions === CRUD_ACTIONS.EDIT ? true : false
-                  }
-                />
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.first-name" />
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  value={firstName}
-                  onChange={(event) => {
-                    this.onChangeInput(event, "firstName");
-                  }}
-                />
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.last-name" />
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  value={lastName}
-                  onChange={(event) => {
-                    this.onChangeInput(event, "lastName");
-                  }}
-                />
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.phone-number" />
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  value={phoneNumber}
-                  onChange={(event) => {
-                    this.onChangeInput(event, "phoneNumber");
-                  }}
-                />
-              </div>
-
-              <div className="col-9">
-                <label>
-                  <FormattedMessage id="manage-user.address" />
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  value={address}
-                  onChange={(event) => {
-                    this.onChangeInput(event, "address");
-                  }}
-                />
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.gender" />
-                </label>
-                <select
-                  className="form-select"
-                  onChange={(event) => {
-                    this.onChangeInput(event, "gender");
-                  }}
-                  value={gender}
-                >
-                  {genders &&
-                    genders.length > 0 &&
-                    genders.map((item, index) => {
-                      return (
-                        <option key={index} value={item.keyMap}>
-                          {language === LANGUAGES.VI
-                            ? item.value_Vi
-                            : item.value_En}
-                        </option>
-                      );
-                    })}
-                </select>
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.position" />
-                </label>
-                <select
-                  className="form-select"
-                  defaultValue=""
-                  onChange={(event) => {
-                    this.onChangeInput(event, "position");
-                  }}
-                  value={position}
-                >
-                  {positions &&
-                    positions.length > 0 &&
-                    positions.map((item, index) => {
-                      return (
-                        <option key={index} value={item.keyMap}>
-                          {language === LANGUAGES.VI
-                            ? item.value_Vi
-                            : item.value_En}
-                        </option>
-                      );
-                    })}
-                </select>
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.role" />
-                </label>
-                <select
-                  className="form-select"
-                  onChange={(event) => {
-                    this.onChangeInput(event, "role");
-                  }}
-                  value={role}
-                >
-                  {roles &&
-                    roles.length > 0 &&
-                    roles.map((item, index) => {
-                      return (
-                        <option key={index} value={item.keyMap}>
-                          {language === LANGUAGES.VI
-                            ? item.value_Vi
-                            : item.value_En}
-                        </option>
-                      );
-                    })}
-                </select>
-              </div>
-
-              <div className="col-3">
-                <label>
-                  <FormattedMessage id="manage-user.image" />
-                </label>
-                <div className="preview-img-container">
-                  <input
-                    values={avatar}
-                    id="previewImg"
-                    type="file"
-                    hidden
-                    onChange={(event) => this.handleOnchangeImage(event)}
-                  ></input>
-                  <label className="label-upload" htmlFor="previewImg">
-                    Tải Ảnh
-                    <i className="fas fa-upload"></i>
-                  </label>
-                  <div
-                    className="preview-img"
-                    style={{
-                      backgroundImage: `url(${this.state.previewImgURL})`,
-                    }}
-                    onClick={() => this.openPreviewImage()}
-                  ></div>
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-md-6 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.email" />
+                    </label>
+                    <input
+                      className="form-control"
+                      type="email"
+                      value={email}
+                      onChange={(event) => this.onChangeInput(event, "email")}
+                      disabled={this.state.actions === CRUD_ACTIONS.EDIT}
+                    />
+                  </div>
+                  <div className="col-md-6 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.password" />
+                    </label>
+                    <input
+                      className="form-control"
+                      type="password"
+                      value={password}
+                      onChange={(event) =>
+                        this.onChangeInput(event, "password")
+                      }
+                      disabled={this.state.actions === CRUD_ACTIONS.EDIT}
+                    />
+                  </div>
+                  <div className="col-md-4 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.first-name" />
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      value={firstName}
+                      onChange={(event) =>
+                        this.onChangeInput(event, "firstName")
+                      }
+                    />
+                  </div>
+                  <div className="col-md-4 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.last-name" />
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      value={lastName}
+                      onChange={(event) =>
+                        this.onChangeInput(event, "lastName")
+                      }
+                    />
+                  </div>
+                  <div className="col-md-4 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.phone-number" />
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      value={phoneNumber}
+                      onChange={(event) =>
+                        this.onChangeInput(event, "phoneNumber")
+                      }
+                    />
+                  </div>
+                  <div className="col-md-12 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.address" />
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      value={address}
+                      onChange={(event) => this.onChangeInput(event, "address")}
+                    />
+                  </div>
+                  <div className="col-md-4 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.gender" />
+                    </label>
+                    <select
+                      className="form-select form-control"
+                      onChange={(event) => this.onChangeInput(event, "gender")}
+                      value={gender}
+                    >
+                      {genders &&
+                        genders.length > 0 &&
+                        genders.map((item, index) => (
+                          <option key={index} value={item.keyMap}>
+                            {language === LANGUAGES.VI
+                              ? item.value_Vi
+                              : item.value_En}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="col-md-4 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.position" />
+                    </label>
+                    <select
+                      className="form-select form-control"
+                      onChange={(event) =>
+                        this.onChangeInput(event, "position")
+                      }
+                      value={position}
+                    >
+                      {positions &&
+                        positions.length > 0 &&
+                        positions.map((item, index) => (
+                          <option key={index} value={item.keyMap}>
+                            {language === LANGUAGES.VI
+                              ? item.value_Vi
+                              : item.value_En}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="col-md-4 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.role" />
+                    </label>
+                    <select
+                      className="form-select form-control"
+                      onChange={(event) => this.onChangeInput(event, "role")}
+                      value={role}
+                    >
+                      {roles &&
+                        roles.length > 0 &&
+                        roles.map((item, index) => (
+                          <option key={index} value={item.keyMap}>
+                            {language === LANGUAGES.VI
+                              ? item.value_Vi
+                              : item.value_En}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="col-md-6 form-group">
+                    <label>
+                      <FormattedMessage id="manage-user.image" />
+                    </label>
+                    <div
+                      className="upload-box"
+                      style={{
+                        backgroundImage: `url(${this.state.previewImgURL})`,
+                      }}
+                      onClick={() => this.fileInput.click()}
+                    >
+                      <input
+                        ref={(fileInput) => (this.fileInput = fileInput)}
+                        id="previewImg"
+                        type="file"
+                        hidden
+                        onChange={(event) => this.handleOnchangeImage(event)}
+                      />
+                      {!this.state.previewImgURL && (
+                        <span className="upload-text">
+                          <i className="fas fa-cloud-upload-alt"></i> Tải ảnh
+                          đại diện
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-12 btn-container">
+                    <button
+                      className={
+                        this.state.actions === CRUD_ACTIONS.EDIT
+                          ? "btn btn-warning btn-save-user"
+                          : "btn btn-primary btn-save-user"
+                      }
+                      onClick={() => this.handleSaveUser()}
+                    >
+                      {this.state.actions === CRUD_ACTIONS.EDIT ? (
+                        <span>
+                          <i className="fas fa-edit"></i>{" "}
+                          <FormattedMessage id="manage-user.edit" />
+                        </span>
+                      ) : (
+                        <span>
+                          <i className="fas fa-save"></i>{" "}
+                          <FormattedMessage id="manage-user.save" />
+                        </span>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              <div className="col-12 mt-3">
-                <button
-                  className={
-                    this.state.actions === CRUD_ACTIONS.EDIT
-                      ? "btn btn-warning"
-                      : "btn btn-primary"
-                  }
-                  onClick={() => {
-                    this.handleSaveUser();
-                  }}
-                >
-                  {this.state.actions === CRUD_ACTIONS.EDIT ? (
-                    <FormattedMessage id="manage-user.edit" />
-                  ) : (
-                    <FormattedMessage id="manage-user.save" />
-                  )}
-                </button>
-              </div>
-
-              <div className="col-12 mt-3">
-                <TableManageUser
-                  handleEditUserFromParentKey={this.handleEditUserFromParent}
-                  actions={this.state.actions}
-                />
+            </div>
+            <div className="row mt-4">
+              <div className="col-12">
+                <div className="info-card">
+                  <div className="card-header">
+                    <span>
+                      <i className="fas fa-users"></i> Danh sách người dùng
+                    </span>
+                  </div>
+                  <div className="card-body p-0">
+                    <TableManageUser
+                      handleEditUserFromParentKey={
+                        this.handleEditUserFromParent
+                      }
+                      actions={this.state.actions}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
         {this.state.isOpen === true && (
           <Lightbox
             mainSrc={this.state.previewImgURL}

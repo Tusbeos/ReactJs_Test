@@ -6,7 +6,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import "../../components/Breadcrumb.scss";
 import { getBase64FromBuffer } from "../../utils/CommonUtils";
 import "./DetailSpecialty.scss";
-import DoctorSpecialty from "./DoctorSpecialty";
+import DoctorCard from "components/Patient/DoctorCard";
 
 class DetailSpecialty extends Component {
   constructor(props) {
@@ -98,7 +98,7 @@ class DetailSpecialty extends Component {
                 </div>
               )}
             </div>
-            <DoctorSpecialty specialtyId={specialty ? specialty.id : null} />
+            <DoctorCard specialtyId={specialty ? specialty.id : null} />
           </div>
         </div>
       </>

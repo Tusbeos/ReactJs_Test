@@ -1,0 +1,179 @@
+$primary-color: #45c3d2;
+$text-main: #333;
+$text-light: #666;
+$bg-white: #ffffff;
+$border-color: #eee;
+
+.doctor-specialty-container {
+    background-color: #f5f5f5; 
+    // Sửa lại background tổng thể xám nhẹ để nổi bật thẻ trắng
+
+    .doctor-specialty-filter {
+        margin-bottom: 20px;
+        .province-select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            outline: none;
+            min-width: 200px;
+        }
+    }
+
+    .doctor-card {
+        display: flex;
+        background: $bg-white;
+        border-radius: 8px;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin-bottom: 15px;
+        border: 1px solid #e6e6e6;
+        
+        // Responsive Mobile: Chuyển thành cột dọc
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+
+        /* --- CỘT TRÁI --- */
+        .doctor-card-left {
+            width: 50%;
+            padding-right: 15px;
+            border-right: 1px solid $border-color;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width: 768px) {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid $border-color;
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+            }
+
+            .doctor-intro {
+                display: flex;
+                gap: 15px;
+                
+                .doctor-avatar {
+                    width: 90px;
+                    height: 90px;
+                    border-radius: 50%;
+                    background-position: center center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    flex-shrink: 0;
+                    cursor: pointer;
+                }
+
+                .doctor-info {
+                    .doctor-name {
+                        color: $text-main;
+                        font-size: 16px;
+                        font-weight: 600;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                        line-height: 1.4;
+                        &:hover { color: $primary-color; }
+                    }
+
+                    .doctor-desc {
+                        font-size: 13px;
+                        color: $text-light;
+                        margin-bottom: 10px;
+                        line-height: 1.5;
+                        max-height: 80px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                    }
+
+                    .location-text {
+                        font-size: 13px;
+                        color: $text-light;
+                        margin-bottom: 10px;
+                        i { margin-right: 5px; }
+                    }
+
+                    .doctor-view-more {
+                        color: $primary-color;
+                        font-size: 13px;
+                        cursor: pointer;
+                        font-weight: 500;
+                        &:hover { text-decoration: underline; }
+                    }
+                }
+            }
+        }
+
+        /* --- CỘT PHẢI --- */
+        .doctor-card-right {
+            width: 50%;
+            padding-left: 15px;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width: 768px) {
+                width: 100%;
+                padding-left: 0;
+            }
+
+            .doctor-schedule {
+                .schedule-select {
+                    border: none;
+                    border-bottom: 1px solid #ccc;
+                    padding: 5px 0;
+                    color: $primary-color;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                    outline: none;
+                    cursor: pointer;
+                }
+
+                .schedule-title {
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                    text-transform: uppercase;
+                    i { margin-right: 5px; color: #333; }
+                }
+
+                .schedule-times {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    margin-bottom: 10px;
+
+                    .time-btn {
+                        background-color: #fff04b; // Màu vàng nhạt giống BookingCare
+                        border: none;
+                        padding: 10px 15px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        border-radius: 4px;
+                        transition: 0.2s;
+                        min-width: 120px;
+
+                        &:hover {
+                            background-color: #f1d50e; 
+                        }
+                    }
+                    .no-schedule { font-style: italic; font-size: 13px; }
+                }
+
+                .book-free-text {
+                    font-size: 12px;
+                    color: $text-main;
+                    margin-bottom: 15px;
+                    i { margin: 0 3px; }
+                }
+            }
+            
+            .doctor-extra-info-container {
+                border-top: 1px solid $border-color;
+                padding-top: 15px;
+            }
+        }
+    }
+}

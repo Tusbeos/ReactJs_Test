@@ -1,123 +1,166 @@
+$primary-color: #0071ba;
+$text-color: #333;
+$bg-light: #f4f6f9;
+$border-color: #d1d3e2;
+$card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+
 .doctor-service-container {
-    padding: 15px;
+    // Không padding ở đây để nó nằm gọn trong layout cha nếu cần
+    // hoặc giữ padding nếu muốn cách ra
 
-    .title-section {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 15px;
-        color: #007bff;
-        text-transform: uppercase;
-    }
+    .info-card {
+        background: #fff;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        box-shadow: $card-shadow;
+        overflow: hidden;
 
-    .header-row {
-        background-color: #f7f7f7;
-        padding: 10px 0;
-        font-weight: 600;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-        margin-bottom: 15px;
-        
-        .header-item {
-            border-right: 1px solid #ddd;
-            text-align: center;
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            &:last-child {
-                border-right: none;}
+        .card-header {
+            background-color: $bg-light;
+            padding: 10px 20px;
+            font-weight: 600;
+            color: $primary-color;
+            border-bottom: 1px solid $border-color;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            text-transform: uppercase;
+            
+            i { margin-right: 8px; }
+        }
+
+        .card-body {
+            padding: 20px;
         }
     }
 
+    // Header bảng
+    .header-row {
+        background-color: #eee;
+        padding: 10px 0;
+        font-weight: 700;
+        border-radius: 4px 4px 0 0;
+        border: 1px solid $border-color;
+        border-bottom: none;
+        margin: 0; // Reset margin row bootstrap
+        
+        .header-item {
+            font-size: 13px;
+            color: #444;
+            text-align: center;
+        }
+    }
+
+    // Body bảng (Danh sách)
     .service-body {
+        border: 1px solid $border-color;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
         max-height: 500px;
         overflow-y: auto;
         overflow-x: hidden;
-        padding-right: 5px;
+        background: #fff;
 
-        .service-row {user-select: none;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #eee;
-            display: flex;
-            align-items: center;
+        .service-row {
+            margin: 0;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            align-items: flex-start; // Căn hàng theo cạnh trên
+            transition: background 0.2s;
 
             &:last-child {
                 border-bottom: none;
             }
 
-            input.form-control {
-                height: 38px;
-                caret-color: auto;
-            }
-            textarea.form-control {
-                caret-color: auto;
-                resize: vertical;
-                min-height: 38px;
-                max-height: 100px;
-                font-size: 14px;
-                line-height: 1.4;
-                padding: 8px;
+            &:hover {
+                background-color: #fcfcfc;
             }
 
+            // Style inputs cho đẹp hơn
+            .form-control {
+                border-radius: 4px;
+                border: 1px solid #ced4da;
+                font-size: 13px;
+                padding: 6px 10px;
+                
+                &:focus {
+                    border-color: $primary-color;
+                    box-shadow: 0 0 0 0.2rem rgba(0, 113, 186, 0.15);
+                }
+
+                &::placeholder {
+                    color: #aaa;
+                    font-style: italic;
+                }
+            }
+            
+            textarea.form-control {
+                resize: vertical;
+                min-height: 38px;
+            }
+
+            // Style riêng cho nhóm Tiếng Anh
+            .group-en {
+                input { margin-bottom: 5px; }
+            }
+
+            // Nút xóa tròn
             .btn-delete {
-                width: 35px;
-                height: 35px;
+                width: 32px;
+                height: 32px;
                 border-radius: 50%;
-                background-color: #ffebee;
-                color: #dc3545;
+                background-color: #fff;
+                border: 1px solid #e74a3b;
+                color: #e74a3b;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
-                transition: all 0.3s;
-                margin: 0 auto;
-
+                transition: all 0.2s;
+                
                 &:hover {
-                    background-color: #dc3545;
+                    background-color: #e74a3b;
                     color: white;
                     transform: scale(1.1);
+                    box-shadow: 0 2px 5px rgba(231, 74, 59, 0.3);
                 }
                 
-                i {
-                    font-size: 16px;
-                }
+                i { font-size: 14px; }
             }
         }
     }
 
+    // Hàng nút bấm (Thêm mới)
     .action-row {
-        margin-top: 20px;
+        margin-top: 15px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         .btn-add-new {
+            background-color: $primary-color;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 5px;
-            background-color: #ffc107;
-            border-color: #ffc107;
-            color: #333;
-            font-weight: 600;
 
             &:hover {
-                background-color: #e0a800;
+                background-color: darken($primary-color, 10%);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             }
         }
 
         .text-note {
-            color: #666;
+            color: #777;
+            font-size: 12px;
             font-style: italic;
+            i { margin-right: 3px; color: #f6c23e; }
         }
-    }
-}
-
-@media (max-width: 992px) {
-    .doctor-service-container {
-        .header-row, .service-body .service-row {
-            min-width: 900px;
-        }
-        overflow-x: auto; 
     }
 }
