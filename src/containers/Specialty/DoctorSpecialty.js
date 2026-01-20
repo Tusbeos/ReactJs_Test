@@ -10,7 +10,6 @@ import {
 } from "../../services/doctorService";
 import { LANGUAGES, path } from "utils";
 import { getBase64FromBuffer } from "utils/CommonUtils";
-// ...existing code...
 import DoctorExtraInfo from "../Patient/Doctor/DoctorExtraInfo";
 import { withRouter } from "react-router";
 class DoctorSpecialty extends Component {
@@ -18,6 +17,9 @@ class DoctorSpecialty extends Component {
     super(props);
     this.state = {
       doctors: [],
+      filteredDoctors: [],
+      provinceOptions: [],
+      selectedProvince: "ALL",
       schedulesByDoctor: {},
       selectedDateByDoctor: {},
       dateOptions: this.buildDateOptions(),
@@ -47,8 +49,8 @@ class DoctorSpecialty extends Component {
         i === 0
           ? "Hôm nay"
           : i === 1
-          ? "Ngày mai"
-          : d.toLocaleDateString("vi-VN");
+            ? "Ngày mai"
+            : d.toLocaleDateString("vi-VN");
       const value = new Date(d.setHours(0, 0, 0, 0)).getTime();
       options.push({ label, value });
     }
@@ -87,8 +89,14 @@ class DoctorSpecialty extends Component {
           .filter((item) => item && item.errCode === 0 && item.data)
           .map((item) => this.normalizeDoctor(item.data));
 
+        const provinceOptions = this.buildProvinceOptions(doctors);
         this.setState(
-          { doctors },
+          {
+            doctors,
+            filteredDoctors: doctors,
+            provinceOptions,
+            selectedProvince: "ALL",
+          },
           () => {
             doctors.forEach((doc) => {
               const defaultDate = this.state.dateOptions[0]?.value;
@@ -96,29 +104,43 @@ class DoctorSpecialty extends Component {
                 this.handleFetchSchedule(doc.id, defaultDate);
               }
             });
-          }
+          },
         );
       } else {
-        this.setState({ doctors: [] });
+        this.setState({
+          doctors: [],
+          filteredDoctors: [],
+          provinceOptions: [],
+          selectedProvince: "ALL",
+        });
       }
     } catch (e) {
-      this.setState({ doctors: [] });
+      this.setState({
+        doctors: [],
+        filteredDoctors: [],
+        provinceOptions: [],
+        selectedProvince: "ALL",
+      });
     }
   };
 
-    normalizeDoctor = (data) => {
+  normalizeDoctor = (data) => {
     const { language } = this.props;
     const positionVi = data.positionData?.value_Vi || "";
     const positionEn = data.positionData?.value_En || "";
-    const nameVi = `${positionVi} ${data.lastName || ""} ${data.firstName || ""}`.trim();
-    const nameEn = `${positionEn} ${data.firstName || ""} ${data.lastName || ""}`.trim();
+    const nameVi =
+      `${positionVi} ${data.lastName || ""} ${data.firstName || ""}`.trim();
+    const nameEn =
+      `${positionEn} ${data.firstName || ""} ${data.lastName || ""}`.trim();
     const name = language === LANGUAGES.VI ? nameVi : nameEn;
 
     return {
       id: data.id,
       name,
       desc: data.Markdown?.description || "Chưa có mô tả",
-      image: data.image ? getBase64FromBuffer(data.image) : "https://via.placeholder.com/120",
+      image: data.image
+        ? getBase64FromBuffer(data.image)
+        : "https://via.placeholder.com/120",
       province:
         data.DoctorInfo?.provinceTypeData?.value_Vi ||
         data.DoctorInfo?.provinceTypeData?.value_En ||
@@ -154,6 +176,34 @@ class DoctorSpecialty extends Component {
     }
   };
 
+  buildProvinceOptions = (doctors = []) => {
+    const map = new Map();
+    doctors.forEach((doc) => {
+      if (doc && doc.province) {
+        map.set(doc.province, doc.province);
+      }
+    });
+    return [
+      { label: "Tất cả tỉnh thành", value: "ALL" },
+      ...Array.from(map.values()).map((value) => ({
+        label: value,
+        value,
+      })),
+    ];
+  };
+
+  handleFilterProvince = (event) => {
+    const selectedProvince = event.target.value;
+    const { doctors } = this.state;
+
+    const filteredDoctors =
+      selectedProvince === "ALL"
+        ? doctors
+        : doctors.filter((doc) => doc.province === selectedProvince);
+
+    this.setState({ selectedProvince, filteredDoctors });
+  };
+
   handleBookingDoctor = (scheduleTime, doctorIdFromList) => {
     if (!scheduleTime) return;
     const doctorId = scheduleTime.doctorId || doctorIdFromList;
@@ -169,18 +219,42 @@ class DoctorSpecialty extends Component {
   };
 
   render() {
-    const { doctors, schedulesByDoctor, selectedDateByDoctor, dateOptions } =
-      this.state;
+    const {
+      doctors,
+      filteredDoctors,
+      schedulesByDoctor,
+      selectedDateByDoctor,
+      dateOptions,
+      provinceOptions,
+      selectedProvince,
+    } = this.state;
     const { language } = this.props;
     console.log("doctors", doctors);
+    const displayDoctors = filteredDoctors || [];
     return (
       <div className="doctor-specialty-container">
         <div className="doctor-specialty-title">
-          <FormattedMessage id="specialty.doctor.list" defaultMessage="Danh sách bác sĩ" />
+          <FormattedMessage
+            id="specialty.doctor.list"
+            defaultMessage="Danh sách bác sĩ"
+          />
+        </div>
+        <div className="doctor-specialty-filter">
+          <select
+            className="province-select"
+            value={selectedProvince}
+            onChange={this.handleFilterProvince}
+          >
+            {provinceOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="doctor-specialty-list">
-          {doctors && doctors.length > 0 ? (
-            doctors.map((doctor) => {
+          {displayDoctors && displayDoctors.length > 0 ? (
+            displayDoctors.map((doctor) => {
               const schedules = schedulesByDoctor[doctor.id] || [];
               const selectedDate =
                 selectedDateByDoctor[doctor.id] || dateOptions[0]?.value;
@@ -194,6 +268,15 @@ class DoctorSpecialty extends Component {
                     <div className="doctor-info">
                       <div className="doctor-name">{doctor.name}</div>
                       <div className="doctor-desc">{doctor.desc}</div>
+                      <button
+                        className="doctor-view-more"
+                        onClick={() =>
+                          this.props.history &&
+                          this.props.history.push(`/detail-doctor/${doctor.id}`)
+                        }
+                      >
+                        Xem thêm
+                      </button>
                     </div>
                   </div>
 
@@ -205,7 +288,7 @@ class DoctorSpecialty extends Component {
                         onChange={(e) =>
                           this.handleFetchSchedule(
                             doctor.id,
-                            Number(e.target.value)
+                            Number(e.target.value),
                           )
                         }
                       >

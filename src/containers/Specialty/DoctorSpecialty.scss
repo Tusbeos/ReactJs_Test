@@ -23,6 +23,21 @@ $shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
         text-transform: uppercase;
     }
 
+    .doctor-specialty-filter {
+        margin-bottom: 16px;
+
+        .province-select {
+            padding: 8px 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            outline: none;
+            cursor: pointer;
+            color: $text-main;
+            background: $bg-white;
+            min-width: 220px;
+        }
+    }
+
     .doctor-specialty-list {
         display: flex;
         flex-direction: column;
@@ -89,6 +104,25 @@ $shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
                     -webkit-line-clamp: 4;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
+                }
+
+                .doctor-view-more {
+                    margin-top: 10px;
+                    align-self: flex-start;
+                    padding: 6px 12px;
+                    border: 1px solid $primary-color;
+                    border-radius: 4px;
+                    background: $bg-white;
+                    color: $primary-color;
+                    font-size: 13px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: $primary-color;
+                        color: #fff;
+                    }
                 }
             }
         }
