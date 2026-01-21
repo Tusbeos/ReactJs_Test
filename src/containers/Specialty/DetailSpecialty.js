@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-
 import { injectIntl } from "react-intl";
-import { handleGetAllSpecialties } from "../../services/specialtyService";
+import { getSpecialtyByIds } from "../../services/specialtyService";
 import { HandleGetDoctorSpecialtyById } from "../../services/doctorService";
 import HomeHeader from "containers/HomePage/HomeHeader";
 import Breadcrumb from "../../components/Breadcrumb";
@@ -26,9 +25,9 @@ class DetailSpecialty extends Component {
     const { match } = this.props;
     const id = match && match.params && match.params.id;
     if (id) {
-      const res = await handleGetAllSpecialties();
+      const res = await getSpecialtyByIds([id]);
       if (res && res.errCode === 0 && Array.isArray(res.data)) {
-        const found = res.data.find((item) => +item.id === +id);
+        const found = res.data && res.data[0];
         if (found) {
           this.setState({
             specialty: {

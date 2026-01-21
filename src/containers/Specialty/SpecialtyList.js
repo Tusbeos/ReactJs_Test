@@ -23,7 +23,7 @@ class SpecialtyItem extends Component {
             alt="icon"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "https://via.placeholder.com/60?text=No+Img"; // Ảnh thay thế nếu link lỗi
+              e.target.src = "https://via.placeholder.com/60?text=No+Img"; 
             }}
           />
         </div>
