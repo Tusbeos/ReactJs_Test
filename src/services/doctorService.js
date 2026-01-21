@@ -46,6 +46,10 @@ const HandleGetDoctorSpecialtyById = (inputId) => {
   return axios.get(`/api/get-doctor-specialty-by-id?id=${inputId}`);
 };
 
+const getDoctorsByClinicId = (clinicId) => {
+  return axios.get(`/api/get-doctors-by-clinic-id?clinicId=${clinicId}`);
+};
+
 export {
   handleGetTopDoctorHomeService,
   handleGetAllDoctorsService,
@@ -58,4 +62,5 @@ export {
   getExtraInfoDoctorById,
   getSpecialtiesByDoctorId,
   HandleGetDoctorSpecialtyById,
+  getDoctorsByClinicId,
 };

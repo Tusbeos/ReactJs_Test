@@ -2,11 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./ManageSpecialty.scss";
 import { FormattedMessage } from "react-intl";
-import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
-import 'react-markdown-editor-lite/lib/index.css';
-import { CommonUtils } from '../../../utils';
-import { createNewSpecialtyService } from "../../../services/specialtyService";
+import MarkdownIt from "markdown-it";
+import MdEditor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
+import { CommonUtils, getBase64FromBuffer } from "../../../utils";
+import {
+  createNewSpecialtyService,
+  handleGetAllSpecialties,
+  deleteSpecialtyService,
+  updateSpecialtyService,
+  getSpecialtyByIds,
+} from "../../../services/specialtyService";
 import { toast } from "react-toastify";
 
 const mdParser = new MarkdownIt();
@@ -19,15 +25,25 @@ class ManageSpecialty extends Component {
       imageBase64: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
+      previewImgURL: "",
+      specialties: [],
+      isEditing: false,
+      editSpecialtyId: null,
     };
   }
 
-  async componentDidMount() {}
-
-  async componentDidUpdate(prevProps, prevState, snapShot) {
-    if (this.props.language !== prevProps.language) {
-    }
+  async componentDidMount() {
+    this.fetchAllSpecialties();
   }
+
+  fetchAllSpecialties = async () => {
+    let res = await handleGetAllSpecialties();
+    if (res && res.errCode === 0) {
+      this.setState({
+        specialties: res.data ? res.data : [],
+      });
+    }
+  };
 
   handleOnChangeInput = (event, id) => {
     let stateCopy = { ...this.state };
@@ -49,51 +65,106 @@ class ManageSpecialty extends Component {
     let file = data[0];
     if (file) {
       let Base64 = await CommonUtils.getBase64(file);
+      // For preview, we can use the base64 string directly
       this.setState({
         imageBase64: Base64,
+        previewImgURL: Base64,
       });
     }
   };
 
   handleSaveNewSpecialty = async () => {
-    // Validate đơn giản
-    if (
-      !this.state.name ||
-      !this.state.imageBase64 ||
-      !this.state.descriptionMarkdown
-    ) {
+    let {
+      isEditing,
+      editSpecialtyId,
+      name,
+      imageBase64,
+      descriptionHTML,
+      descriptionMarkdown,
+    } = this.state;
+
+    if (!name || !imageBase64 || !descriptionMarkdown) {
       toast.error("Vui lòng điền đầy đủ thông tin!");
       return;
     }
 
-    let res = await createNewSpecialtyService({
-      name: this.state.name,
-      imageBase64: this.state.imageBase64,
-      descriptionHTML: this.state.descriptionHTML,
-      descriptionMarkdown: this.state.descriptionMarkdown,
-    });
+    let data = {
+      name: name,
+      imageBase64: imageBase64,
+      descriptionHTML: descriptionHTML,
+      descriptionMarkdown: descriptionMarkdown,
+    };
+
+    let res;
+    if (isEditing) {
+      res = await updateSpecialtyService({ ...data, id: editSpecialtyId });
+    } else {
+      res = await createNewSpecialtyService(data);
+    }
+
     if (res && res.errCode === 0) {
-      toast.success("Thêm chuyên khoa thành công!");
+      toast.success(
+        isEditing
+          ? "Cập nhật chuyên khoa thành công!"
+          : "Thêm chuyên khoa thành công!",
+      );
       this.setState({
         name: "",
         imageBase64: "",
         descriptionHTML: "",
         descriptionMarkdown: "",
+        previewImgURL: "",
+        isEditing: false,
+        editSpecialtyId: null,
       });
+      this.fetchAllSpecialties();
     } else {
-      toast.error("Lỗi thêm chuyên khoa!");
+      toast.error(res.errMessage || "Đã có lỗi xảy ra!");
     }
   };
 
-  // Trigger input file khi click vào box ảnh
-  openPreviewImage = () => {
-    if (!this.state.previewImgURL) return;
+  handleEditSpecialty = (item) => {
+    let imageBase64 = "";
+    if (item.image) {
+      imageBase64 = item.image;
+    }
+
     this.setState({
-      isOpen: true,
+      name: item.name,
+      imageBase64: imageBase64,
+      previewImgURL: imageBase64,
+      descriptionHTML: item.descriptionHTML,
+      descriptionMarkdown: item.descriptionMarkdown,
+      isEditing: true,
+      editSpecialtyId: item.id,
+    });
+  };
+
+  handleDeleteSpecialty = async (item) => {
+    let res = await deleteSpecialtyService(item.id);
+    if (res && res.errCode === 0) {
+      toast.success("Xóa chuyên khoa thành công!");
+      this.fetchAllSpecialties();
+    } else {
+      toast.error(res.errMessage || "Xóa chuyên khoa thất bại!");
+    }
+  };
+
+  handleCancelEdit = () => {
+    this.setState({
+      name: "",
+      imageBase64: "",
+      descriptionHTML: "",
+      descriptionMarkdown: "",
+      previewImgURL: "",
+      isEditing: false,
+      editSpecialtyId: null,
     });
   };
 
   render() {
+    let { specialties, isEditing, previewImgURL } = this.state;
+
     return (
       <div className="manage-specialty-container">
         <div className="ms-title">
@@ -101,16 +172,14 @@ class ManageSpecialty extends Component {
         </div>
 
         <div className="add-new-specialty row">
-          {/* --- CARD 1: THÔNG TIN CƠ BẢN --- */}
           <div className="col-12 mb-4">
             <div className="info-card">
               <div className="card-header">
                 <span>
-                  <i className="fas fa-info-circle"></i> Thông tin chung
+                  <i className="fas fa-notes-medical"></i> Thông tin chung
                 </span>
               </div>
               <div className="card-body row">
-                {/* Cột Trái: Tên */}
                 <div className="col-md-6 form-group">
                   <label className="label-bold">
                     <FormattedMessage id="menu.manage-specialty.name-specialty" />{" "}
@@ -127,7 +196,6 @@ class ManageSpecialty extends Component {
                   />
                 </div>
 
-                {/* Cột Phải: Upload Ảnh (Box Style) */}
                 <div className="col-md-6 form-group">
                   <label className="label-bold">
                     <FormattedMessage id="menu.manage-specialty.image-specialty" />{" "}
@@ -135,9 +203,7 @@ class ManageSpecialty extends Component {
                   </label>
                   <div
                     className="upload-box"
-                    style={{
-                      backgroundImage: `url(${this.state.imageBase64})`,
-                    }}
+                    style={{ backgroundImage: `url(${previewImgURL})` }}
                     onClick={() => this.fileInput.click()}
                   >
                     <input
@@ -147,8 +213,7 @@ class ManageSpecialty extends Component {
                       hidden
                       onChange={(event) => this.handleOnChangeImage(event)}
                     />
-                    {/* Chỉ hiện text khi chưa có ảnh */}
-                    {!this.state.imageBase64 && (
+                    {!previewImgURL && (
                       <span className="upload-text">
                         <i className="fas fa-cloud-upload-alt"></i>{" "}
                         <FormattedMessage id="menu.manage-specialty.upload-image" />
@@ -160,7 +225,6 @@ class ManageSpecialty extends Component {
             </div>
           </div>
 
-          {/* --- CARD 2: EDITOR --- */}
           <div className="col-12">
             <div className="info-card">
               <div className="card-header">
@@ -180,7 +244,6 @@ class ManageSpecialty extends Component {
             </div>
           </div>
 
-          {/* --- BUTTON SAVE --- */}
           <div className="col-12 btn-container">
             <button
               type="button"
@@ -188,8 +251,74 @@ class ManageSpecialty extends Component {
               onClick={() => this.handleSaveNewSpecialty()}
             >
               <i className="fas fa-save"></i>{" "}
-              <FormattedMessage id="menu.manage-specialty.save" />
+              {isEditing ? (
+                <FormattedMessage
+                  id="menu.manage-specialty.edit"
+                  defaultMessage="Cập nhật"
+                />
+              ) : (
+                <FormattedMessage id="menu.manage-specialty.save" />
+              )}
             </button>
+            {isEditing && (
+              <button
+                className="btn btn-secondary ml-3 btn-cancel"
+                onClick={() => this.handleCancelEdit()}
+              >
+                <i className="fas fa-times"></i> Hủy
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="specialty-list-container mt-5">
+          <div className="info-card">
+            <div className="card-header">
+              <span>
+                <i className="fas fa-list"></i> Danh sách chuyên khoa
+              </span>
+            </div>
+            <div className="card-body p-0">
+              <table className="table table-striped table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th>Tên chuyên khoa</th>
+                    <th style={{ width: "150px", textAlign: "center" }}>
+                      Hành động
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {specialties && specialties.length > 0 ? (
+                    specialties.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.name}</td>
+                        <td className="text-center">
+                          <button
+                            className="btn-edit"
+                            onClick={() => this.handleEditSpecialty(item)}
+                          >
+                            <i className="fas fa-pencil-alt"></i>
+                          </button>
+                          <button
+                            className="btn-delete"
+                            onClick={() => this.handleDeleteSpecialty(item)}
+                          >
+                            <i className="fas fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="2" className="text-center">
+                        Chưa có chuyên khoa nào
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

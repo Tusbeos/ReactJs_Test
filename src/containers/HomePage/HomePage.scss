@@ -104,8 +104,6 @@ a { text-decoration: none; }
             color: $text-color;
         }
     }
-
-    /* --- CẤU HÌNH ẢNH (Generic) --- */
     .img-customize {
       background: #fff;
       border: 1px solid $border-color;
@@ -149,12 +147,28 @@ a { text-decoration: none; }
         height: 180px;
         border-radius: 10px;
     }
-    
+    &.section-medical-facility .img-customize {
+ width: 100%;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain ; 
+    }
     // Bác sĩ (Override thêm text bên dưới)
     &.section-os-doctor {
        .name-section { font-weight: 600; font-size: 16px; }
        .position-section { font-size: 14px; color: #666; text-align: center;}
     }
+  }
+}
+
+.section-share.section-medical-facility {
+  .img-customize {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-color: #ffffff !important;
+    height: 200px;
   }
 }
 

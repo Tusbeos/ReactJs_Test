@@ -7,7 +7,6 @@ import {
   getDetailInfoDoctor,
   getScheduleDoctorByDate,
   HandleGetDoctorSpecialtyById,
-  //   handleGetDetailClinicById
 } from "../../services/doctorService";
 import { LANGUAGES, path } from "utils";
 import { getBase64FromBuffer } from "utils/CommonUtils";

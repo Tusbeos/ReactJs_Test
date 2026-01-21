@@ -1,131 +1,211 @@
 $primary-color: #45c3d2;
-$border-color: #dcdfe6;
+$text-color: #333;
 $bg-light: #f8f9fa;
+$border-color: #d1d3e2;
+$card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 
 .manage-clinic-container {
-    caret-color: transparent;
-    padding: 30px;
-    background: #fff;
+    padding: 20px 30px;
+    background-color: #fff;
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
+    caret-color: transparent;
 
+    // Page Title
     .ms-title {
+        text-align: center;
         text-transform: uppercase;
         font-size: 22px;
         font-weight: 700;
         margin-bottom: 25px;
-        color: #333;
+        color: $text-color;
         border-bottom: 2px solid $bg-light;
-        padding-bottom: 15px;
+        padding-bottom: 10px;
     }
 
-    .add-new-clinic {
-        .left-content {
-            .form-group {
-                caret-color: auto;
-                margin-bottom: 20px;
-                label {
-                    font-weight: 600;
-                    margin-bottom: 8px;
-                    display: block;
-                    color: #555;
-                }
-                .form-control {
-                    border-radius: 6px;
-                    border: 1px solid $border-color;
-                    padding: 10px;
-                    font-size: 14px;
-                    &:focus {
-                        border-color: $primary-color;
-                        box-shadow: 0 0 0 2px rgba(69, 195, 210, 0.2);
-                    }
-                }
-                textarea.form-control {
-                    resize: none; 
-                }
-            }
-        }
-        .right-content {
-            label {
-                font-weight: 600;
-                margin-bottom: 8px;
-                display: block;
-                color: #555;
-            }
+    .info-card {
+        background: #fff;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        box-shadow: $card-shadow;
+        overflow: hidden;
+        margin-bottom: 0;
 
-            .upload-box {
-                background-color: $bg-light;
-                border: 2px dashed $border-color;
-                border-radius: 8px;
-                cursor: pointer;
-                position: relative;
-                overflow: hidden;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-                
-                // Hiển thị ảnh background
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-
-                &:hover {
-                    border-color: $primary-color;
-                    background-color: lighten($primary-color, 45%);
-                    
-                    .upload-text {
-                        color: $primary-color;
-                    }
-                }
-
-                .upload-text {
-                    color: #adb5bd;
-                    font-weight: 600;
-                    font-size: 14px;
-                    pointer-events: none;
-                    i { margin-right: 5px; }
-                }
-                &.logo-box {
-                    height: 120px;
-                    width: 120px;
-                }
-
-                &.cover-box {
-                    height: 120px;
-                    width: 100%; 
-                }
-            }
-        }
-        .editor-content {
-            margin-top: 20px;
-            label { font-weight: 600; color: #555; }
+        .card-header {
+            background-color: $bg-light;
+            padding: 10px 20px;
+            font-weight: 600;
+            color: darken($primary-color, 15%);
+            border-bottom: 1px solid $border-color;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
             
-            .rc-md-editor {
-                caret-color: auto;
-                border-radius: 6px;
-                border: 1px solid $border-color;
-                box-shadow: 0 2px 12px 0 rgba(0,0,0,.05);
+            i { margin-right: 8px; }
+        }
+
+        .card-body {
+            padding: 20px;
+
+            &.p-0 {
+                padding: 0; // For table to go edge-to-edge
+            }
+        }
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        caret-color: auto;
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #555;
+            font-size: 14px;
+
+            &.label-bold { color: #333; }
+        }
+
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+            // Height auto for textarea
+            
+            &:focus {
+                border-color: $primary-color;
+                box-shadow: 0 0 0 0.2rem rgba(69, 195, 210, 0.25);
+                outline: none;
+            }
+        }
+        
+        textarea.form-control {
+            resize: none;
+        }
+    }
+
+    .upload-box {
+        width: 100%;
+        border: 2px dashed $border-color;
+        border-radius: 6px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &:hover {
+            border-color: $primary-color;
+            background-color: lighten($primary-color, 48%);
+            
+            .upload-text {
+                color: $primary-color;
             }
         }
 
-        .action-btn {
-            margin-top: 30px;
-            text-align: right;
+        .upload-text {
+            color: #aaa;
+            font-weight: 600;
+            font-size: 14px;
+            pointer-events: none;
+            text-align: center;
+            i { font-size: 20px; display: block; margin-bottom: 5px; }
+        }
 
-            .btn {
-                padding: 10px 40px;
-                border-radius: 50px;
-                font-weight: 600;
-                box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-                
-                i { margin-right: 8px; }
+        // Specific sizes
+        &.logo-box {
+            height: 150px; 
+            background-size: contain;
+        }
 
-                &:hover {
-                    transform: translateY(-1px);
-                    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-                }
+        &.cover-box {
+            height: 150px;
+            background-size: cover;
+        }
+    }
+
+    .rc-md-editor {
+        border-radius: 6px;
+        border: 1px solid $border-color;
+        box-shadow: none;
+        caret-color: auto; 
+    }
+
+    .btn-container {
+        margin-top: 25px;
+        text-align: right;
+
+        .btn-save-clinic {
+            min-width: 150px;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 50px;
+            border: none;
+            background-color: $primary-color;
+            color: #fff;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            
+            i { margin-right: 5px; }
+
+            &:hover {
+                background-color: darken($primary-color, 10%);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
+        }
+
+        .btn-cancel {
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    }
+
+    .clinic-list-container {
+        .table {
+            th {
+                vertical-align: middle;
+                text-align: center;
+            }
+            td {
+                vertical-align: middle;
+            }
+        }
+
+        // Custom action buttons in table
+        .btn-edit, .btn-delete {
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin: 0 5px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background-color: #fff3cd;
+            color: #856404;
+            &:hover { background-color: #ffeeba; transform: scale(1.1); }
+        }
+
+        .btn-delete {
+            background-color: #f8d7da;
+            color: #721c24;
+            &:hover { background-color: #f5c6cb; transform: scale(1.1); }
         }
     }
 }
