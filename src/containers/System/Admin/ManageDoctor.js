@@ -40,7 +40,7 @@ class ManageDoctor extends Component {
       addressClinic: "",
       note: "",
       listSpecialty: [],
-      selectedSpecialty: null,
+      selectedSpecialty: [],
       selectedClinic: null,
       listClinic: [],
     };
@@ -81,6 +81,7 @@ class ManageDoctor extends Component {
       .map((item) => ({
         label: item.name,
         value: item.id,
+        address: item.address || "",
       }));
   };
 
@@ -139,11 +140,16 @@ class ManageDoctor extends Component {
   };
 
   handleChangeSelectSpecialty = (selectedSpecialty) => {
-    this.setState({ selectedSpecialty });
+    this.setState({ selectedSpecialty: selectedSpecialty || [] });
   };
 
   handleChangeSelectClinic = (selectedClinic) => {
-    this.setState({ selectedClinic });
+    if (!selectedClinic) return;
+    this.setState({
+      selectedClinic,
+      nameClinic: selectedClinic.label || "",
+      addressClinic: selectedClinic.address || "",
+    });
   };
 
   buildDataInputSelect = (inputData, type) => {
@@ -184,7 +190,7 @@ class ManageDoctor extends Component {
       let selectedPayment = null,
         selectedPrice = null,
         selectedProvince = null,
-        selectedSpecialty = null;
+        selectedSpecialty = [];
       let contentHTML = "",
         contentMarkdown = "",
         description = "";
@@ -212,9 +218,15 @@ class ManageDoctor extends Component {
           (item) => item.value === doctorInfo.provinceId,
         );
         if (listSpecialty && listSpecialty.length > 0) {
-          selectedSpecialty = listSpecialty.find(
-            (item) => item.value === doctorInfo.specialtyId,
-          );
+          if (doctorInfo.specialtyIds && doctorInfo.specialtyIds.length > 0) {
+            selectedSpecialty = listSpecialty.filter((item) =>
+              doctorInfo.specialtyIds.includes(item.value),
+            );
+          } else if (doctorInfo.specialtyId) {
+            selectedSpecialty = listSpecialty.filter(
+              (item) => item.value === doctorInfo.specialtyId,
+            );
+          }
         }
       }
       this.setState({
@@ -294,9 +306,10 @@ class ManageDoctor extends Component {
       nameClinic: this.state.nameClinic,
       addressClinic: this.state.addressClinic,
       note: this.state.note,
-      specialtyId: this.state.selectedSpecialty
-        ? this.state.selectedSpecialty.value
-        : null,
+      specialtyIds:
+        this.state.selectedSpecialty && this.state.selectedSpecialty.length > 0
+          ? this.state.selectedSpecialty.map((item) => item.value)
+          : [],
       clinicId: this.state.selectedClinic
         ? this.state.selectedClinic.value
         : null,
@@ -424,6 +437,7 @@ class ManageDoctor extends Component {
                     onChange={this.handleChangeSelectSpecialty}
                     options={this.state.listSpecialty}
                     name="selectedSpecialty"
+                    isMulti
                     placeholder={intl.formatMessage({
                       id: "menu.manage-doctor.select-specialty",
                     })}
@@ -469,6 +483,7 @@ class ManageDoctor extends Component {
                       this.handleOnChangeText(event, "nameClinic")
                     }
                     value={this.state.nameClinic}
+                    disabled
                   />
                 </div>
                 <div className="col-12 form-group">
@@ -481,6 +496,7 @@ class ManageDoctor extends Component {
                       this.handleOnChangeText(event, "addressClinic")
                     }
                     value={this.state.addressClinic}
+                    disabled
                   />
                 </div>
                 <div className="col-12 form-group">

@@ -1,26 +1,23 @@
 .detail-clinic-wrapper {
-  background-color: #f9f9f9; // Nền tổng thể màu xám rất nhạt
-  padding-bottom: 80px; // Chừa chỗ cho Sticky Footer
+  background-color: #f9f9f9; 
+  padding-bottom: 80px; 
 
   .booking-container {
-    width: 1170px;
+    width: 1500px;
     margin: 0 auto;
     padding: 0 15px;
-    @media (max-width: 1200px) { width: 100%; }
   }
-
-  /* 1. HERO BANNER */
   .clinic-hero-container {
     position: relative;
     
     .hero-cover {
-      height: 380px; // Chiều cao giống ảnh mẫu
+      height: 380px;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       position: relative;
       display: flex;
-      align-items: flex-end; // Đẩy nội dung xuống đáy
+      align-items: flex-end;
 
       .overlay-gradient {
         position: absolute;
