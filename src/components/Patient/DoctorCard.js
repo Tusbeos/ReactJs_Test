@@ -38,7 +38,8 @@ class DoctorCard extends Component {
     }
     if (
       this.props.specialtyId !== prevProps.specialtyId ||
-      this.props.clinicId !== prevProps.clinicId
+      this.props.clinicId !== prevProps.clinicId ||
+      this.props.doctorIds !== prevProps.doctorIds
     ) {
       await this.fetchDoctors();
     }
@@ -64,8 +65,41 @@ class DoctorCard extends Component {
 
   fetchDoctors = async () => {
     try {
-      const { specialtyId, clinicId } = this.props;
+      const { specialtyId, clinicId, doctorIds } = this.props;
       let res = {};
+      if (Array.isArray(doctorIds)) {
+        if (doctorIds.length === 0) {
+          this.setState({
+            doctors: [],
+            filteredDoctors: [],
+            provinceOptions: [],
+          });
+          return;
+        }
+        const detailPromises = doctorIds.map((id) => getDetailInfoDoctor(id));
+        const detailResults = await Promise.all(detailPromises);
+        const doctors = detailResults
+          .filter((item) => item && item.errCode === 0 && item.data)
+          .map((item) => this.normalizeDoctor(item.data));
+        const provinceOptions = this.buildProvinceOptions(doctors);
+        this.setState(
+          {
+            doctors,
+            filteredDoctors: doctors,
+            provinceOptions,
+            selectedProvince: "ALL",
+          },
+          () => {
+            doctors.forEach((doc) => {
+              const defaultDate = this.state.dateOptions[0]?.value;
+              if (defaultDate) {
+                this.handleFetchSchedule(doc.id, defaultDate);
+              }
+            });
+          },
+        );
+        return;
+      }
       if (specialtyId) {
         res = await HandleGetDoctorSpecialtyById(specialtyId);
       } else if (clinicId) {

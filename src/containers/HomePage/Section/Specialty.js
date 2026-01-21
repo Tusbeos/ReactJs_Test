@@ -4,8 +4,6 @@ import Slider from "react-slick";
 import { FormattedMessage } from "react-intl";
 import { handleGetAllSpecialties } from "../../../services/specialtyService";
 import { withRouter } from "react-router";
-
-// Import Component chung đã xử lý logic ảnh
 import SectionItem from "./SectionItem";
 
 class Specialty extends Component {

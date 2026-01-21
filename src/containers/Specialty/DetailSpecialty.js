@@ -3,6 +3,7 @@ import { withRouter } from "react-router";
 
 import { injectIntl } from "react-intl";
 import { handleGetAllSpecialties } from "../../services/specialtyService";
+import { HandleGetDoctorSpecialtyById } from "../../services/doctorService";
 import HomeHeader from "containers/HomePage/HomeHeader";
 import Breadcrumb from "../../components/Breadcrumb";
 import "../../components/Breadcrumb.scss";
@@ -17,6 +18,7 @@ class DetailSpecialty extends Component {
     this.state = {
       specialty: null,
       isShowDetail: false,
+      doctorIds: [],
     };
   }
 
@@ -36,6 +38,19 @@ class DetailSpecialty extends Component {
           });
         }
       }
+      const doctorRes = await HandleGetDoctorSpecialtyById(id);
+      if (
+        doctorRes &&
+        doctorRes.errCode === 0 &&
+        Array.isArray(doctorRes.data)
+      ) {
+        const ids = doctorRes.data
+          .map((item) => item && (item.id || item.doctorId))
+          .filter((value) => value);
+        this.setState({ doctorIds: ids });
+      } else {
+        this.setState({ doctorIds: [] });
+      }
     }
   }
 
@@ -47,7 +62,7 @@ class DetailSpecialty extends Component {
 
   render() {
     let intl = this.props.intl;
-    const { specialty, isShowDetail } = this.state;
+    const { specialty, isShowDetail, doctorIds } = this.state;
     let backgroundImage = specialty ? `url(${specialty.imageUrl})` : "";
 
     const breadcrumbItems = [
@@ -119,7 +134,10 @@ class DetailSpecialty extends Component {
                 </div>
               )}
             </div>
-            <DoctorCard specialtyId={specialty ? specialty.id : null} />
+            <DoctorCard
+              specialtyId={specialty ? specialty.id : null}
+              doctorIds={doctorIds}
+            />
           </div>
         </div>
       </>

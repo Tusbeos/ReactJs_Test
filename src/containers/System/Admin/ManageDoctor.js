@@ -8,7 +8,10 @@ import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
 import { CRUD_ACTIONS, LANGUAGES } from "utils";
-import { getDetailInfoDoctor } from "../../../services/doctorService";
+import {
+  getDetailInfoDoctor,
+  getSpecialtiesByDoctorId,
+} from "../../../services/doctorService";
 import { handleGetAllSpecialties } from "../../../services/specialtyService";
 import { handleGetAllClinics } from "../../../services/clinicService";
 import { FormattedMessage, injectIntl } from "react-intl";
@@ -128,6 +131,12 @@ class ManageDoctor extends Component {
         listProvince: dataSelectProvince,
       });
     }
+    if (
+      prevState.listSpecialty !== this.state.listSpecialty &&
+      this.state.selectedOption
+    ) {
+      this.handleChange(this.state.selectedOption);
+    }
   }
 
   buildDataSpecialtySelect = (inputData = []) => {
@@ -179,6 +188,7 @@ class ManageDoctor extends Component {
     this.setState({ selectedOption });
     let { listPrice, listPayment, listProvince, listSpecialty } = this.state;
     let res = await getDetailInfoDoctor(selectedOption.value);
+    let specialtyRes = await getSpecialtiesByDoctorId(selectedOption.value);
 
     if (res && res.errCode === 0 && res.data) {
       let data = res.data;
@@ -190,7 +200,8 @@ class ManageDoctor extends Component {
       let selectedPayment = null,
         selectedPrice = null,
         selectedProvince = null,
-        selectedSpecialty = [];
+        selectedSpecialty = [],
+        selectedClinic = null;
       let contentHTML = "",
         contentMarkdown = "",
         description = "";
@@ -217,14 +228,24 @@ class ManageDoctor extends Component {
         selectedProvince = listProvince.find(
           (item) => item.value === doctorInfo.provinceId,
         );
+        if (doctorInfo.clinicId && Array.isArray(this.state.listClinic)) {
+          selectedClinic = this.state.listClinic.find(
+            (item) => item.value === doctorInfo.clinicId,
+          );
+          if (selectedClinic) {
+            nameClinic = selectedClinic.label || nameClinic;
+            addressClinic = selectedClinic.address || addressClinic;
+          }
+        }
         if (listSpecialty && listSpecialty.length > 0) {
-          if (doctorInfo.specialtyIds && doctorInfo.specialtyIds.length > 0) {
+          const apiSpecialtyIds =
+            specialtyRes && specialtyRes.errCode === 0 ? specialtyRes.data : [];
+          const normalizedIds = Array.isArray(apiSpecialtyIds)
+            ? apiSpecialtyIds.map((id) => Number(id))
+            : [];
+          if (normalizedIds.length > 0) {
             selectedSpecialty = listSpecialty.filter((item) =>
-              doctorInfo.specialtyIds.includes(item.value),
-            );
-          } else if (doctorInfo.specialtyId) {
-            selectedSpecialty = listSpecialty.filter(
-              (item) => item.value === doctorInfo.specialtyId,
+              normalizedIds.includes(Number(item.value)),
             );
           }
         }
@@ -241,6 +262,7 @@ class ManageDoctor extends Component {
         selectedPrice,
         selectedProvince,
         selectedSpecialty,
+        selectedClinic,
       });
     } else {
       this.setState({
@@ -254,7 +276,8 @@ class ManageDoctor extends Component {
         selectedPayment: null,
         selectedPrice: null,
         selectedProvince: null,
-        selectedSpecialty: null,
+        selectedSpecialty: [],
+        selectedClinic: null,
       });
     }
   };

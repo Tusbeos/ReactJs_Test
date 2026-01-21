@@ -5,27 +5,29 @@ import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../utils";
 import { changeLanguageApp } from "../../store/actions/appActions";
 import { withRouter } from "react-router";
+
+import logo from "../../assets/Logo.svg";
+
 class HomeHeader extends Component {
-  handleSpecialtyClick = () => {
-    if (this.props.history) {
-      this.props.history.push("/specialty");
-    }
-  };
-  handleClinicClick = () => {
-    if (this.props.history) {
-      this.props.history.push("/clinic/detail-clinic/:id");
-    }
-  };
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
+
   returnToHome = () => {
-    if (this.props.history) {
-      this.props.history.push("/home");
-    }
+    if (this.props.history) this.props.history.push("/home");
   };
+
+  handleSpecialtyClick = () => {
+    if (this.props.history) this.props.history.push("/specialty");
+  };
+
+  handleClinicClick = () => {
+    if (this.props.history) this.props.history.push("/clinic");
+  };
+
   render() {
     let language = this.props.language;
+
     return (
       <React.Fragment>
         <div className="home-header-container">
@@ -43,46 +45,34 @@ class HomeHeader extends Component {
                 onClick={this.handleSpecialtyClick}
                 style={{ cursor: "pointer" }}
               >
-                <>
-                  <b>
-                    <FormattedMessage id="home-header.speciality" />
-                  </b>
-                </>
-                <div className="subs-title">
+                <div className="title">
+                  <FormattedMessage id="home-header.speciality" />
+                </div>
+                <div className="sub-title">
                   <FormattedMessage id="home-header.search-doctor" />
                 </div>
               </div>
-              <div
-                className="child-content"
-                onClick={this.handleClinicClick}
-                style={{ cursor: "pointer" }}
-              >
-                <>
-                  <b>
-                    <FormattedMessage id="home-header.medical-facility" />
-                  </b>
-                </>
-                <div className="subs-title">
+              <div className="child-content">
+                <div className="title">
+                  <FormattedMessage id="home-header.medical-facility" />
+                </div>
+                <div className="sub-title">
                   <FormattedMessage id="home-header.choose-hospital-clinic" />
                 </div>
               </div>
               <div className="child-content">
-                <>
-                  <b>
-                    <FormattedMessage id="home-header.doctor" />
-                  </b>
-                </>
-                <div className="subs-title">
+                <div className="title">
+                  <FormattedMessage id="home-header.doctor" />
+                </div>
+                <div className="sub-title">
                   <FormattedMessage id="home-header.choose-doctor" />
                 </div>
               </div>
               <div className="child-content">
-                <>
-                  <b>
-                    <FormattedMessage id="home-header.fee" />
-                  </b>
-                </>
-                <div className="subs-title">
+                <div className="title">
+                  <FormattedMessage id="home-header.fee" />
+                </div>
+                <div className="sub-title">
                   <FormattedMessage id="home-header.check-health" />
                 </div>
               </div>
@@ -93,26 +83,16 @@ class HomeHeader extends Component {
                 <FormattedMessage id="home-header.support" />
               </div>
               <div
-                className={
-                  language === LANGUAGES.VI
-                    ? "language-vi active"
-                    : "language-vi"
-                }
+                className={language === LANGUAGES.VI ? "flag active" : "flag"}
+                onClick={() => this.changeLanguage(LANGUAGES.VI)}
               >
-                <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>
-                  VN
-                </span>
+                VN
               </div>
               <div
-                className={
-                  language === LANGUAGES.EN
-                    ? "language-en active"
-                    : "language-en"
-                }
+                className={language === LANGUAGES.EN ? "flag active" : "flag"}
+                onClick={() => this.changeLanguage(LANGUAGES.EN)}
               >
-                <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>
-                  EN
-                </span>
+                EN
               </div>
             </div>
           </div>
@@ -124,68 +104,56 @@ class HomeHeader extends Component {
                 <FormattedMessage id="banner.title1" />
               </div>
               <div className="title2">
-                {" "}
                 <FormattedMessage id="banner.title2" />
               </div>
-              <div className="search">
+              <div className="search-box">
                 <i className="fas fa-search"></i>
-                <input className="search-input"></input>
+                <input
+                  type="text"
+                  placeholder="Tìm chuyên khoa, bác sĩ, bệnh viện..."
+                />
               </div>
             </div>
             <div className="content-down">
-              <div className="options">
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="far fa-hospital"></i>
+              <div className="stats-glass-bar">
+                <div className="stat-item">
+                  <div className="stat-icon">
+                    <i className="fas fa-hospital"></i>
                   </div>
-                  <div className="text-child">
-                    {" "}
-                    <FormattedMessage id="banner.child1" />
-                  </div>
-                </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="fa-solid fa-mobile-screen-button"></i>
-                  </div>
-                  <div className="text-child">
-                    {" "}
-                    <FormattedMessage id="banner.child2" />
+                  <div className="stat-text">
+                    <span className="stat-number">150+</span>
+                    <span className="stat-label">
+                      <FormattedMessage id="banner.child1" />
+                    </span>
                   </div>
                 </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="fas fa-stethoscope"></i>
+
+                <div className="stat-divider"></div>
+
+                {/* Item 2 */}
+                <div className="stat-item">
+                  <div className="stat-icon">
+                    <i className="fas fa-user-md"></i> {/* Icon Bác sĩ */}
                   </div>
-                  <div className="text-child">
-                    {" "}
-                    <FormattedMessage id="banner.child3" />
-                  </div>
-                </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="fas fa-vial"></i>
-                  </div>
-                  <div className="text-child">
-                    {" "}
-                    <FormattedMessage id="banner.child4" />
+                  <div className="stat-text">
+                    <span className="stat-number">1,500+</span>
+                    <span className="stat-label">
+                      <FormattedMessage id="banner.child6" />
+                    </span>
                   </div>
                 </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="fas fa-brain"></i>
+
+                <div className="stat-divider"></div>
+
+                <div className="stat-item">
+                  <div className="stat-icon">
+                    <i className="fas fa-file-medical"></i>
                   </div>
-                  <div className="text-child">
-                    {" "}
-                    <FormattedMessage id="banner.child5" />
-                  </div>
-                </div>
-                <div className="option-child">
-                  <div className="icon-child">
-                    <i className="fa-solid fa-user-doctor"></i>
-                  </div>
-                  <div className="text-child">
-                    {" "}
-                    <FormattedMessage id="banner.child6" />
+                  <div className="stat-text">
+                    <span className="stat-number">10k+</span>
+                    <span className="stat-label">
+                      <FormattedMessage id="banner.child4" />
+                    </span>
                   </div>
                 </div>
               </div>
@@ -197,19 +165,15 @@ class HomeHeader extends Component {
   }
 }
 
-// Redux
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.user.isLoggedIn,
-    language: state.app.language,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
-  };
-};
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.user.isLoggedIn,
+  language: state.app.language,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+});
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(HomeHeader)
+  connect(mapStateToProps, mapDispatchToProps)(HomeHeader),
 );

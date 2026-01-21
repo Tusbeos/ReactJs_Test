@@ -38,6 +38,10 @@ const getExtraInfoDoctorById = (doctorId) => {
   return axios.get(`/api/get-extra-info-doctor-by-id?doctorId=${doctorId}`);
 };
 
+const getSpecialtiesByDoctorId = (doctorId) => {
+  return axios.get(`/api/get-specialties-by-doctor-id?doctorId=${doctorId}`);
+};
+
 const HandleGetDoctorSpecialtyById = (inputId) => {
   return axios.get(`/api/get-doctor-specialty-by-id?id=${inputId}`);
 };
@@ -52,5 +56,6 @@ export {
   saveBulkDoctorServices,
   getAllDoctorServices,
   getExtraInfoDoctorById,
+  getSpecialtiesByDoctorId,
   HandleGetDoctorSpecialtyById,
 };
