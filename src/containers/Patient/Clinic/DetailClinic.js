@@ -52,25 +52,19 @@ class DetailClinic extends Component {
         </div>
       );
     }
-
-    // Xử lý ảnh sử dụng hàm CommonUtils
     let coverUrl = getBase64FromBuffer(clinic.imageCover);
     let logoUrl = getBase64FromBuffer(clinic.image);
 
     return (
       <div className="detail-clinic-wrapper">
         <HomeHeader />
-
-        {/* 1. HERO BANNER SECTION (Giống BookingCare) */}
         <div className="clinic-hero-container">
           <div
             className="hero-cover"
             style={{ backgroundImage: `url(${coverUrl})` }}
           >
-            {/* Lớp phủ đen mờ để chữ trắng nổi bật */}
             <div className="overlay-gradient"></div>
 
-            {/* Nội dung đè lên banner */}
             <div className="hero-content booking-container">
               <div className="profile-box">
                 <div
@@ -87,8 +81,6 @@ class DetailClinic extends Component {
             </div>
           </div>
         </div>
-
-        {/* 2. NAVIGATION TABS (Thanh menu trắng dưới banner) */}
         <div className="clinic-nav-tabs">
           <div className="booking-container">
             <div className="tab-list">
@@ -99,11 +91,8 @@ class DetailClinic extends Component {
             </div>
           </div>
         </div>
-
-        {/* 3. MAIN CONTENT (Nền xám nhạt) */}
         <div className="clinic-body-section">
           <div className="booking-container">
-            {/* Box giới thiệu vàng - chuẩn style BookingCare */}
             <div className="intro-section">
               <div className="notice-box-yellow">
                 <strong>BookingCare</strong> là Nền tảng Y tế chăm sóc sức khỏe
@@ -129,42 +118,12 @@ class DetailClinic extends Component {
               </div>
             </div>
 
-            {/* Nội dung HTML từ server */}
             <div className="clinic-html-content">
               {clinic.descriptionHTML && (
                 <div
                   dangerouslySetInnerHTML={{ __html: clinic.descriptionHTML }}
                 ></div>
               )}
-            </div>
-          </div>
-        </div>
-
-        {/* 4. AGENT STICKY FOOTER (Thanh công cụ dính dưới đáy) */}
-        <div className="agent-sticky-footer">
-          <div className="booking-container footer-content">
-            <div className="agent-info">
-              <div className="agent-stat">
-                <span className="label">Hoa hồng Agent:</span>
-                <span className="value highlight">15%</span>
-              </div>
-              <div className="vr-line"></div>
-              <div className="agent-stat">
-                <span className="label">Suất hôm nay:</span>
-                <span className="value">12 suất</span>
-              </div>
-            </div>
-
-            <div className="agent-actions">
-              <button className="btn-support">
-                <i className="fas fa-phone-alt"></i> Hỗ trợ
-              </button>
-              <button
-                className="btn-book-now"
-                onClick={this.handleAgentBooking}
-              >
-                Tạo Lịch Khám (Agent)
-              </button>
             </div>
           </div>
         </div>

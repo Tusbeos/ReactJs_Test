@@ -7,8 +7,7 @@ import {
   getDetailInfoDoctor,
   getScheduleDoctorByDate,
   HandleGetDoctorSpecialtyById,
-  // Giả sử bạn đã viết API này trong service (nếu chưa hãy thêm vào)
-//   handleGetDetailClinicById 
+  //   handleGetDetailClinicById
 } from "../../services/doctorService";
 import { LANGUAGES, path } from "utils";
 import { getBase64FromBuffer } from "utils/CommonUtils";

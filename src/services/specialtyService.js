@@ -6,7 +6,7 @@ const createNewSpecialtyService = (data) => {
 };
 
 const handleGetAllSpecialties = () => {
-  return axios.get("/api/get-specialty");
+  return axios.get("/api/get-all-specialty");
 };
 
 export {

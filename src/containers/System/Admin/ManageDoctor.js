@@ -10,6 +10,7 @@ import Select from "react-select";
 import { CRUD_ACTIONS, LANGUAGES } from "utils";
 import { getDetailInfoDoctor } from "../../../services/doctorService";
 import { handleGetAllSpecialties } from "../../../services/specialtyService";
+import { handleGetAllClinics } from "../../../services/clinicService";
 import { FormattedMessage, injectIntl } from "react-intl";
 import DoctorServices from "./DoctorServices";
 
@@ -41,6 +42,7 @@ class ManageDoctor extends Component {
       listSpecialty: [],
       selectedSpecialty: null,
       selectedClinic: null,
+      listClinic: [],
     };
     this.serviceRef = React.createRef();
   }
@@ -56,11 +58,31 @@ class ManageDoctor extends Component {
       } else {
         this.setState({ listSpecialty: [] });
       }
+      // Load clinic
+      const resClinic = await handleGetAllClinics();
+      if (
+        resClinic &&
+        resClinic.errCode === 0 &&
+        Array.isArray(resClinic.data)
+      ) {
+        const dataSelectClinic = this.buildDataClinicSelect(resClinic.data);
+        this.setState({ listClinic: dataSelectClinic });
+      } else {
+        this.setState({ listClinic: [] });
+      }
     } catch (e) {
-      console.error("Lỗi khi lấy chuyên khoa:", e);
-      this.setState({ listSpecialty: [] });
+      console.error("Lỗi khi lấy chuyên khoa hoặc clinic:", e);
+      this.setState({ listSpecialty: [], listClinic: [] });
     }
   }
+  buildDataClinicSelect = (inputData = []) => {
+    return inputData
+      .filter((item) => item && item.id && item.name)
+      .map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+  };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.allDoctors !== this.props.allDoctors) {
@@ -235,7 +257,6 @@ class ManageDoctor extends Component {
   handleSaveContentMarkDown = () => {
     let { hasOldData } = this.state;
     const { intl } = this.props;
-    // ... (Logic Validate giữ nguyên)
     if (!this.state.selectedOption)
       return alert(
         intl.formatMessage({ id: "menu.manage-doctor.error-selected-doctor" }),
@@ -275,6 +296,9 @@ class ManageDoctor extends Component {
       note: this.state.note,
       specialtyId: this.state.selectedSpecialty
         ? this.state.selectedSpecialty.value
+        : null,
+      clinicId: this.state.selectedClinic
+        ? this.state.selectedClinic.value
         : null,
       action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
     });
@@ -415,7 +439,7 @@ class ManageDoctor extends Component {
                   <Select
                     value={this.state.selectedClinic}
                     onChange={this.handleChangeSelectClinic}
-                    options={[]}
+                    options={this.state.listClinic}
                     name="selectedClinic"
                     placeholder={intl.formatMessage({
                       id: "menu.manage-doctor.select-clinic",
