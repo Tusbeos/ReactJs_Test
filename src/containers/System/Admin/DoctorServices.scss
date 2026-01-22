@@ -5,9 +5,6 @@ $border-color: #d1d3e2;
 $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 
 .doctor-service-container {
-    // Không padding ở đây để nó nằm gọn trong layout cha nếu cần
-    // hoặc giữ padding nếu muốn cách ra
-
     .info-card {
         background: #fff;
         border: 1px solid $border-color;
@@ -33,8 +30,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             padding: 20px;
         }
     }
-
-    // Header bảng
     .header-row {
         background-color: #eee;
         padding: 10px 0;
@@ -42,7 +37,7 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         border-radius: 4px 4px 0 0;
         border: 1px solid $border-color;
         border-bottom: none;
-        margin: 0; // Reset margin row bootstrap
+        margin: 0;
         
         .header-item {
             font-size: 13px;
@@ -50,8 +45,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             text-align: center;
         }
     }
-
-    // Body bảng (Danh sách)
     .service-body {
         border: 1px solid $border-color;
         border-top: none;
@@ -65,7 +58,7 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             margin: 0;
             padding: 15px 0;
             border-bottom: 1px solid #eee;
-            align-items: flex-start; // Căn hàng theo cạnh trên
+            align-items: flex-start;
             transition: background 0.2s;
 
             &:last-child {
@@ -75,8 +68,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             &:hover {
                 background-color: #fcfcfc;
             }
-
-            // Style inputs cho đẹp hơn
             .form-control {
                 border-radius: 4px;
                 border: 1px solid #ced4da;
@@ -98,13 +89,9 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
                 resize: vertical;
                 min-height: 38px;
             }
-
-            // Style riêng cho nhóm Tiếng Anh
             .group-en {
                 input { margin-bottom: 5px; }
             }
-
-            // Nút xóa tròn
             .btn-delete {
                 width: 32px;
                 height: 32px;
@@ -129,8 +116,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             }
         }
     }
-
-    // Hàng nút bấm (Thêm mới)
     .action-row {
         margin-top: 15px;
         display: flex;

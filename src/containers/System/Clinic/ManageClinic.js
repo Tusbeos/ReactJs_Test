@@ -72,8 +72,6 @@ class ManageClinic extends Component {
     if (!file) return;
 
     const Base64 = await CommonUtils.getBase64(file);
-    // Create object URL for immediate preview without base64 conversion overhead if desired,
-    // but here we stick to base64 for consistency with your saving logic.
     if (type === "cover") {
       this.setState({
         imageCoverBase64: Base64 || "",
@@ -161,7 +159,6 @@ class ManageClinic extends Component {
     try {
       const res = await getDetailClinicById(clinic.id);
       if (res && res.errCode === 0 && res.data) {
-        // Handle image previews. Data might come as buffer or base64 string depending on backend
         const imageBase64 = res.data.image
           ? getBase64FromBuffer(res.data.image) || ""
           : "";
@@ -228,9 +225,7 @@ class ManageClinic extends Component {
       clinics,
       isEditing,
     } = this.state;
-
-    // Use state preview directly.
-    // Ensure your handleEditClinic correctly sets these state variables from the fetched data.
+    
     const logoPreviewUrl = previewImage ? `url(${previewImage})` : "";
     const coverPreviewUrl = previewImageCover
       ? `url(${previewImageCover})`

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import "./DoctorExtraInfo.scss";
 import {
   getExtraInfoDoctorById,
@@ -62,6 +63,17 @@ class DoctorExtraInfo extends Component {
     });
   };
 
+  handleViewDetailClinic = () => {
+    const { extraInfo } = this.state;
+    const clinicId = extraInfo && extraInfo.clinicId ? extraInfo.clinicId : null;
+    if (clinicId && this.props.history) {
+      this.props.history.push({
+        pathname: `/clinic/detail-clinic/${clinicId}`,
+        state: { clinicId },
+      });
+    }
+  };
+
   render() {
     let language = this.props.language;
     let { isShowDetailInfo, extraInfo } = this.state;
@@ -71,7 +83,11 @@ class DoctorExtraInfo extends Component {
           <div className="text-address">
             <FormattedMessage id="patient.extra-info-doctor.clinic-address" />
           </div>
-          <div className="name-clinic">
+          <div
+            className="name-clinic"
+            style={{ cursor: extraInfo && extraInfo.clinicId ? "pointer" : "default" }}
+            onClick={this.handleViewDetailClinic}
+          >
             {extraInfo && extraInfo.nameClinic ? extraInfo.nameClinic : ""}
           </div>
           <div className="detail-address">
@@ -242,4 +258,6 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoctorExtraInfo);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DoctorExtraInfo),
+);

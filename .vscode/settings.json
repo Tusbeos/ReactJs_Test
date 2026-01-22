@@ -1,8 +1,8 @@
 {
-  "editor.formatOnSave": true, // vẫn bật format khi save mặc định
-  "editor.formatOnSaveMode": "modifications", // chỉ format phần code thay đổi
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modifications",
   "files.watcherExclude": {
-    "**/src/containers/Auth/Login.scss": true // file SCSS muốn bỏ qua auto format
+    "**/src/containers/Auth/Login.scss": true
   },
   "cSpell.words": [
     "Axios",
@@ -25,6 +25,7 @@
     "tiền",
     "Tiếng",
     "Truyền",
+    "Tuấn",
     "Việt"
   ]
 }

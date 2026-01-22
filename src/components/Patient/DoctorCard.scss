@@ -27,13 +27,6 @@ $border-color: #f1f0f0;
         padding: 20px;
         margin-bottom: 15px;
         border: 1px solid #e6e6e6;
-        
-        // Responsive Mobile: Chuyển thành cột dọc
-        @media (max-width: 768px) {
-            flex-direction: column;
-        }
-
-        /* --- CỘT TRÁI --- */
         .doctor-card-left {
             width: 50%;
             padding-right: 15px;
@@ -110,8 +103,7 @@ $border-color: #f1f0f0;
 
             .doctor-schedule {
                 .schedule-select {
-                    border: none;
-                    // border-bottom: 1px solid #ccc;
+                    border: none;;
                     padding: 5px 0;
                     color: $primary-color;
                     font-weight: 600;

@@ -1,4 +1,4 @@
-$primary-color: #0071ba; // Specialty specific blue
+$primary-color: #0071ba;
 $text-color: #333;
 $bg-light: #f8f9fa;
 $border-color: #d1d3e2;
@@ -9,9 +9,7 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
     background-color: #fff;
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
-    caret-color: transparent; // Hide default caret in container
-
-    // Page Title
+    caret-color: transparent;
     .ms-title {
         text-align: center;
         text-transform: uppercase;
@@ -22,8 +20,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         border-bottom: 2px solid $bg-light;
         padding-bottom: 10px;
     }
-
-    // 1. Info Card Style (Shared Concept)
     .info-card {
         background: #fff;
         border: 1px solid $border-color;
@@ -49,15 +45,13 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             padding: 20px;
 
             &.p-0 {
-                padding: 0; // For table to go edge-to-edge
+                padding: 0;
             }
         }
     }
-
-    // 2. Form Groups
     .form-group {
         margin-bottom: 15px;
-        caret-color: auto; // Restore caret for inputs
+        caret-color: auto;
 
         label {
             font-weight: 600;
@@ -85,10 +79,9 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         }
     }
 
-    // 3. Upload Box (Dashed Style)
     .upload-box {
         width: 100%;
-        height: 180px; // Fixed height for consistency
+        height: 180px;
         border: 2px dashed $border-color;
         border-radius: 6px;
         background-color: #f8f9fa;
@@ -97,8 +90,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         align-items: center;
         justify-content: center;
         transition: all 0.3s;
-        
-        // Background Image settings
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -121,16 +112,12 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             i { font-size: 20px; display: block; margin-bottom: 5px; }
         }
     }
-
-    // 4. Editor
     .rc-md-editor {
         border-radius: 6px;
         border: 1px solid $border-color;
         box-shadow: none;
         caret-color: auto;
     }
-
-    // 5. Buttons
     .btn-container {
         margin-top: 25px;
         text-align: right;
@@ -162,8 +149,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             text-transform: uppercase;
         }
     }
-
-    // 6. Table List Styles
     .specialty-list-container {
         .table {
             th {

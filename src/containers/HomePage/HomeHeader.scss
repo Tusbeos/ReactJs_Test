@@ -21,8 +21,6 @@ $highlight-color: #FE9400;
         padding: 0 20px;
         display: flex;
         justify-content: space-between;
-
-        // LEFT (Logo)
         .left-content {
             display: flex;
             align-items: center;
@@ -36,8 +34,6 @@ $highlight-color: #FE9400;
                 cursor: pointer;
             }
         }
-
-        // CENTER (Menu Links)
         .center-content {
             display: flex;
             align-items: center;
@@ -54,8 +50,6 @@ $highlight-color: #FE9400;
                 &:hover .title { color: $primary-color; }
             }
         }
-
-        // RIGHT (Support & Lang)
         .right-content {
             display: flex;
             align-items: center;
@@ -170,7 +164,7 @@ $highlight-color: #FE9400;
 
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.25); 
-                    transform: translateY(-3px); // Nhấc lên
+                    transform: translateY(-3px);
                     box-shadow: 0 5px 15px rgba(0,0,0,0.15); 
 
                     .stat-icon {
@@ -209,8 +203,6 @@ $highlight-color: #FE9400;
                     }
                 }
             }
-
-            // Đường kẻ dọc
             .stat-divider {
                 width: 1px; height: 30px;
                 background: rgba(255, 255, 255, 0.3);

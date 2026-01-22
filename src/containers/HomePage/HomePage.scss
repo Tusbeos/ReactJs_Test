@@ -28,8 +28,6 @@ a { text-decoration: none; }
   padding: 30px 0;
   background: $bg-light;
   margin-top: 30px;
-
-  // Background riêng cho từng section
   &.section-specialty,
   &.section-os-doctor {
     background: $bg-light;

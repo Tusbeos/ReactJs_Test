@@ -15,8 +15,6 @@ class HomeFooter extends Component {
     );
   }
 }
-
-// Redux
 const mapStateToProps = (state) => {
   return {};
 };

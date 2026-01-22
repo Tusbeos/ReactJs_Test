@@ -10,7 +10,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
 
-    // Tiêu đề
     .m-s-title {
         text-align: center;
         text-transform: uppercase;
@@ -22,14 +21,12 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         padding-bottom: 10px;
     }
 
-    // Card Container
     .info-card {
         background: #fff;
         border: 1px solid $border-color;
         border-radius: 8px;
         box-shadow: $card-shadow;
-        // overflow: hidden; // Bỏ dòng này để Select không bị che (dù đã dùng Portal)
-
+       
         .card-header {
             background-color: $bg-light;
             padding: 10px 20px;
@@ -49,7 +46,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         }
     }
 
-    // Form inputs
     .form-group {
         margin-bottom: 20px;
 
@@ -61,14 +57,13 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             font-size: 14px;
         }
 
-        // Custom Datepicker
         .form-control {
             border-radius: 4px;
             border: 1px solid #ced4da;
             padding: 8px 10px;
             font-size: 14px;
             width: 100%;
-            height: 38px; // Đồng bộ chiều cao với React Select
+            height: 38px;
 
             &:focus {
                 border-color: $primary-color;
@@ -77,15 +72,13 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             }
         }
     }
-
-    // Khu vực chọn giờ
     .pick-hour-container {
         margin-top: 10px;
         
         .time-content {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px; // Khoảng cách giữa các nút
+            gap: 15px;
 
             .btn-schedule {
                 padding: 10px 20px;
@@ -95,7 +88,7 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
                 border-radius: 6px;
                 font-size: 14px;
                 font-weight: 500;
-                min-width: 120px; // Đảm bảo độ rộng tối thiểu
+                min-width: 120px;
                 transition: all 0.2s;
                 cursor: pointer;
 
@@ -106,22 +99,15 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
                 }
 
                 &.active {
-                    background-color: #ffe7ba; // Màu nền khi chọn (Vàng nhạt)
+                    background-color: #ffe7ba; 
                     border-color: #ffc107;
                     color: #333;
                     font-weight: 600;
                     box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.3);
-                    
-                    // Hoặc nếu muốn màu xanh chủ đạo:
-                    // background-color: $primary-color;
-                    // color: #fff;
-                    // border-color: $primary-color;
                 }
             }
         }
     }
-
-    // Nút Lưu
     .btn-container {
         margin-top: 30px;
         text-align: right;

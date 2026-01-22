@@ -27,7 +27,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         border-radius: 8px;
         box-shadow: $card-shadow;
         margin-bottom: 20px;
-        // overflow: hidden;
         position: relative;
         z-index: 10;
 
@@ -74,7 +73,7 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             padding: 8px 12px;
             font-size: 14px;
             transition: all 0.2s;
-            width: 100%; // Đảm bảo full chiều ngang cột
+            width: 100%;
 
             &:focus {
                 border-color: $primary-color;
@@ -82,39 +81,30 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
                 box-shadow: 0 0 0 0.2rem rgba(0, 113, 186, 0.25);
             }
         }
-
-        // Input dạng text area
         textarea.form-control {
-            resize: vertical; // Cho phép kéo giãn chiều dọc
+            resize: vertical;
             min-height: 80px;
         }
-        
-        // Fix font size cho React Select
         .css-b62m3t-container { 
             font-size: 14px;
         }
     }
-
-    // 4. Grid System (Chia cột)
-    // Tận dụng class 'row' và 'col-md-*' của Bootstrap có sẵn trong project
     .detail-info-grid {
         display: flex;
         flex-wrap: wrap;
         margin-right: -10px;
         margin-left: -10px;
         
-        > div { // Chọn các cột con
+        > div {
             padding: 0 10px;
             display: flex; 
             flex-direction: column;
             
             .info-card {
-                flex: 1; // Giúp 2 card trái/phải luôn bằng chiều cao nhau
+                flex: 1; 
             }
         }
     }
-
-    // 5. Editor Markdown
     .manage-doctor-editor {
         .rc-md-editor {
             border-radius: 8px;
@@ -123,14 +113,12 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             background-color: #fff;
         }
     }
-
-    // 6. Nút Bấm (Buttons)
     .save-content-doctor, .create-content-doctor {
-        float: right; // Luôn nằm bên phải
+        float: right;
         min-width: 150px;
         padding: 10px 20px;
         font-weight: 600;
-        border-radius: 50px; // Bo tròn viên thuốc
+        border-radius: 50px;
         border: none;
         cursor: pointer;
         transition: all 0.3s;
@@ -138,8 +126,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         span {
             text-transform: uppercase;
         }
-        
-        // Nút Lưu mới (Xanh)
         &.btn-primary {
             background-color: $primary-color;
             color: #fff;

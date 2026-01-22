@@ -21,7 +21,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         padding-bottom: 10px;
     }
 
-    // --- CARD STYLE (Giống các trang khác) ---
     .info-card {
         background: #fff;
         border: 1px solid $border-color;
@@ -52,12 +51,10 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             padding: 25px;
             
             &.p-0 {
-                padding: 0; // Dùng cho phần Table để full viền
+                padding: 0;
             }
         }
     }
-
-    // --- FORM INPUTS ---
     .form-group {
         margin-bottom: 15px;
 
@@ -88,21 +85,17 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             }
         }
     }
-
-    // --- UPLOAD BOX ---
     .upload-box {
-        width: 150px; // Kích thước cố định cho Avatar
+        width: 150px;
         height: 150px;
         border: 2px dashed $border-color;
-        border-radius: 50%; // Bo tròn nếu muốn avatar tròn, hoặc để 8px nếu muốn vuông
+        border-radius: 50%; 
         background-color: #f8f9fa;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all 0.3s;
-        
-        // Background Image
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -125,8 +118,6 @@ $card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             i { font-size: 24px; display: block; margin-bottom: 5px; }
         }
     }
-
-    // --- BUTTONS ---
     .btn-container {
         margin-top: 20px;
         text-align: right;

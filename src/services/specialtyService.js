@@ -1,6 +1,5 @@
 import axios from "../axios";
 
-// Specialty related APIs
 const createNewSpecialtyService = (data) => {
   return axios.post("/api/create-new-specialty", data);
 };

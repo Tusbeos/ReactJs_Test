@@ -56,7 +56,7 @@ class DetailDoctor extends Component {
       },
       {
         label: this.props.language === LANGUAGES.VI ? "Bác sĩ" : "Doctor",
-        to: "/doctor",
+        to: "/top-doctor",
       },
       {
         label:

@@ -84,7 +84,7 @@ class UserRedux extends Component {
         roleArr: arrRoles,
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
         avatar: "",
-        previewImgURL: "", // Reset ảnh preview
+        previewImgURL: "",
         actions: CRUD_ACTIONS.CREATE,
       });
     }

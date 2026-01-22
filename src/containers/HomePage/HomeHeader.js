@@ -24,7 +24,9 @@ class HomeHeader extends Component {
   handleClinicClick = () => {
     if (this.props.history) this.props.history.push("/clinic");
   };
-
+  handleViewTopDoctors = () => {
+    if (this.props.history) this.props.history.push("/top-doctor");
+  };
   render() {
     let language = this.props.language;
 
@@ -64,7 +66,11 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.choose-hospital-clinic" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={this.handleViewTopDoctors}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="title">
                   <FormattedMessage id="home-header.doctor" />
                 </div>

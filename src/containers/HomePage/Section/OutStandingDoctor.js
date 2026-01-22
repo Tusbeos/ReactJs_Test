@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import * as actions from "../../../store/actions";
 import SectionItem from "./SectionItem";
 import { FormattedMessage } from "react-intl";
+import { path } from "utils";
 
 class OutStandingDoctor extends Component {
   constructor(props) {
@@ -33,10 +34,14 @@ class OutStandingDoctor extends Component {
     }
   };
 
+  handleViewAllDoctors = () => {
+    if (this.props.history) {
+      this.props.history.push(path.LIST_TOP_DOCTOR);
+    }
+  };
+
   render() {
     let { arrDoctors } = this.state;
-
-    // Đã xóa biến language không dùng để fix warning ESLint
     return (
       <div className="section-share section-os-doctor">
         <div className="booking-container">
@@ -45,7 +50,10 @@ class OutStandingDoctor extends Component {
               <span className="title-section">
                 <FormattedMessage id="home-header.top-doctor" />
               </span>
-              <button className="btn-section">
+              <button
+                className="btn-section"
+                onClick={this.handleViewAllDoctors}
+              >
                 <FormattedMessage id="home-header.see-more" />
               </button>
             </div>

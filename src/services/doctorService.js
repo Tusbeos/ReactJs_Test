@@ -1,6 +1,5 @@
 import axios from "../axios";
 
-// Doctor related APIs
 const handleGetTopDoctorHomeService = (limit) => {
   return axios.get("/api/top-doctor-home", { params: { limit } });
 };

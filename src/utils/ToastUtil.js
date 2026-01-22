@@ -36,24 +36,22 @@ class ToastUtil {
     }
     static errorApi(error, title = 'common.fail-to-load-data', autoCloseDelay = 3000) {
         if (axios.isCancel(error)) {
-            // Do nothing if request was cancelled
-            return;
+          return;
         }
         let message = null;
         let messageId = 'common.unknown-error';
         if (error.httpStatusCode >= 500) {
-            messageId = 'common.internal-server-error';
+          messageId = "common.internal-server-error";
         } else if (error.httpStatusCode < 500 && error.httpStatusCode >= 400) {
-            if (error.httpStatusCode === 400) {
-                messageId = 'common.bad-request';
-            } else if (error.httpStatusCode === 403) {
-                messageId = 'common.forbiden-request';
-            }
+          if (error.httpStatusCode === 400) {
+            messageId = "common.bad-request";
+          } else if (error.httpStatusCode === 403) {
+            messageId = "common.forbiden-request";
+          }
         } else {
-            // Request fail even server was returned a success response
-            if (error.errorMessage) {
-                message = error.errorMessage
-            }
+          if (error.errorMessage) {
+            message = error.errorMessage;
+          }
         }
         toast.error(<CustomToast titleId={title} message={message} messageId={messageId} time={new Date()} />, {
             position: toast.POSITION.BOTTOM_RIGHT,

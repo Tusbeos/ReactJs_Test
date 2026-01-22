@@ -65,7 +65,6 @@ class ManageSpecialty extends Component {
     let file = data[0];
     if (file) {
       let Base64 = await CommonUtils.getBase64(file);
-      // For preview, we can use the base64 string directly
       this.setState({
         imageBase64: Base64,
         previewImgURL: Base64,

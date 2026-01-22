@@ -102,7 +102,6 @@ class DoctorCard extends Component {
       if (specialtyId) {
         res = await HandleGetDoctorSpecialtyById(specialtyId);
       } else if (clinicId) {
-        //  res = await handleGetDetailClinicById(clinicId);
       } else {
         res = await handleGetAllDoctorsService();
       }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
-// Import ảnh
 import logo1 from "../../../assets/about/110757-dantrilogo.png";
 import logo2 from "../../../assets/about/142415-logo-vnnet.png";
 import logo3 from "../../../assets/about/vnexpress.png";

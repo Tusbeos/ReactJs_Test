@@ -20,7 +20,6 @@ import DoctorServices from "./DoctorServices";
 const mdParser = new MarkdownIt();
 
 class ManageDoctor extends Component {
-  // ... (Giữ nguyên constructor và các hàm logic xử lý state/API không đổi) ...
   constructor(props) {
     super(props);
     this.state = {
@@ -61,7 +60,6 @@ class ManageDoctor extends Component {
       } else {
         this.setState({ listSpecialty: [] });
       }
-      // Load clinic
       const resClinic = await handleGetAllClinics();
       if (
         resClinic &&
@@ -583,8 +581,6 @@ class ManageDoctor extends Component {
     );
   }
 }
-
-// ... mapStateToProps, mapDispatchToProps (Giữ nguyên)
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,

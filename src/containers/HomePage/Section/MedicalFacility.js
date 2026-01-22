@@ -4,8 +4,6 @@ import Slider from "react-slick";
 import { withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 import { handleGetAllClinics } from "../../../services/clinicService";
-
-// Import Component chung
 import SectionItem from "./SectionItem";
 
 class MedicalFacility extends Component {
