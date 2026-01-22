@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import HomeHeader from "containers/HomePage/HomeHeader";
 import "./DetailClinic.scss";
-import { LANGUAGES } from "utils";
 import { getDetailClinicById } from "../../../services/clinicService";
 import { getDoctorsByClinicId } from "../../../services/doctorService";
 import { getBase64FromBuffer } from "../../../utils/CommonUtils";
 import DoctorCard from "../../../components/Patient/DoctorCard";
+
+const HEADER_SELECTOR = "h2";
 
 class DetailClinic extends Component {
   constructor(props) {
@@ -15,12 +16,11 @@ class DetailClinic extends Component {
       clinic: {},
       notFound: false,
       doctorIds: [],
+      tableOfContents: [],
     };
 
-    this.sectionRefs = {
-      intro: React.createRef(),
-      doctors: React.createRef(),
-    };
+    this.introRef = React.createRef();
+    this.doctorsRef = React.createRef();
     this.contentRef = React.createRef();
   }
 
@@ -57,39 +57,101 @@ class DetailClinic extends Component {
     }
   }
 
-  handleScrollTo = (key) => {
-    const offset = 80;
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.clinic !== prevState.clinic &&
+      this.state.clinic.descriptionHTML
+    ) {
+      setTimeout(() => this.buildTableOfContents(), 100);
+    }
+  }
 
-    if (key === "intro" || key === "doctors") {
-      const el = document.getElementById(key);
-      if (el) {
-        const top =
-          el.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top, behavior: "smooth" });
+  normalizeString = (str) => {
+    if (!str) return "";
+    return str.toLowerCase().trim().replace(/\s+/g, " ");
+  };
+
+  buildTableOfContents = () => {
+    const container = this.contentRef.current;
+    if (!container) return;
+
+    const headers = container.querySelectorAll(HEADER_SELECTOR);
+    const toc = [];
+    const ignoredKeywords = [
+      "giới thiệu",
+      "thế mạnh chuyên môn",
+      "đặt lịch khám",
+    ];
+
+    headers.forEach((header, index) => {
+      const originalText = header.innerText || "";
+      const cleanText = this.normalizeString(originalText);
+
+      if (cleanText.length === 0 || cleanText.length > 150) return;
+      if (ignoredKeywords.some((keyword) => cleanText.includes(keyword)))
         return;
+
+      toc.push({ title: originalText, originalIndex: index });
+    });
+
+    this.setState({ tableOfContents: toc });
+  };
+
+  handleScrollTo = (key, originalIndex = null) => {
+    let element = null;
+    const container = this.contentRef.current;
+
+    const findHeaderByKeywords = (keywords = []) => {
+      if (!container) return null;
+      const headers = container.querySelectorAll(HEADER_SELECTOR);
+      const normalizedKeywords = keywords.map((kw) => this.normalizeString(kw));
+      return Array.from(headers).find((header) => {
+        const text = this.normalizeString(header.innerText || "");
+        return normalizedKeywords.some((kw) => text.includes(kw));
+      });
+    };
+
+    if (key === "intro") {
+      element = findHeaderByKeywords(["giới thiệu"]) || this.introRef.current;
+    } else if (key === "doctors") {
+      element =
+        findHeaderByKeywords(["thế mạnh", "chuyên môn"]) ||
+        this.doctorsRef.current;
+    } else if (key === "markdown" && originalIndex !== null) {
+      if (container) {
+        const headers = container.querySelectorAll(HEADER_SELECTOR);
+        if (headers && headers[originalIndex]) element = headers[originalIndex];
       }
     }
 
-    const container = this.contentRef && this.contentRef.current;
-    if (container) {
-      const selector = "h2, h3, h4, strong";
-      const nodes = Array.from(container.querySelectorAll(selector));
-      const keyword = key === "equipment" ? "trang thiết bị" : "quy trình";
+    if (element) {
+      const wrapper = document.querySelector(".custom-scrollbar");
+      let scrollContainer = document.documentElement;
 
-      const target = nodes.find((node) => {
-        const text = (node.textContent || "").toLowerCase();
-        return text.includes(keyword);
-      });
+      if (wrapper) {
+        const innerDiv = wrapper.firstElementChild;
+        if (innerDiv) {
+          scrollContainer = innerDiv;
+        }
+      }
+      const headerOffset = 100;
+      const elementTop = element.getBoundingClientRect().top;
+      const containerTop = scrollContainer.getBoundingClientRect
+        ? scrollContainer.getBoundingClientRect().top
+        : 0;
+      const currentScroll = scrollContainer.scrollTop || 0;
 
-      const scrollTarget = target || container;
-      const top =
-        scrollTarget.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+      const targetScroll =
+        currentScroll + (elementTop - containerTop) - headerOffset;
+
+      if (scrollContainer && scrollContainer.scrollTo) {
+        scrollContainer.scrollTo({ top: targetScroll, behavior: "smooth" });
+      }
     }
   };
 
   render() {
-    const { clinic, notFound, doctorIds } = this.state;
+    const { clinic, notFound, doctorIds, tableOfContents } = this.state;
 
     if (notFound) {
       return (
@@ -111,7 +173,6 @@ class DetailClinic extends Component {
             style={{ backgroundImage: `url(${coverUrl})` }}
           >
             <div className="overlay-gradient"></div>
-
             <div className="hero-content booking-container">
               <div className="profile-box">
                 <div
@@ -128,11 +189,12 @@ class DetailClinic extends Component {
             </div>
           </div>
         </div>
+
         <div className="clinic-nav-tabs">
           <div className="booking-container">
             <div className="tab-list">
               <span
-                className="tab-item active"
+                className="tab-item"
                 onClick={() => this.handleScrollTo("intro")}
               >
                 Giới thiệu
@@ -143,38 +205,33 @@ class DetailClinic extends Component {
               >
                 Thế mạnh chuyên môn
               </span>
-              <span
-                className="tab-item"
-                onClick={() => this.handleScrollTo("equipment")}
-              >
-                Trang thiết bị
-              </span>
-              <span
-                className="tab-item"
-                onClick={() => this.handleScrollTo("process")}
-              >
-                Quy trình khám
-              </span>
+              {tableOfContents &&
+                tableOfContents.map((item, i) => (
+                  <span
+                    key={i}
+                    className="tab-item"
+                    onClick={() =>
+                      this.handleScrollTo("markdown", item.originalIndex)
+                    }
+                  >
+                    {item.title}
+                  </span>
+                ))}
             </div>
           </div>
         </div>
+
         <div className="clinic-body-section">
           <div className="booking-container">
-            <div
-              className="intro-section"
-              ref={this.sectionRefs.intro}
-              id="intro"
-            >
+            <div className="intro-section" ref={this.introRef}>
               <div className="notice-box-yellow">
                 <strong>BookingCare</strong> là Nền tảng Y tế chăm sóc sức khỏe
-                toàn diện hàng đầu Việt Nam, kết nối người dùng với trên 200
-                bệnh viện - phòng khám uy tín.
+                toàn diện...
               </div>
-
               <div className="info-box-blue">
                 <p>
                   Từ nay, người bệnh có thể đặt lịch tại{" "}
-                  <strong>{clinic.name}</strong> thông qua hệ thống BookingCare.
+                  <strong>{clinic.name}</strong>...
                 </p>
                 <ul>
                   <li>
@@ -188,14 +245,12 @@ class DetailClinic extends Component {
                 </ul>
               </div>
             </div>
-
-            <div ref={this.sectionRefs.doctors} id="doctors">
+            <div ref={this.doctorsRef}>
               <DoctorCard
                 clinicId={clinic && clinic.id ? clinic.id : null}
                 doctorIds={doctorIds}
               />
             </div>
-
             <div className="clinic-html-content" ref={this.contentRef}>
               {clinic.descriptionHTML && (
                 <div
@@ -210,8 +265,5 @@ class DetailClinic extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  language: state.app.language,
-});
-
+const mapStateToProps = (state) => ({ language: state.app.language });
 export default connect(mapStateToProps)(DetailClinic);

@@ -23,9 +23,9 @@ class ManageClinic extends Component {
       name: "",
       address: "",
       imageBase64: "",
-      previewImage: "", // For Logo
+      previewImage: "",
       imageCoverBase64: "",
-      previewImageCover: "", // For Cover
+      previewImageCover: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
       clinics: [],
@@ -162,15 +162,12 @@ class ManageClinic extends Component {
       const res = await getDetailClinicById(clinic.id);
       if (res && res.errCode === 0 && res.data) {
         // Handle image previews. Data might come as buffer or base64 string depending on backend
-        let imageBase64 = "";
-        let imageCoverBase64 = "";
-
-        if (res.data.image) {
-          imageBase64 = res.data.image; // Assuming API returns usable base64 or you handle buffer elsewhere
-        }
-        if (res.data.imageCover) {
-          imageCoverBase64 = res.data.imageCover;
-        }
+        const imageBase64 = res.data.image
+          ? getBase64FromBuffer(res.data.image) || ""
+          : "";
+        const imageCoverBase64 = res.data.imageCover
+          ? getBase64FromBuffer(res.data.imageCover) || ""
+          : "";
 
         this.setState({
           name: res.data.name || "",
@@ -340,8 +337,6 @@ class ManageClinic extends Component {
               </div>
             </div>
           </div>
-
-          {/* --- CARD 2: EDITOR --- */}
           <div className="col-12">
             <div className="info-card">
               <div className="card-header">

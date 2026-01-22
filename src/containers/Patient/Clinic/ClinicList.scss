@@ -1,0 +1,74 @@
+.clinic-list-container {
+  background-color: #fff;
+  caret-color: transparent;
+
+  .clinic-list-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .clinic-list-items {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+
+    .clinic-item {
+      display: flex;
+      height: 200px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #cccccc;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #fbfbfb;
+
+        .clinic-item__name {
+          color: #45c3d2;
+        }
+      }
+
+      &.last {
+        border-bottom: none;
+      }
+
+      &__icon {
+        width: auto;
+        height: 130px;
+        background-color: #e8fafa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 15px;
+        flex-shrink: 0;
+
+        img {
+          width: auto;
+          height: 130px;
+          object-fit: contain;
+        }
+      }
+
+      &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      &__name {
+        font-size: 25px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      &__address {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
+}

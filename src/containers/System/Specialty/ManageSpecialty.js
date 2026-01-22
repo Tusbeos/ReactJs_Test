@@ -125,18 +125,18 @@ class ManageSpecialty extends Component {
 
   handleEditSpecialty = (item) => {
     let imageBase64 = "";
-    if (item.image) {
-      imageBase64 = item.image;
+    if (item && item.image) {
+      imageBase64 = getBase64FromBuffer(item.image) || "";
     }
 
     this.setState({
-      name: item.name,
+      name: item?.name || "",
       imageBase64: imageBase64,
       previewImgURL: imageBase64,
-      descriptionHTML: item.descriptionHTML,
-      descriptionMarkdown: item.descriptionMarkdown,
+      descriptionHTML: item?.descriptionHTML || "",
+      descriptionMarkdown: item?.descriptionMarkdown || "",
       isEditing: true,
-      editSpecialtyId: item.id,
+      editSpecialtyId: item?.id || null,
     });
   };
 

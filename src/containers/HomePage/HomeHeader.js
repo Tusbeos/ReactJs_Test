@@ -52,7 +52,11 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.search-doctor" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={this.handleClinicClick}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="title">
                   <FormattedMessage id="home-header.medical-facility" />
                 </div>
